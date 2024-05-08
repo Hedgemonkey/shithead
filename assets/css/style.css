@@ -1,3 +1,77 @@
-.heading {
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    color: #333;
+    background-color: #00c3ff;
+    margin: 0;
+    padding: 0;
+}
+/* Header */
+header {
+    padding: 0 1rem;
     text-align: center;
+    margin: 0;
+    top: 0;
+    z-index: 110;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    height: 40px;
+}
+
+/* Menu */
+#menu {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    list-style-type: none;
+    text-transform: uppercase;
+}
+
+header a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.active {
+    background-color: rgba(255, 255, 255, 0.6);
+    color: rgba(0, 3, 197, 0.8);
+    font-weight: 700;
+}
+
+/* Nav */
+nav {
+    position: fixed;
+    width: 100%;
+    padding: 0 1rem;
+    box-shadow: 0 2px 2px rgba(255, 255, 255, 0.6);
+    background-color: rgba(0, 3, 197, 0.8);
+    visibility: hidden;
+    top: 0;
+    left: 0;
+    overflow-y: hidden;
+    z-index: 100;
+    transition: all 1s ease;
+    max-height: 0;
+}
+
+/* Nav Link hover styling */
+nav a:hover {
+    text-shadow: 2px 2px 5px white
+}
+
+/* Nav dropdown functionality */
+#nav-toggle:checked~nav {
+    visibility: visible;
+    max-height: 300px;
+    transition: all 1s ease;
+    top: 40px;
+}
+
+#nav-toggle {
+    display: none;
+}
+
+.heading {
+    margin-top: 0;
 }

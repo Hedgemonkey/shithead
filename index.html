@@ -7,11 +7,26 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <h1 class="heading">Sh*tHead</h1>
+    <!-- Header -->
+    <header>
+        <h1 class="heading">Sh*tHead</h1>
+        <input type="checkbox" name="nav-toggle" id="nav-toggle">
+        <label for="nav-toggle" class="nav-toggle-label"><i class="fa-solid fa-bars"></i></label>
+        <nav>
+            <ul id="menu">
+                <li><a onclick="">Play!</a></li>
+                <li><a onclick="rules()">Rules</a></li>
+                <li><a onclick="">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
+    <!-- Game -->
     <div class="game"></div>
 
     <script src="assets/js/cards.js"></script>
     <script src="assets/js/script.js"></script>
+    <!-- Font Awesome kit -->
+    <script src="https://kit.fontawesome.com/2ec0144cbf.js" crossorigin="anonymous"></script>
 </body>
 </html>
