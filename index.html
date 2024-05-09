@@ -15,14 +15,19 @@
         <nav>
             <ul id="menu">
                 <li><a onclick="">Play!</a></li>
-                <li><a onclick="rules()">Rules</a></li>
+                <li><a onclick="rules();">Rules</a></li>
                 <li><a onclick="">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Game -->
-    <div class="game"></div>
+    <div class="game" id="main">
+        <div id="hero" class="hero">
+            <button id="play" class="welcome-button">Play!</button>
+            <button id="rules" class="welcome-button">Rules</button>
+        </div>
+    </div>
 
     <script src="assets/js/cards.js"></script>
     <script src="assets/js/script.js"></script>

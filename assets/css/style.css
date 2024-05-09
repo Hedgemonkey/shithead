@@ -75,3 +75,15 @@ nav a:hover {
 .heading {
     margin-top: 0;
 }
+
+#hero {
+    background-image: url(../images/shithead_logo.png);
+    background-size: cover;
+    background-position: center;
+    height: 600px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    border: #333;
+    border-style: groove;
+}

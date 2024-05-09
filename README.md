@@ -6,10 +6,11 @@ Users are able to play against a computer opponent.
 
 ## The game will use the following rules:
 
-- Must play a higher card than last played unless it's a special card
+- The deck will be shuffled and each player gets delt 1 card each until the both have 3 cards face down, 3 cards face up, and 3 to their hand.
+- Player must play a higher card than last played unless it's a special card
 - If you can't play a higher card then you must pick up the deck
 - You must have a minimum of 3 cards in your hand until the deck is empty
-- Once your hand is empty then you can play one of the 6 table cards you have (3 face down, 3 face up)
+- Once your hand is empty then you can play one of the 6 table cards you have (3 face down, 3 face up) using the face up cards first
 - Before you start game you can swap your face up cards for cards you have in your hand if you wish
 - If you have more than one card of the same value you may play them at the same time.
 - If 4 cards of the same value are played in a row then the current pack gets burned and taken out of play.
