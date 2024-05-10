@@ -119,3 +119,15 @@ nav a:hover {
     top: 60%;
     right: 10px;
 }
+
+/* Styling for rules */
+#rules {
+    background-color: rgba(0, 3, 197, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 20px;
+    max-height: 50%;
+    overflow: scroll;
+}
