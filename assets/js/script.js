@@ -41,3 +41,55 @@ function rules() {
         document.getElementById('rules-button').innerHTML = "Close Rules";
     }
 };
+/** 
+ * play() function initialises the game and sets up the deck, players, and game state.
+ */
+function play() {
+    // Set up HTML for gameplay
+    // Remove Play and rules Buttons
+    let containerDiv = document.getElementById('hero');
+    for (let i = 0; containerDiv.children.length > 0; i++) {
+        containerDiv.removeChild(containerDiv.children[0]);
+    }
+    // Add the opponents hand div
+    let opponentsHandDiv = document.createElement('div');
+    opponentsHandDiv.setAttribute('id', 'opponents-hand');
+    opponentsHandDiv.setAttribute('class', 'opponents-hand');
+    containerDiv.appendChild(opponentsHandDiv);
+    // Add the opponents table cards div
+    let opponentsTableDiv = document.createElement('div');
+    opponentsTableDiv.setAttribute('id', 'opponents-table');
+    opponentsTableDiv.setAttribute('class', 'opponents-table');
+    containerDiv.appendChild(opponentsTableDiv);
+    // Add the deck div
+    let deckDiv = document.createElement('div');
+    deckDiv.setAttribute('id', 'deck');
+    deckDiv.setAttribute('class', 'deck');
+    containerDiv.appendChild(deckDiv);
+    // Add the score div
+    let scoreDiv = document.createElement('div');
+    scoreDiv.setAttribute('id', 'score');
+    scoreDiv.setAttribute('class', 'score');
+    containerDiv.appendChild(scoreDiv);
+    // Add the inPlay div
+    let inPlayDiv = document.createElement('div');
+    inPlayDiv.setAttribute('id', 'in-play');
+    inPlayDiv.setAttribute('class', 'in-play');
+    containerDiv.appendChild(inPlayDiv);
+    // Add the player table cards div
+    let playerTableDiv = document.createElement('div');
+    playerTableDiv.setAttribute('id', 'player-table');
+    playerTableDiv.setAttribute('class', 'player-table');
+    containerDiv.appendChild(playerTableDiv);
+    // Add the player hand div
+    let playerHandDiv = document.createElement('div');
+    playerHandDiv.setAttribute('id', 'player-hand');
+    playerHandDiv.setAttribute('class', 'player-hand');
+    containerDiv.appendChild(playerHandDiv);
+
+    // set up deck
+    let deck = new Deck();
+    console.log(deck);
+    deck.shuffle();
+    console.log(deck);
+};
