@@ -21,3 +21,6 @@ Users are able to play against a computer opponent.
 - 7 - Can be played on any card, next player skips a go.
 - 8 - Can be played on any card, is invisible (Next player must play game from previous card)
 - 10 - Can be played on any card, burns the pack and allows player to play another card.
+
+### Credits:
+Play card images - https://tekeye.uk/playing_cards/svg-playing-cards

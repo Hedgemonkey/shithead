@@ -1,17 +1,21 @@
+/**
+ * rules() function checks if div ID "rules" exists and removes that element if it does
+ * otherwise it creates a div element with the rules of the game and appends it to the hero div
+ */
 function rules() {
     // check if rules div exists
     if (document.getElementById('rules')) {
         // if it does then remove it
         document.getElementById('rules').remove();
-        return;
+        document.getElementById('rules-button').innerHTML = "Rules";
     } else {
-    // set containerDiv to the div to contain new HTML
-    let containerDiv = document.getElementById('hero');
-    // create new div element to contain rules
-    let rulesHTML = document.createElement('div');
-    rulesHTML.setAttribute('id', 'rules');
-    rulesHTML.setAttribute('class', 'rules');
-    rulesHTML.innerHTML = `
+        // set containerDiv to the div to contain new HTML
+        let containerDiv = document.getElementById('hero');
+        // create new div element to contain rules
+        let rulesHTML = document.createElement('div');
+        rulesHTML.setAttribute('id', 'rules');
+        rulesHTML.setAttribute('class', 'rules');
+        rulesHTML.innerHTML = `
         <h2>Sh*tHead rules:</h2>
         <ul>
         <li>The deck will be shuffled and each player gets delt 1 card each until the both have 3 cards face down, 3 cards face up, and 3 to their hand.</li>
@@ -32,7 +36,8 @@ function rules() {
         <li>8 - Can be played on any card, is invisible (Next player must play game from previous card)</li>
         <li>10 - Can be played on any card, burns the pack and allows player to play another card.</li>
         </ul>`;
-    // prepend rulesHTML to containerDiv
-    containerDiv.prepend(rulesHTML);
+        // prepend rulesHTML to containerDiv
+        containerDiv.prepend(rulesHTML);
+        document.getElementById('rules-button').innerHTML = "Close Rules";
     }
 };

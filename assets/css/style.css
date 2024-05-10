@@ -127,7 +127,7 @@ nav a:hover {
     padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
-    margin-top: 20px;
+    margin: 10px 10px;
     max-height: 50%;
     overflow: scroll;
 }
