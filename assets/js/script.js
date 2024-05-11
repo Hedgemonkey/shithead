@@ -56,37 +56,74 @@ function play() {
     opponentsHandDiv.setAttribute('id', 'opponents-hand');
     opponentsHandDiv.setAttribute('class', 'opponents-hand');
     containerDiv.appendChild(opponentsHandDiv);
+    opponentsHandDiv = document.getElementById('opponents-hand'); // Re-assign to the new element
     // Add the opponents table cards div
     let opponentsTableDiv = document.createElement('div');
     opponentsTableDiv.setAttribute('id', 'opponents-table');
     opponentsTableDiv.setAttribute('class', 'opponents-table');
     containerDiv.appendChild(opponentsTableDiv);
-    // Add the deck div
+    opponentsTableDiv = document.getElementById('opponents-table'); // Re-assign to the new element
+    // Add div to hold thecentral gameplay area
+    let gamePlayDiv = document.createElement('div');
+    gamePlayDiv.setAttribute('id', 'game-play');
+    gamePlayDiv.setAttribute('class', 'game-play');
+    // Add the deck div to gameplay div
     let deckDiv = document.createElement('div');
     deckDiv.setAttribute('id', 'deck');
     deckDiv.setAttribute('class', 'deck');
-    containerDiv.appendChild(deckDiv);
-    // Add the score div
+    gamePlayDiv.appendChild(deckDiv);
+    // Add the score div to gameplay div
     let scoreDiv = document.createElement('div');
     scoreDiv.setAttribute('id', 'score');
     scoreDiv.setAttribute('class', 'score');
-    containerDiv.appendChild(scoreDiv);
-    // Add the inPlay div
+    gamePlayDiv.appendChild(scoreDiv);
+    // Add the loss div to gameplay div
+    let lossDiv = document.createElement('div');
+    lossDiv.setAttribute('id', 'loss');
+    lossDiv.setAttribute('class', 'loss');
+    gamePlayDiv.appendChild(lossDiv);
+    // Add the inPlay div to gameplay div
     let inPlayDiv = document.createElement('div');
     inPlayDiv.setAttribute('id', 'in-play');
     inPlayDiv.setAttribute('class', 'in-play');
-    containerDiv.appendChild(inPlayDiv);
+    gamePlayDiv.appendChild(inPlayDiv);
+    // Add gamePlayDiv to containerDiv
+    containerDiv.appendChild(gamePlayDiv);
+    // Re-assign to the new elements
+    deckDiv = document.getElementById('deck');
+    scoreDiv = document.getElementById('score');
+    lossDiv = document.getElementById('loss');
+    inPlayDiv = document.getElementById('in-play');
+    gamePlayDiv = document.getElementById('game-play');
     // Add the player table cards div
     let playerTableDiv = document.createElement('div');
     playerTableDiv.setAttribute('id', 'player-table');
     playerTableDiv.setAttribute('class', 'player-table');
     containerDiv.appendChild(playerTableDiv);
+    playerTableDiv = document.getElementById('player-table'); // Re-assign to the new element
     // Add the player hand div
     let playerHandDiv = document.createElement('div');
     playerHandDiv.setAttribute('id', 'player-hand');
     playerHandDiv.setAttribute('class', 'player-hand');
     containerDiv.appendChild(playerHandDiv);
-
+    playerHandDiv = document.getElementById('player-hand'); // Re-assign to the new element
+    // Add placeholders for 3 table cards for both opponent and player and assign to arrays
+    let opponentsTableCardArray = [];
+    let playerTableCardArray = [];
+    for (let i = 0; i < 3; i++) {
+        let opponentsTableCard = document.createElement('div');
+        opponentsTableCard.setAttribute('id', `opponents-table-card-${i}`);
+        opponentsTableCard.setAttribute('class', 'opponents-table-card');
+        opponentsTableCard.setAttribute('class', 'table-card');
+        opponentsTableDiv.appendChild(opponentsTableCard);
+        opponentsTableCardArray.push(opponentsTableCard);
+        let playerTableCard = document.createElement('div');
+        playerTableCard.setAttribute('id', `player-table-card-${i}`);
+        playerTableCard.setAttribute('class', 'player-table-card');
+        playerTableCard.setAttribute('class', 'table-card');
+        playerTableDiv.appendChild(playerTableCard);
+        playerTableCardArray.push(playerTableCard);
+    }
     // set up deck
     let deck = new Deck();
     console.log(deck);
