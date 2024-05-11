@@ -15,10 +15,11 @@ let opponentsTableCardArray = [];
 let playerTableCardArray = [];
 let shuffleButton;
 let dealButton;
+let cardBack = 'astronaut.svg';
 
 
 /**
- * rules() function checks if div ID "rules" exists and removes that element if it does
+ * rules() function checks if div ID "rules" exists and removes that element if it does,
  * otherwise it creates a div element with the rules of the game and appends it to the hero div
  */
 function rules() {
@@ -160,20 +161,51 @@ function play() {
     dealButton.style.opacity = "0.5"; // Set the deal button to be transparent
     dealButton.style.backgroundColor = "grey"; // Set the deal button to be grey
 
-    // set up deck
-    deck = new Deck();
-
 };
+
 /**
  * shuffle() function shuffles the deck of cards, and enables the deal button
  */
 function shuffle() {
+    // Create a new deck
+    deck = new Deck();
     // Shuffle the deck
     deck.shuffle();
     // Enable the deal button
-    let dealButton = document.getElementById('deal-button');
+    dealButton = document.getElementById('deal-button');
     dealButton.disabled = false;
     dealButton.style.opacity = "1";
     dealButton.style.backgroundColor = "green";
-    console.log(deck);
+    shuffleButton.innerHTML = "Start Again"; // Change the shuffle button to start again
+};
+
+/**
+ * deal() function deals the cards to the players and sets up the game
+ */
+function deal() {
+    let dealCount = 0;
+    function delayDeal(dealCountDelayed, currentCardDelayed) {
+        console.log(dealCountDelayed);
+        console.log(currentCardDelayed);
+            if (dealCountDelayed < 3) {
+                opponentsTableCardArray[dealCountDelayed].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
+                opponentsTableCardArray[dealCountDelayed].style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;   
+                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table');
+            } else if (dealCountDelayed < 6) {
+                playerTableCardArray[dealCountDelayed - 3].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
+                playerTableCardArray[dealCountDelayed - 3].style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
+                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table');
+            } else {
+                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to next card');
+            }
+        }
+    while (dealCount < 52) {
+        let currentCard = deck.deal();
+        let i = dealCount;
+        setTimeout(function(){ delayDeal(i, currentCard); }, 500 * (dealCount + 1));
+        dealCount++;
+    }
+    dealButton.disabled = true; // Disable the deal button until the deck is shuffled again
+    dealButton.style.opacity = "0.5"; // Set the deal button to be transparent
+    dealButton.style.backgroundColor = "grey"; // Set the deal button to be grey
 };
