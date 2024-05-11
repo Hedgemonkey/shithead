@@ -1,4 +1,23 @@
 /**
+ * Variables required cross multiple functions
+ */
+let deck;
+let opponentsHandDiv;
+let playerHandDiv;
+let opponentsTableDiv;
+let playerTableDiv;
+let gamePlayDiv;
+let deckDiv;
+let inPlayDiv;
+let scoreDiv;
+let lossDiv;
+let opponentsTableCardArray = [];
+let playerTableCardArray = [];
+let shuffleButton;
+let dealButton;
+
+
+/**
  * rules() function checks if div ID "rules" exists and removes that element if it does
  * otherwise it creates a div element with the rules of the game and appends it to the hero div
  */
@@ -52,38 +71,38 @@ function play() {
         containerDiv.removeChild(containerDiv.children[0]);
     }
     // Add the opponents hand div
-    let opponentsHandDiv = document.createElement('div');
+    opponentsHandDiv = document.createElement('div');
     opponentsHandDiv.setAttribute('id', 'opponents-hand');
     opponentsHandDiv.setAttribute('class', 'opponents-hand');
     containerDiv.appendChild(opponentsHandDiv);
     opponentsHandDiv = document.getElementById('opponents-hand'); // Re-assign to the new element
     // Add the opponents table cards div
-    let opponentsTableDiv = document.createElement('div');
+    opponentsTableDiv = document.createElement('div');
     opponentsTableDiv.setAttribute('id', 'opponents-table');
     opponentsTableDiv.setAttribute('class', 'opponents-table');
     containerDiv.appendChild(opponentsTableDiv);
     opponentsTableDiv = document.getElementById('opponents-table'); // Re-assign to the new element
     // Add div to hold thecentral gameplay area
-    let gamePlayDiv = document.createElement('div');
+    gamePlayDiv = document.createElement('div');
     gamePlayDiv.setAttribute('id', 'game-play');
     gamePlayDiv.setAttribute('class', 'game-play');
     // Add the deck div to gameplay div
-    let deckDiv = document.createElement('div');
+    deckDiv = document.createElement('div');
     deckDiv.setAttribute('id', 'deck');
     deckDiv.setAttribute('class', 'deck');
     gamePlayDiv.appendChild(deckDiv);
     // Add the score div to gameplay div
-    let scoreDiv = document.createElement('div');
+    scoreDiv = document.createElement('div');
     scoreDiv.setAttribute('id', 'score');
     scoreDiv.setAttribute('class', 'score');
     gamePlayDiv.appendChild(scoreDiv);
     // Add the loss div to gameplay div
-    let lossDiv = document.createElement('div');
+    lossDiv = document.createElement('div');
     lossDiv.setAttribute('id', 'loss');
     lossDiv.setAttribute('class', 'loss');
     gamePlayDiv.appendChild(lossDiv);
     // Add the inPlay div to gameplay div
-    let inPlayDiv = document.createElement('div');
+    inPlayDiv = document.createElement('div');
     inPlayDiv.setAttribute('id', 'in-play');
     inPlayDiv.setAttribute('class', 'in-play');
     gamePlayDiv.appendChild(inPlayDiv);
@@ -96,20 +115,18 @@ function play() {
     inPlayDiv = document.getElementById('in-play');
     gamePlayDiv = document.getElementById('game-play');
     // Add the player table cards div
-    let playerTableDiv = document.createElement('div');
+    playerTableDiv = document.createElement('div');
     playerTableDiv.setAttribute('id', 'player-table');
     playerTableDiv.setAttribute('class', 'player-table');
     containerDiv.appendChild(playerTableDiv);
     playerTableDiv = document.getElementById('player-table'); // Re-assign to the new element
     // Add the player hand div
-    let playerHandDiv = document.createElement('div');
+    playerHandDiv = document.createElement('div');
     playerHandDiv.setAttribute('id', 'player-hand');
     playerHandDiv.setAttribute('class', 'player-hand');
     containerDiv.appendChild(playerHandDiv);
     playerHandDiv = document.getElementById('player-hand'); // Re-assign to the new element
     // Add placeholders for 3 table cards for both opponent and player and assign to arrays
-    let opponentsTableCardArray = [];
-    let playerTableCardArray = [];
     for (let i = 0; i < 3; i++) {
         let opponentsTableCard = document.createElement('div');
         opponentsTableCard.setAttribute('id', `opponents-table-card-${i}`);
@@ -124,9 +141,39 @@ function play() {
         playerTableDiv.appendChild(playerTableCard);
         playerTableCardArray.push(playerTableCard);
     }
+    // Add shuffle and Deal buttons
+    shuffleButton = document.createElement('button');
+    shuffleButton.setAttribute('id', 'shuffle-button');
+    shuffleButton.setAttribute('class', 'shuffle-button');
+    shuffleButton.setAttribute('onclick', 'shuffle()');
+    shuffleButton.innerHTML = "Shuffle";
+    containerDiv.appendChild(shuffleButton);
+    shuffleButton = document.getElementById('shuffle-button'); // Re-assign to the new element
+    dealButton = document.createElement('button');
+    dealButton.setAttribute('id', 'deal-button');
+    dealButton.setAttribute('class', 'deal-button');
+    dealButton.setAttribute('onclick', 'deal()');
+    dealButton.innerHTML = "Deal";
+    containerDiv.appendChild(dealButton);
+    dealButton = document.getElementById('deal-button'); // Re-assign to the new element
+    dealButton.disabled = true; // Disable the deal button until the deck is shuffled
+    dealButton.style.opacity = "0.5"; // Set the deal button to be transparent
+    dealButton.style.backgroundColor = "grey"; // Set the deal button to be grey
+
     // set up deck
-    let deck = new Deck();
-    console.log(deck);
+    deck = new Deck();
+
+};
+/**
+ * shuffle() function shuffles the deck of cards, and enables the deal button
+ */
+function shuffle() {
+    // Shuffle the deck
     deck.shuffle();
+    // Enable the deal button
+    let dealButton = document.getElementById('deal-button');
+    dealButton.disabled = false;
+    dealButton.style.opacity = "1";
+    dealButton.style.backgroundColor = "green";
     console.log(deck);
 };
