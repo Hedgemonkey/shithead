@@ -16,6 +16,13 @@ let playerTableCardArray = [];
 let shuffleButton;
 let dealButton;
 let cardBack = 'astronaut.svg';
+let opponentsTableCardsDown = [];
+let playerTableCardsDown = [];
+let opponentsTableCardsUp = [];
+let playerTableCardsUp = [];
+let opponentsHand = [];
+let playerHand = [];
+let gameDeck = [];
 
 
 /**
@@ -191,12 +198,27 @@ function deal() {
                 opponentsTableCardArray[dealCountDelayed].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
                 opponentsTableCardArray[dealCountDelayed].style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;   
                 console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table');
+                opponentsTableCardsDown.push(currentCardDelayed);
             } else if (dealCountDelayed < 6) {
                 playerTableCardArray[dealCountDelayed - 3].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
                 playerTableCardArray[dealCountDelayed - 3].style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
                 console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table');
+                playerTableCardsDown.push(currentCardDelayed);
+            } else if (dealCountDelayed == 6 || dealCountDelayed == 8 || dealCountDelayed == 10) {
+                opponentsTableCardsUp.push(currentCardDelayed);
+                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
+            } else if (dealCountDelayed == 7 || dealCountDelayed == 9 || dealCountDelayed == 11) {
+                playerTableCardsUp.push(currentCardDelayed);
+                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
+            } else if (dealCountDelayed == 12 || dealCountDelayed == 14 || dealCountDelayed == 16) {
+                opponentsHand.push(currentCardDelayed);
+                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents hand');
+            } else if (dealCountDelayed == 13 || dealCountDelayed == 15 || dealCountDelayed == 17) {
+                playerHand.push(currentCardDelayed);
+                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player hand');
             } else {
-                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to next card');
+                gameDeck.push(currentCardDelayed);
+                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to deck');
             }
         }
     while (dealCount < 52) {
