@@ -249,7 +249,7 @@ nav a:hover {
     text-decoration: none;
     margin-top: 20px;
     position: absolute;
-    bottom: 10%;
+    bottom: 9%;
 }
 #shuffle-button {
     left: 5%;
@@ -257,6 +257,27 @@ nav a:hover {
     height: 5%;
 }
 #deal-button {
+    right: 5%;
+    bottom: 9%;
+    height: 5%;
+}
+/* Play selected card and Swap cards button styling */
+#play-selected-button, #swap-selected-button {
+    background-color: rgba(0, 3, 197, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 20px;
+    position: absolute;
+    bottom: 9%;
+}
+#play-selected-button {
+    left: 35%;
+    bottom: 9%;
+    height: 5%;
+}
+#swap-selected-button {
     right: 5%;
     bottom: 9%;
     height: 5%;

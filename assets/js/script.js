@@ -26,6 +26,8 @@ let gameDeck = [];
 let opponentsHandCount = 0;
 let playerHandCount = 0;
 let tipDiv;
+let playSelectedButton;
+let swapSelectedButton;
 
 
 /**
@@ -209,6 +211,15 @@ function shuffle() {
     populateTableCards();
     deckDiv.innerHTML = '';
     inPlayDiv.innerHTML = '';
+    // Check if deal button exists and add it if it doesn't
+    if (!document.getElementById('deal-button')) {
+        dealButton = document.createElement('button');
+        dealButton.setAttribute('id', 'deal-button');
+        dealButton.setAttribute('class', 'deal-button');
+        dealButton.setAttribute('onclick', 'deal()');
+        dealButton.innerHTML = "Deal";
+        document.getElementById('hero').appendChild(dealButton);
+    }
     // Enable the deal button
     dealButton = document.getElementById('deal-button');
     dealButton.disabled = false;
@@ -279,7 +290,14 @@ function deal() {
             containerDiv.appendChild(playerHandUpdatable);
             playerHand.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player hand');
-        } else if (dealCountDelayed == 51) { // Game Tip Div
+        } else if (dealCountDelayed == 51) { // Last card to deck
+            gameDeck.push(currentCardDelayed);
+            deckDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+            deckDiv.innerHTML = gameDeck.length;
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to deck');
+            /**
+             * Add a game tips to the hero div
+             */
             let containerDiv = document.getElementById('hero');
             tipDiv = document.createElement('div');
             tipDiv.setAttribute('id', 'tip');
@@ -287,6 +305,29 @@ function deal() {
             tipDiv.innerHTML = '<h4>Choose cards you want to swap, Click Play when you are happy with your hand.</h4>';
             containerDiv.appendChild(tipDiv);
             tipDiv = document.getElementById('tip');
+            /**
+             * Play Selected Button
+             */
+            playSelectedButton = document.createElement('button');
+            playSelectedButton.setAttribute('id', 'play-selected-button');
+            playSelectedButton.setAttribute('class', 'play-selected-button');
+            playSelectedButton.setAttribute('onclick', 'playSelected()');
+            playSelectedButton.innerHTML = "Play Selected";
+            containerDiv.appendChild(playSelectedButton);
+            playSelectedButton = document.getElementById('play-selected-button');
+            playSelectedButton.disabled = true; // Disable the play selected button until the player has selected cards
+            playSelectedButton.style.opacity = "0.5"; // Set the play selected button to be transparent
+            playSelectedButton.style.backgroundColor = "grey"; // Set the play selected button to be grey
+            /**
+             * Swap Selected Button
+             */
+            swapSelectedButton = document.createElement('button');
+            swapSelectedButton.setAttribute('id', 'swap-selected-button');
+            swapSelectedButton.setAttribute('class', 'swap-selected-button');
+            swapSelectedButton.setAttribute('onclick', 'swapSelected()');
+            swapSelectedButton.innerHTML = "Accept Cards";
+            containerDiv.appendChild(swapSelectedButton);
+            swapSelectedButton = document.getElementById('swap-selected-button');
         } else {
             gameDeck.push(currentCardDelayed);
             deckDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
@@ -300,7 +341,5 @@ function deal() {
         setTimeout(function () { delayDeal(i, currentCard); }, 200 * (dealCount + 1));
         dealCount++;
     }
-    dealButton.disabled = true; // Disable the deal button until the deck is shuffled again
-    dealButton.style.opacity = "0.5"; // Set the deal button to be transparent
-    dealButton.style.backgroundColor = "grey"; // Set the deal button to be grey
+    dealButton.remove(); // Remove the deal button
 };
