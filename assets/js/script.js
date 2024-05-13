@@ -15,7 +15,7 @@ let opponentsTableCardArray = [];
 let playerTableCardArray = [];
 let shuffleButton;
 let dealButton;
-let cardBack = 'astronaut.svg';
+let cardBack = 'midjourney_design.jpg';
 let opponentsTableCardsDown = [];
 let playerTableCardsDown = [];
 let opponentsTableCardsUp = [];
@@ -101,16 +101,20 @@ function play() {
     deckDiv = document.createElement('div');
     deckDiv.setAttribute('id', 'deck');
     deckDiv.setAttribute('class', 'deck');
+    deckDiv.innerHTML = '52';
+    deckDiv.style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
     gamePlayDiv.appendChild(deckDiv);
     // Add the score div to gameplay div
     scoreDiv = document.createElement('div');
     scoreDiv.setAttribute('id', 'score');
     scoreDiv.setAttribute('class', 'score');
+    scoreDiv.innerHTML = '<h3>Wins:<br> 0</h3>';
     gamePlayDiv.appendChild(scoreDiv);
     // Add the loss div to gameplay div
     lossDiv = document.createElement('div');
     lossDiv.setAttribute('id', 'loss');
     lossDiv.setAttribute('class', 'loss');
+    lossDiv.innerHTML = '<h3>Losses:<br> 0</h3>';
     gamePlayDiv.appendChild(lossDiv);
     // Add the inPlay div to gameplay div
     inPlayDiv = document.createElement('div');
@@ -137,8 +141,6 @@ function play() {
     playerHandDiv.setAttribute('class', 'player-hand');
     containerDiv.appendChild(playerHandDiv);
     playerHandDiv = document.getElementById('player-hand'); // Re-assign to the new element
-    // Add placeholders for 3 table cards for both opponent and player and assign to arrays
-    populateTableCards();
     // Add shuffle and Deal buttons
     shuffleButton = document.createElement('button');
     shuffleButton.setAttribute('id', 'shuffle-button');
@@ -157,7 +159,14 @@ function play() {
     dealButton.disabled = true; // Disable the deal button until the deck is shuffled
     dealButton.style.opacity = "0.5"; // Set the deal button to be transparent
     dealButton.style.backgroundColor = "grey"; // Set the deal button to be grey
-
+    // Clear the table card arrays
+    opponentsTableCardArray = [];
+    playerTableCardArray = [];
+    // Clear the table card divs
+    opponentsTableDiv.innerHTML = '';
+    playerTableDiv.innerHTML = '';
+    // Populate the table cards
+    populateTableCards();
 };
 /**
  * function to populate the table card divs with placeholders for the cards
@@ -212,46 +221,40 @@ function shuffle() {
  */
 function deal() {
     let dealCount = 0;
+    playerHandCount = 0;
+    opponentsHandCount = 0;
     function delayDeal(dealCountDelayed, currentCardDelayed) {
         console.log(dealCountDelayed);
         console.log(currentCardDelayed);
         if (dealCountDelayed < 3) { // First 3 cards to opponents table
-            opponentsTableCardArray[dealCountDelayed].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
             opponentsTableCardArray[dealCountDelayed].style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table');
             opponentsTableCardsDown.push(currentCardDelayed);
         } else if (dealCountDelayed < 6) { // Next 3 cards to player table
-            playerTableCardArray[dealCountDelayed - 3].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
             playerTableCardArray[dealCountDelayed - 3].style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table');
             playerTableCardsDown.push(currentCardDelayed);
         } else if (dealCountDelayed == 6) { // First up card to opponents table
-            opponentsTableCardArray[dealCountDelayed - 6].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
             opponentsTableCardArray[dealCountDelayed - 6].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             opponentsTableCardsUp.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
         } else if (dealCountDelayed == 8) { // Second up card to opponents table
-            opponentsTableCardArray[dealCountDelayed - 7].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
             opponentsTableCardArray[dealCountDelayed - 7].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             opponentsTableCardsUp.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
         } else if (dealCountDelayed == 10) { // Third up card to opponents table
-            opponentsTableCardArray[dealCountDelayed - 8].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
             opponentsTableCardArray[dealCountDelayed - 8].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             opponentsTableCardsUp.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
         } else if (dealCountDelayed == 7) {  // First up card to player table
-            playerTableCardArray[dealCountDelayed - 7].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
             playerTableCardArray[dealCountDelayed - 7].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             playerTableCardsUp.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
         } else if (dealCountDelayed == 9) { // Second up card to player table
-            playerTableCardArray[dealCountDelayed - 8].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
             playerTableCardArray[dealCountDelayed - 8].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             playerTableCardsUp.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
         } else if (dealCountDelayed == 11) { // Third up card to player table
-            playerTableCardArray[dealCountDelayed - 9].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
             playerTableCardArray[dealCountDelayed - 9].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             playerTableCardsUp.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
@@ -261,7 +264,7 @@ function deal() {
             let opponenetsHandUpdatable = document.createElement('div');
             opponenetsHandUpdatable.setAttribute('id', `opponents-hand-card-${opponentsHandCount}`);
             opponenetsHandUpdatable.setAttribute('class', 'opponents-hand-card');
-            opponenetsHandUpdatable.style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
+            opponentsTableCardArray[dealCountDelayed].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
             containerDiv.appendChild(opponenetsHandUpdatable);
             opponentsHand.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents hand');
@@ -277,13 +280,15 @@ function deal() {
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player hand');
         } else {
             gameDeck.push(currentCardDelayed);
+            deckDiv.style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
+            deckDiv.innerHTML = gameDeck.length;
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to deck');
         }
     }
     while (dealCount < 52) {
         let currentCard = deck.deal();
         let i = dealCount;
-        setTimeout(function () { delayDeal(i, currentCard); }, 500 * (dealCount + 1));
+        setTimeout(function () { delayDeal(i, currentCard); }, 200 * (dealCount + 1));
         dealCount++;
     }
     dealButton.disabled = true; // Disable the deal button until the deck is shuffled again
