@@ -25,6 +25,7 @@ let playerHand = [];
 let gameDeck = [];
 let opponentsHandCount = 0;
 let playerHandCount = 0;
+let tipDiv;
 
 
 /**
@@ -278,6 +279,14 @@ function deal() {
             containerDiv.appendChild(playerHandUpdatable);
             playerHand.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player hand');
+        } else if (dealCountDelayed == 51) { // Game Tip Div
+            let containerDiv = document.getElementById('hero');
+            tipDiv = document.createElement('div');
+            tipDiv.setAttribute('id', 'tip');
+            tipDiv.setAttribute('class', 'tip');
+            tipDiv.innerHTML = '<h4>Choose cards you want to swap, Click Play when you are happy with your hand.</h4>';
+            containerDiv.appendChild(tipDiv);
+            tipDiv = document.getElementById('tip');
         } else {
             gameDeck.push(currentCardDelayed);
             deckDiv.style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;

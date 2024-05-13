@@ -81,6 +81,16 @@ nav a:hover {
 .heading {
     margin-top: 0;
 }
+/* Main */
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 
 /* Hero welcome image */
 #hero {
@@ -89,12 +99,14 @@ nav a:hover {
     background-position: center;
     height: 90%;
     width: 90%;
+    max-width: 600px;
     margin-left: 5%;
     margin-right: 5%;
     border: #333;
     border-style: groove;
     position: absolute;
     bottom: 5%;
+    align-self: center;
 }
 
 /* Welcome button styling */
@@ -241,9 +253,31 @@ nav a:hover {
 }
 #shuffle-button {
     left: 5%;
-    bottom: 5%;
+    bottom: 9%;
+    height: 5%;
 }
 #deal-button {
     right: 5%;
-    bottom: 5%;
+    bottom: 9%;
+    height: 5%;
+}
+
+/* Tips styling */
+#tip {
+    background-color: rgba(0, 3, 197, 0.8);
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    position: absolute;
+    align-self: center;
+    margin-left: 10%;
+    margin-right: 10%;
+    max-height: 10%;
+    height: fit-content;
+    bottom: 1%;
+}
+#tip h4 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
