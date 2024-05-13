@@ -148,17 +148,21 @@ function play() {
     shuffleButton = document.createElement('button');
     shuffleButton.setAttribute('id', 'shuffle-button');
     shuffleButton.setAttribute('class', 'shuffle-button');
-    shuffleButton.setAttribute('onclick', 'shuffle()');
     shuffleButton.innerHTML = "Shuffle";
     containerDiv.appendChild(shuffleButton);
     shuffleButton = document.getElementById('shuffle-button'); // Re-assign to the new element
+    shuffleButton.addEventListener('click', function () {  // Add event listener to the shuffle button
+        shuffle();
+    });
     dealButton = document.createElement('button');
     dealButton.setAttribute('id', 'deal-button');
     dealButton.setAttribute('class', 'deal-button');
-    dealButton.setAttribute('onclick', 'deal()');
     dealButton.innerHTML = "Deal";
     containerDiv.appendChild(dealButton);
     dealButton = document.getElementById('deal-button'); // Re-assign to the new element
+    dealButton.addEventListener('click', function () {  // Add event listener to the deal button
+        deal();
+    });
     dealButton.disabled = true; // Disable the deal button until the deck is shuffled
     dealButton.style.opacity = "0.5"; // Set the deal button to be transparent
     dealButton.style.backgroundColor = "grey"; // Set the deal button to be grey
@@ -216,16 +220,21 @@ function shuffle() {
         dealButton = document.createElement('button');
         dealButton.setAttribute('id', 'deal-button');
         dealButton.setAttribute('class', 'deal-button');
-        dealButton.setAttribute('onclick', 'deal()');
         dealButton.innerHTML = "Deal";
         document.getElementById('hero').appendChild(dealButton);
+        dealButton = document.getElementById('deal-button'); // Re-assign to the new element
+        dealButton.addEventListener('click', function () {  // Add event listener to the deal button
+        deal();
+        });
     }
     // Enable the deal button
-    dealButton = document.getElementById('deal-button');
     dealButton.disabled = false;
     dealButton.style.opacity = "1";
     dealButton.style.backgroundColor = "green";
     shuffleButton.innerHTML = "Start Again"; // Change the shuffle button to start again
+    shuffleButton.addEventListener('click', function () {  // Add event listener to the shuffle button
+        play();
+    });
 };
 
 /**
@@ -311,7 +320,6 @@ function deal() {
             playSelectedButton = document.createElement('button');
             playSelectedButton.setAttribute('id', 'play-selected-button');
             playSelectedButton.setAttribute('class', 'play-selected-button');
-            playSelectedButton.setAttribute('onclick', 'playSelected()');
             playSelectedButton.innerHTML = "Play Selected";
             containerDiv.appendChild(playSelectedButton);
             playSelectedButton = document.getElementById('play-selected-button');
@@ -324,7 +332,6 @@ function deal() {
             swapSelectedButton = document.createElement('button');
             swapSelectedButton.setAttribute('id', 'swap-selected-button');
             swapSelectedButton.setAttribute('class', 'swap-selected-button');
-            swapSelectedButton.setAttribute('onclick', 'swapSelected()');
             swapSelectedButton.innerHTML = "Accept Cards";
             containerDiv.appendChild(swapSelectedButton);
             swapSelectedButton = document.getElementById('swap-selected-button');
@@ -343,3 +350,17 @@ function deal() {
     }
     dealButton.remove(); // Remove the deal button
 };
+
+/**
+ * DOM load event listener to add event listeners to the buttons
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    // Add event listener to the rules button
+    document.getElementById('rules-button').addEventListener('click', function () { // Add event listener to the rules button
+        rules();
+    });
+    // Add event listener to the play button
+    document.getElementById('play-button').addEventListener('click', function () {  // Add event listener to the play button
+        play();
+    });
+});
