@@ -28,6 +28,7 @@ let playerHandCount = 0;
 let tipDiv;
 let playSelectedButton;
 let swapSelectedButton;
+let selectedCards = [];
 
 
 /**
@@ -297,6 +298,30 @@ function deal() {
             playerHandUpdatable.setAttribute('class', 'player-hand-card');
             playerHandUpdatable.style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             containerDiv.appendChild(playerHandUpdatable);
+            // Add event listener to the player hand cards
+            playerHandUpdatable.addEventListener('click', function () {
+                if (playerHandUpdatable.style.border == "3px solid red") { // If the card is already selected then deselect it
+                    playerHandUpdatable.style.border = "none";
+                } else { // If the card is not selected then select it
+                    playerHandUpdatable.style.border = "3px solid red";
+                }
+                selectedCards = document.getElementsByClassName('player-hand-card'); // Get all the player hand cards
+                let selectedCardCount = 0; // Set the selected card count to 0
+                for (let i = 0; i < selectedCards.length; i++) { // Loop through the selected cards
+                    if (selectedCards[i].style.border == "3px solid red") {
+                        selectedCardCount++;
+                    }
+                }
+                if (selectedCardCount > 0) { // If the player has selected cards then enable the play selected button
+                    playSelectedButton.disabled = false;
+                    playSelectedButton.style.opacity = "1";
+                    playSelectedButton.style.backgroundColor = "green";
+                } else { // If the player has not selected cards then disable the play selected button
+                    playSelectedButton.disabled = true;
+                    playSelectedButton.style.opacity = "0.5";
+                    playSelectedButton.style.backgroundColor = "grey";
+                }
+            });
             playerHand.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player hand');
         } else if (dealCountDelayed == 51) { // Last card to deck
