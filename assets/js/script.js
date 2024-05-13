@@ -23,6 +23,8 @@ let playerTableCardsUp = [];
 let opponentsHand = [];
 let playerHand = [];
 let gameDeck = [];
+let opponentsHandCount = 0;
+let playerHandCount = 0;
 
 
 /**
@@ -75,6 +77,7 @@ function play() {
     // Set up HTML for gameplay
     // Remove Play and rules Buttons
     let containerDiv = document.getElementById('hero');
+    // Clear the hero div
     for (let i = 0; containerDiv.children.length > 0; i++) {
         containerDiv.removeChild(containerDiv.children[0]);
     }
@@ -135,20 +138,7 @@ function play() {
     containerDiv.appendChild(playerHandDiv);
     playerHandDiv = document.getElementById('player-hand'); // Re-assign to the new element
     // Add placeholders for 3 table cards for both opponent and player and assign to arrays
-    for (let i = 0; i < 3; i++) {
-        let opponentsTableCard = document.createElement('div');
-        opponentsTableCard.setAttribute('id', `opponents-table-card-${i}`);
-        opponentsTableCard.setAttribute('class', 'opponents-table-card');
-        opponentsTableCard.setAttribute('class', 'table-card');
-        opponentsTableDiv.appendChild(opponentsTableCard);
-        opponentsTableCardArray.push(opponentsTableCard);
-        let playerTableCard = document.createElement('div');
-        playerTableCard.setAttribute('id', `player-table-card-${i}`);
-        playerTableCard.setAttribute('class', 'player-table-card');
-        playerTableCard.setAttribute('class', 'table-card');
-        playerTableDiv.appendChild(playerTableCard);
-        playerTableCardArray.push(playerTableCard);
-    }
+    populateTableCards();
     // Add shuffle and Deal buttons
     shuffleButton = document.createElement('button');
     shuffleButton.setAttribute('id', 'shuffle-button');
@@ -169,7 +159,32 @@ function play() {
     dealButton.style.backgroundColor = "grey"; // Set the deal button to be grey
 
 };
-
+/**
+ * function to populate the table card divs with placeholders for the cards
+ */
+function populateTableCards() {
+    // Clear the table card arrays
+    opponentsTableCardArray = [];
+    playerTableCardArray = [];
+    // Clear the table card divs
+    opponentsTableDiv.innerHTML = '';
+    playerTableDiv.innerHTML = '';
+    for (let i = 0; i < 3; i++) {
+        // Add the table cards to the divs
+        let opponentsTableCard = document.createElement('div');
+        opponentsTableCard.setAttribute('id', `opponents-table-card-${i}`);
+        opponentsTableCard.setAttribute('class', 'opponents-table-card');
+        opponentsTableCard.setAttribute('class', 'table-card');
+        opponentsTableDiv.appendChild(opponentsTableCard);
+        opponentsTableCardArray.push(opponentsTableCard);
+        let playerTableCard = document.createElement('div');
+        playerTableCard.setAttribute('id', `player-table-card-${i}`);
+        playerTableCard.setAttribute('class', 'player-table-card');
+        playerTableCard.setAttribute('class', 'table-card');
+        playerTableDiv.appendChild(playerTableCard);
+        playerTableCardArray.push(playerTableCard);
+    }
+};
 /**
  * shuffle() function shuffles the deck of cards, and enables the deal button
  */
@@ -178,6 +193,12 @@ function shuffle() {
     deck = new Deck();
     // Shuffle the deck
     deck.shuffle();
+    // Clear game state
+    playerHandDiv.innerHTML = '';
+    opponentsHandDiv.innerHTML = '';
+    populateTableCards();
+    deckDiv.innerHTML = '';
+    inPlayDiv.innerHTML = '';
     // Enable the deal button
     dealButton = document.getElementById('deal-button');
     dealButton.disabled = false;
@@ -194,37 +215,75 @@ function deal() {
     function delayDeal(dealCountDelayed, currentCardDelayed) {
         console.log(dealCountDelayed);
         console.log(currentCardDelayed);
-            if (dealCountDelayed < 3) {
-                opponentsTableCardArray[dealCountDelayed].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
-                opponentsTableCardArray[dealCountDelayed].style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;   
-                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table');
-                opponentsTableCardsDown.push(currentCardDelayed);
-            } else if (dealCountDelayed < 6) {
-                playerTableCardArray[dealCountDelayed - 3].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
-                playerTableCardArray[dealCountDelayed - 3].style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
-                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table');
-                playerTableCardsDown.push(currentCardDelayed);
-            } else if (dealCountDelayed == 6 || dealCountDelayed == 8 || dealCountDelayed == 10) {
-                opponentsTableCardsUp.push(currentCardDelayed);
-                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
-            } else if (dealCountDelayed == 7 || dealCountDelayed == 9 || dealCountDelayed == 11) {
-                playerTableCardsUp.push(currentCardDelayed);
-                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
-            } else if (dealCountDelayed == 12 || dealCountDelayed == 14 || dealCountDelayed == 16) {
-                opponentsHand.push(currentCardDelayed);
-                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents hand');
-            } else if (dealCountDelayed == 13 || dealCountDelayed == 15 || dealCountDelayed == 17) {
-                playerHand.push(currentCardDelayed);
-                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player hand');
-            } else {
-                gameDeck.push(currentCardDelayed);
-                console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to deck');
-            }
+        if (dealCountDelayed < 3) { // First 3 cards to opponents table
+            opponentsTableCardArray[dealCountDelayed].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
+            opponentsTableCardArray[dealCountDelayed].style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table');
+            opponentsTableCardsDown.push(currentCardDelayed);
+        } else if (dealCountDelayed < 6) { // Next 3 cards to player table
+            playerTableCardArray[dealCountDelayed - 3].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
+            playerTableCardArray[dealCountDelayed - 3].style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table');
+            playerTableCardsDown.push(currentCardDelayed);
+        } else if (dealCountDelayed == 6) { // First up card to opponents table
+            opponentsTableCardArray[dealCountDelayed - 6].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
+            opponentsTableCardArray[dealCountDelayed - 6].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            opponentsTableCardsUp.push(currentCardDelayed);
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
+        } else if (dealCountDelayed == 8) { // Second up card to opponents table
+            opponentsTableCardArray[dealCountDelayed - 7].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
+            opponentsTableCardArray[dealCountDelayed - 7].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            opponentsTableCardsUp.push(currentCardDelayed);
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
+        } else if (dealCountDelayed == 10) { // Third up card to opponents table
+            opponentsTableCardArray[dealCountDelayed - 8].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
+            opponentsTableCardArray[dealCountDelayed - 8].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            opponentsTableCardsUp.push(currentCardDelayed);
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
+        } else if (dealCountDelayed == 7) {  // First up card to player table
+            playerTableCardArray[dealCountDelayed - 7].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
+            playerTableCardArray[dealCountDelayed - 7].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            playerTableCardsUp.push(currentCardDelayed);
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
+        } else if (dealCountDelayed == 9) { // Second up card to player table
+            playerTableCardArray[dealCountDelayed - 8].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
+            playerTableCardArray[dealCountDelayed - 8].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            playerTableCardsUp.push(currentCardDelayed);
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
+        } else if (dealCountDelayed == 11) { // Third up card to player table
+            playerTableCardArray[dealCountDelayed - 9].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
+            playerTableCardArray[dealCountDelayed - 9].style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            playerTableCardsUp.push(currentCardDelayed);
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
+        } else if (dealCountDelayed == 12 || dealCountDelayed == 14 || dealCountDelayed == 16) { // Alternating cards to opponents hand
+            opponentsHandCount++;
+            let containerDiv = document.getElementById('opponents-hand');
+            let opponenetsHandUpdatable = document.createElement('div');
+            opponenetsHandUpdatable.setAttribute('id', `opponents-hand-card-${opponentsHandCount}`);
+            opponenetsHandUpdatable.setAttribute('class', 'opponents-hand-card');
+            opponenetsHandUpdatable.style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
+            containerDiv.appendChild(opponenetsHandUpdatable);
+            opponentsHand.push(currentCardDelayed);
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents hand');
+        } else if (dealCountDelayed == 13 || dealCountDelayed == 15 || dealCountDelayed == 17) { // Alternating cards to player hand
+            playerHandCount++;
+            let containerDiv = document.getElementById('player-hand');
+            let playerHandUpdatable = document.createElement('div');
+            playerHandUpdatable.setAttribute('id', `player-hand-card-${playerHandCount}`);
+            playerHandUpdatable.setAttribute('class', 'player-hand-card');
+            playerHandUpdatable.style.backgroundImage = `url('../assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            containerDiv.appendChild(playerHandUpdatable);
+            playerHand.push(currentCardDelayed);
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player hand');
+        } else {
+            gameDeck.push(currentCardDelayed);
+            console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to deck');
         }
+    }
     while (dealCount < 52) {
         let currentCard = deck.deal();
         let i = dealCount;
-        setTimeout(function(){ delayDeal(i, currentCard); }, 500 * (dealCount + 1));
+        setTimeout(function () { delayDeal(i, currentCard); }, 500 * (dealCount + 1));
         dealCount++;
     }
     dealButton.disabled = true; // Disable the deal button until the deck is shuffled again
