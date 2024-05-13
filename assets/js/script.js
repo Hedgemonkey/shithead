@@ -264,7 +264,7 @@ function deal() {
             let opponenetsHandUpdatable = document.createElement('div');
             opponenetsHandUpdatable.setAttribute('id', `opponents-hand-card-${opponentsHandCount}`);
             opponenetsHandUpdatable.setAttribute('class', 'opponents-hand-card');
-            opponentsTableCardArray[dealCountDelayed].innerHTML = currentCardDelayed.suit + ' ' + currentCardDelayed.value;
+            opponenetsHandUpdatable.style.backgroundImage = `url('../assets/images/cards/backs/${cardBack}')`;
             containerDiv.appendChild(opponenetsHandUpdatable);
             opponentsHand.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents hand');
