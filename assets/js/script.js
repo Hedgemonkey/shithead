@@ -29,6 +29,9 @@ let tipDiv;
 let playSelectedButton;
 let swapSelectedButton;
 let selectedCards = [];
+let selectedCardsElements = [];
+let selectedCardCount = 0;
+let swapTableCards = false;
 
 
 /**
@@ -51,7 +54,8 @@ function rules() {
         rulesHTML.innerHTML = `
         <h2>Sh*tHead rules:</h2>
         <ul>
-        <li>The deck will be shuffled and each player gets delt 1 card each until the both have 3 cards face down, 3 cards face up, and 3 to their hand.</li>
+        <li>The deck will be shuffled and each player            opponentsTableCardArray[dealCountDelayed].setAttribute('suit', currentCardDelayed.suit);
+        opponentsTableCardArray[dealCountDelayed].setAttribute('value', currentCardDelayed.value); gets delt 1 card each until the both have 3 cards face down, 3 cards face up, and 3 to their hand.</li>
         <li>Player must play a higher card than last played unless it's a special card</li>
         <li>If you can't play a higher card then you must pick up the deck</li>
         <li>You must have a minimum of 3 cards in your hand until the deck is empty</li>
@@ -242,43 +246,70 @@ function shuffle() {
  * deal() function deals the cards to the players and sets up the game
  */
 function deal() {
-    let dealCount = 0;
-    playerHandCount = 0;
-    opponentsHandCount = 0;
+    /**
+     * Create and add game tips to the hero div
+     */
+    let containerDiv = document.getElementById('hero');
+    tipDiv = document.createElement('div');
+    tipDiv.setAttribute('id', 'tip');
+    tipDiv.setAttribute('class', 'tip');
+    tipDiv.innerHTML = '<h4>Dealing cards...</h4>';
+    containerDiv.appendChild(tipDiv);
+    tipDiv = document.getElementById('tip'); // Re-assign to the new element
+    let dealCount = 0; // Set the deal count to 0
+    playerHandCount = 0; // Set the player hand count to 0
+    opponentsHandCount = 0; // Set the opponents hand count to 0
+    /**
+    * Function to delay the dealing of the cards
+    * @param {number} dealCountDelayed - The deal count
+    * @param {object} currentCardDelayed - The current card
+    */
     function delayDeal(dealCountDelayed, currentCardDelayed) {
         console.log(dealCountDelayed);
         console.log(currentCardDelayed);
-        if (dealCountDelayed < 3) { // First 3 cards to opponents table
+        if (dealCountDelayed < 3) { // First 3 cards to opponents table face down
             opponentsTableCardArray[dealCountDelayed].style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table');
             opponentsTableCardsDown.push(currentCardDelayed);
-        } else if (dealCountDelayed < 6) { // Next 3 cards to player table
+        } else if (dealCountDelayed < 6) { // Next 3 cards to player table face down
             playerTableCardArray[dealCountDelayed - 3].style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table');
             playerTableCardsDown.push(currentCardDelayed);
         } else if (dealCountDelayed == 6) { // First up card to opponents table
             opponentsTableCardArray[dealCountDelayed - 6].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             opponentsTableCardsUp.push(currentCardDelayed);
+            opponentsTableCardArray[dealCountDelayed - 6].setAttribute('suit', currentCardDelayed.suit);
+            opponentsTableCardArray[dealCountDelayed - 6].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
         } else if (dealCountDelayed == 8) { // Second up card to opponents table
             opponentsTableCardArray[dealCountDelayed - 7].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             opponentsTableCardsUp.push(currentCardDelayed);
+            opponentsTableCardArray[dealCountDelayed - 7].setAttribute('suit', currentCardDelayed.suit);
+            opponentsTableCardArray[dealCountDelayed - 7].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
         } else if (dealCountDelayed == 10) { // Third up card to opponents table
             opponentsTableCardArray[dealCountDelayed - 8].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             opponentsTableCardsUp.push(currentCardDelayed);
+            opponentsTableCardArray[dealCountDelayed - 8].setAttribute('suit', currentCardDelayed.suit);
+            opponentsTableCardArray[dealCountDelayed - 8].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
         } else if (dealCountDelayed == 7) {  // First up card to player table
             playerTableCardArray[dealCountDelayed - 7].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             playerTableCardsUp.push(currentCardDelayed);
+            playerTableCardArray[dealCountDelayed - 7].setAttribute('suit', currentCardDelayed.suit);
+            playerTableCardArray[dealCountDelayed - 7].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
         } else if (dealCountDelayed == 9) { // Second up card to player table
             playerTableCardArray[dealCountDelayed - 8].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             playerTableCardsUp.push(currentCardDelayed);
+            playerTableCardArray[dealCountDelayed - 8].setAttribute('suit', currentCardDelayed.suit);
+            playerTableCardArray[dealCountDelayed - 8].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
         } else if (dealCountDelayed == 11) { // Third up card to player table
             playerTableCardArray[dealCountDelayed - 9].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
             playerTableCardsUp.push(currentCardDelayed);
+            playerTableCardArray[dealCountDelayed - 9].setAttribute('suit', currentCardDelayed.suit);
+            playerTableCardArray[dealCountDelayed - 9].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
         } else if (dealCountDelayed == 12 || dealCountDelayed == 14 || dealCountDelayed == 16) { // Alternating cards to opponents hand
             opponentsHandCount++;
@@ -286,6 +317,9 @@ function deal() {
             let opponenetsHandUpdatable = document.createElement('div');
             opponenetsHandUpdatable.setAttribute('id', `opponents-hand-card-${opponentsHandCount}`);
             opponenetsHandUpdatable.setAttribute('class', 'opponents-hand-card');
+            opponenetsHandUpdatable.setAttribute('suit', currentCardDelayed.suit);
+            opponenetsHandUpdatable.setAttribute('value', currentCardDelayed.value);
+            opponentsHand.push(currentCardDelayed);
             opponenetsHandUpdatable.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
             containerDiv.appendChild(opponenetsHandUpdatable);
             opponentsHand.push(currentCardDelayed);
@@ -296,19 +330,30 @@ function deal() {
             let playerHandUpdatable = document.createElement('div');
             playerHandUpdatable.setAttribute('id', `player-hand-card-${playerHandCount}`);
             playerHandUpdatable.setAttribute('class', 'player-hand-card');
+            playerHandUpdatable.setAttribute('suit', currentCardDelayed.suit);
+            playerHandUpdatable.setAttribute('value', currentCardDelayed.value);
             playerHandUpdatable.style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            playerHand.push(currentCardDelayed);
             containerDiv.appendChild(playerHandUpdatable);
             // Add event listener to the player hand cards
             playerHandUpdatable.addEventListener('click', function () {
-                if (playerHandUpdatable.style.border == "3px solid red") { // If the card is already selected then deselect it
-                    playerHandUpdatable.style.border = "none";
+                if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
+                    this.style.border = "1px solid black";
+                    let obj = [this.getAttribute('suit'), this.getAttribute('value')]
+                    console.log(obj);
+                    removeSubarray(selectedCards, obj);
+                    if (selectedCards.length == 0) {
+                        swapTableCards = false;
+                    }
                 } else { // If the card is not selected then select it
-                    playerHandUpdatable.style.border = "3px solid red";
+                    this.style.border = "3px solid red";
+                    selectedCards.push([this.getAttribute('suit'), this.getAttribute('value')]);
+                    swapTableCards = true;
                 }
-                selectedCards = document.getElementsByClassName('player-hand-card'); // Get all the player hand cards
-                let selectedCardCount = 0; // Set the selected card count to 0
-                for (let i = 0; i < selectedCards.length; i++) { // Loop through the selected cards
-                    if (selectedCards[i].style.border == "3px solid red") {
+                selectedCardsElements = document.getElementsByClassName('player-hand-card'); // Get all the player hand cards
+                selectedCardCount = 0; // Set the selected card count to 0
+                for (let i = 0; i < selectedCardsElements.length; i++) { // Loop through the selected cards
+                    if (selectedCardsElements[i].style.border == "3px solid red") {
                         selectedCardCount++;
                     }
                 }
@@ -329,16 +374,7 @@ function deal() {
             deckDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
             deckDiv.innerHTML = gameDeck.length;
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to deck');
-            /**
-             * Add a game tips to the hero div
-             */
-            let containerDiv = document.getElementById('hero');
-            tipDiv = document.createElement('div');
-            tipDiv.setAttribute('id', 'tip');
-            tipDiv.setAttribute('class', 'tip');
-            tipDiv.innerHTML = '<h4>Choose cards you want to swap, Click Play when you are happy with your hand.</h4>';
-            containerDiv.appendChild(tipDiv);
-            tipDiv = document.getElementById('tip');
+            tipDiv.innerHTML = '<h4>Choose cards you want to swap, Click Play when you are happy with your hand.</h4>'; // Update the tip
             /**
              * Play Selected Button
              */
@@ -347,7 +383,7 @@ function deal() {
             playSelectedButton.setAttribute('class', 'play-selected-button');
             playSelectedButton.innerHTML = "Play Selected";
             containerDiv.appendChild(playSelectedButton);
-            playSelectedButton = document.getElementById('play-selected-button');
+            playSelectedButton = document.getElementById('play-selected-button'); // Re-assign to the new element
             playSelectedButton.disabled = true; // Disable the play selected button until the player has selected cards
             playSelectedButton.style.opacity = "0.5"; // Set the play selected button to be transparent
             playSelectedButton.style.backgroundColor = "grey"; // Set the play selected button to be grey
@@ -389,3 +425,17 @@ document.addEventListener('DOMContentLoaded', function () {
         play();
     });
 });
+
+/**
+* Function to remove subarray from array 
+*/
+function arraysEqual(a, b) {
+    return a.length === b.length && a.every((val, index) => val === b[index]);
+}
+
+function removeSubarray(mainArray, subArray) {
+    let index = mainArray.findIndex(arr => arraysEqual(arr, subArray));
+    if (index !== -1) {
+        mainArray.splice(index, 1);
+    }
+}
