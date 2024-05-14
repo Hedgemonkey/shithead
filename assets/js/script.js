@@ -463,11 +463,20 @@ document.addEventListener('DOMContentLoaded', function () {
 */
 function arraysEqual(a, b) {
     return a.length === b.length && a.every((val, index) => val === b[index]);
-}
+};
 
 function removeSubarray(mainArray, subArray) {
     let index = mainArray.findIndex(arr => arraysEqual(arr, subArray));
     if (index !== -1) {
         mainArray.splice(index, 1);
     }
+};
+
+/**
+ * Function to remove class object from array
+ */
+function removeClassObject(mainArray, subArray) {
+    let index = mainArray.findIndex(arr => arr.suit === subArray.suit && arr.value === subArray.value);
+    if (index !== -1) {
+        mainArray.splice(index, 1);
 }
