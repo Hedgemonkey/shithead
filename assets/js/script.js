@@ -399,12 +399,13 @@ function deal() {
             for (let i = 0; i < playerTableCardArray.length; i++) {
                 playerTableCardArray[i].addEventListener('click', function () {
                     if (swapTableCards) {
-                        if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
-                            this.style.border = "1px solid black";
-                            let obj = [this.getAttribute('suit'), this.getAttribute('value')]
-                            console.log(obj + ' deselected');
-                            removeSubarray(selectedTableCards, obj);
-                        } else { // If the card is not selected then select it
+                    if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
+                        this.style.border = "1px solid black";
+                        let obj = new Card(this.getAttribute('suit'), this.getAttribute('value'));
+                        console.log(obj + ' deselected');
+                        removeSubarray(selectedTableCards, obj);
+                    } else { // If the card is not selected then select it
+                        if (swapTableCards) {
                             this.style.border = "3px solid red";
                             selectedTableCards.push([this.getAttribute('suit'), this.getAttribute('value')]);
                         }
