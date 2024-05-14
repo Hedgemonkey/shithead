@@ -374,14 +374,14 @@ function deal() {
             deckDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
             deckDiv.innerHTML = gameDeck.length;
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to deck');
-            tipDiv.innerHTML = '<h4>Choose cards you want to swap, Click Play when you are happy with your hand.</h4>'; // Update the tip
+            tipDiv.innerHTML = '<h4>Choose cards you want to swap.</h4>'; // Update the tip
             /**
-             * Play Selected Button
+             * Play/Swap Selected Button
              */
             playSelectedButton = document.createElement('button');
             playSelectedButton.setAttribute('id', 'play-selected-button');
             playSelectedButton.setAttribute('class', 'play-selected-button');
-            playSelectedButton.innerHTML = "Play Selected";
+            playSelectedButton.innerHTML = "Swap";
             containerDiv.appendChild(playSelectedButton);
             playSelectedButton = document.getElementById('play-selected-button'); // Re-assign to the new element
             playSelectedButton.disabled = true; // Disable the play selected button until the player has selected cards
@@ -393,7 +393,7 @@ function deal() {
             swapSelectedButton = document.createElement('button');
             swapSelectedButton.setAttribute('id', 'swap-selected-button');
             swapSelectedButton.setAttribute('class', 'swap-selected-button');
-            swapSelectedButton.innerHTML = "Accept Cards";
+            swapSelectedButton.innerHTML = "Accept";
             containerDiv.appendChild(swapSelectedButton);
             swapSelectedButton = document.getElementById('swap-selected-button');
         } else {

@@ -97,7 +97,7 @@ nav a:hover {
     background-image: url(../images/shithead_logo.png);
     background-size: cover;
     background-position: center;
-    height: 90%;
+    height: 93%;
     width: 90%;
     max-width: 600px;
     margin-left: 5%;
@@ -105,7 +105,7 @@ nav a:hover {
     border: #333;
     border-style: groove;
     position: absolute;
-    bottom: 5%;
+    bottom: 1%;
     align-self: center;
 }
 
@@ -183,7 +183,7 @@ nav a:hover {
     justify-content: center;
     align-items: center;
     text-align: center;
-    width: 15%;
+    width: 20%;
     height: 40%;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -244,42 +244,40 @@ nav a:hover {
 #shuffle-button, #deal-button {
     background-color: rgba(0, 3, 197, 0.8);
     color: white;
-    padding: 10px 20px;
+    padding: 5px 5px;
     border-radius: 5px;
     text-decoration: none;
-    margin-top: 20px;
     position: absolute;
-    bottom: 9%;
+    bottom: 7%;
 }
 #shuffle-button {
-    left: 5%;
-    bottom: 9%;
+    left: 3%;
+    bottom: 7%;
     height: 5%;
 }
 #deal-button {
-    right: 5%;
-    bottom: 9%;
+    right: 3%;
+    bottom: 7%;
     height: 5%;
 }
 /* Play selected card and Swap cards button styling */
 #play-selected-button, #swap-selected-button {
     background-color: rgba(0, 3, 197, 0.8);
     color: white;
-    padding: 10px 20px;
+    padding: 5px 5px;
     border-radius: 5px;
     text-decoration: none;
-    margin-top: 20px;
     position: absolute;
-    bottom: 9%;
+    bottom: 7%;
 }
 #play-selected-button {
-    left: 35%;
-    bottom: 9%;
+    left: 45%;
+    bottom: 7%;
     height: 5%;
 }
 #swap-selected-button {
-    right: 5%;
-    bottom: 9%;
+    right: 3%;
+    bottom: 7%;
     height: 5%;
 }
 
