@@ -315,7 +315,6 @@ function deal() {
             playerTableCardArray[dealCountDelayed - 9].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
         } else if (dealCountDelayed == 12 || dealCountDelayed == 14 || dealCountDelayed == 16) { // Alternating cards to opponents hand
-            opponentsHandCount++;
             let containerDiv = document.getElementById('opponents-hand');
             let opponenetsHandUpdatable = document.createElement('div');
             opponenetsHandUpdatable.setAttribute('id', `opponents-hand-card-${opponentsHandCount}`);
@@ -324,11 +323,10 @@ function deal() {
             opponenetsHandUpdatable.setAttribute('value', currentCardDelayed.value);
             opponentsHand.push(currentCardDelayed);
             opponenetsHandUpdatable.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+            opponentsHandCount++;
             containerDiv.appendChild(opponenetsHandUpdatable);
-            opponentsHand.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents hand');
         } else if (dealCountDelayed == 13 || dealCountDelayed == 15 || dealCountDelayed == 17) { // Alternating cards to player hand
-            playerHandCount++;
             let containerDiv = document.getElementById('player-hand');
             let playerHandUpdatable = document.createElement('div');
             playerHandUpdatable.setAttribute('id', `player-hand-card-${playerHandCount}`);
@@ -336,7 +334,7 @@ function deal() {
             playerHandUpdatable.setAttribute('suit', currentCardDelayed.suit);
             playerHandUpdatable.setAttribute('value', currentCardDelayed.value);
             playerHandUpdatable.style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
-            playerHand.push(currentCardDelayed);
+            playerHandCount++;
             containerDiv.appendChild(playerHandUpdatable);
             // Add event listener to the player hand cards
             playerHandUpdatable.addEventListener('click', function () {
