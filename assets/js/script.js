@@ -197,14 +197,12 @@ function populateTableCards() {
         // Add the table cards to the divs
         let opponentsTableCard = document.createElement('div');
         opponentsTableCard.setAttribute('id', `opponents-table-card-${i}`);
-        opponentsTableCard.setAttribute('class', 'opponents-table-card');
-        opponentsTableCard.setAttribute('class', 'table-card');
+        opponentsTableCard.setAttribute('class', 'opponents-table-card table-card');
         opponentsTableDiv.appendChild(opponentsTableCard);
         opponentsTableCardArray.push(opponentsTableCard);
         let playerTableCard = document.createElement('div');
         playerTableCard.setAttribute('id', `player-table-card-${i}`);
-        playerTableCard.setAttribute('class', 'player-table-card');
-        playerTableCard.setAttribute('class', 'table-card');
+        playerTableCard.setAttribute('class', 'player-table-card table-card');
         playerTableDiv.appendChild(playerTableCard);
         playerTableCardArray.push(playerTableCard);
     }
@@ -398,7 +396,6 @@ function deal() {
              */
             for (let i = 0; i < playerTableCardArray.length; i++) {
                 playerTableCardArray[i].addEventListener('click', function () {
-                    if (swapTableCards) {
                     if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
                         this.style.border = "1px solid black";
                         let obj = new Card(this.getAttribute('suit'), this.getAttribute('value'));
