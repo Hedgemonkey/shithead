@@ -32,6 +32,9 @@ let selectedCards = [];
 let selectedCardsElements = [];
 let selectedCardCount = 0;
 let swapTableCards = false;
+let selectedTableCards = [];
+let selectedTableCardsElements = [];
+let selectedTableCardCount = 0;
 
 
 /**
@@ -229,7 +232,7 @@ function shuffle() {
         document.getElementById('hero').appendChild(dealButton);
         dealButton = document.getElementById('deal-button'); // Re-assign to the new element
         dealButton.addEventListener('click', function () {  // Add event listener to the deal button
-        deal();
+            deal();
         });
     }
     // Enable the deal button
@@ -340,7 +343,7 @@ function deal() {
                 if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
                     this.style.border = "1px solid black";
                     let obj = [this.getAttribute('suit'), this.getAttribute('value')]
-                    console.log(obj);
+                    console.log(obj + ' deselected');
                     removeSubarray(selectedCards, obj);
                     if (selectedCards.length == 0) {
                         swapTableCards = false;
@@ -357,11 +360,7 @@ function deal() {
                         selectedCardCount++;
                     }
                 }
-                if (selectedCardCount > 0) { // If the player has selected cards then enable the play selected button
-                    playSelectedButton.disabled = false;
-                    playSelectedButton.style.opacity = "1";
-                    playSelectedButton.style.backgroundColor = "green";
-                } else { // If the player has not selected cards then disable the play selected button
+                if (selectedCardCount == 0) { // If the player has not selected cards then disable the play selected button
                     playSelectedButton.disabled = true;
                     playSelectedButton.style.opacity = "0.5";
                     playSelectedButton.style.backgroundColor = "grey";
@@ -396,6 +395,40 @@ function deal() {
             swapSelectedButton.innerHTML = "Accept";
             containerDiv.appendChild(swapSelectedButton);
             swapSelectedButton = document.getElementById('swap-selected-button');
+            /**
+             * Event listener for the player table cards
+             */
+            for (let i = 0; i < playerTableCardArray.length; i++) {
+                playerTableCardArray[i].addEventListener('click', function () {
+                    if (swapTableCards) {
+                        if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
+                            this.style.border = "1px solid black";
+                            let obj = [this.getAttribute('suit'), this.getAttribute('value')]
+                            console.log(obj + ' deselected');
+                            removeSubarray(selectedTableCards, obj);
+                        } else { // If the card is not selected then select it
+                            this.style.border = "3px solid red";
+                            selectedTableCards.push([this.getAttribute('suit'), this.getAttribute('value')]);
+                        }
+                        selectedTableCardsElements = document.getElementsByClassName('player-table-card'); // Get all the player table cards
+                        selectedTableCardCount = 0; // Set the selected card count to 0
+                        for (let i = 0; i < selectedTableCardsElements.length; i++) { // Loop through the selected cards
+                            if (selectedTableCardsElements[i].style.border == "3px solid red") {
+                                selectedTableCardCount++;
+                            }
+                        }
+                        if (selectedTableCardCount > 0) { // If the player has selected cards then enable the play selected button
+                            playSelectedButton.disabled = false;
+                            playSelectedButton.style.opacity = "1";
+                            playSelectedButton.style.backgroundColor = "green";
+                        } else { // If the player has not selected cards then disable the play selected button
+                            playSelectedButton.disabled = true;
+                            playSelectedButton.style.opacity = "0.5";
+                            playSelectedButton.style.backgroundColor = "grey";
+                        }
+                    }
+                });
+            }
         } else {
             gameDeck.push(currentCardDelayed);
             deckDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
