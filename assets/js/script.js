@@ -347,7 +347,7 @@ function deal() {
                 } else { // If the card is not selected then select it
                     this.style.border = "3px solid red";
                     selectedCards.push(obj);
-                    swapTableCards = true;
+                    // swapTableCards = true;
                 }
                 playerCardsElements = document.getElementsByClassName('player-hand-card'); // Get all the player hand cards
                 selectedCardCount = 0; // Set the selected card count to 0
@@ -372,7 +372,7 @@ function deal() {
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player hand');
         } else if (dealCountDelayed == 51) { // Last card to deck
             gameDeck.push(currentCardDelayed);
-            deckDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+            deckDiv.style.backgroundImage = `url('assets/                let removePlayerHandClass = new Card(selectedCardArray[j].getAttribute('suit'), selectedCardArray[j].getAttribute('value'));images/cards/backs/${cardBack}')`;
             deckDiv.innerHTML = gameDeck.length;
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to deck');
             tipDiv.innerHTML = '<h4>Choose cards you want to swap.</h4>'; // Update the tip
@@ -382,6 +382,7 @@ function deal() {
             playSelectedButton = document.createElement('button');
             playSelectedButton.setAttribute('id', 'play-selected-button');
             playSelectedButton.setAttribute('class', 'play-selected-button');
+            playSelectedButton.onclick = function () { swap(); };
             playSelectedButton.innerHTML = "Swap";
             containerDiv.appendChild(playSelectedButton);
             playSelectedButton = document.getElementById('play-selected-button'); // Re-assign to the new element
@@ -395,6 +396,7 @@ function deal() {
             swapSelectedButton.setAttribute('id', 'swap-selected-button');
             swapSelectedButton.setAttribute('class', 'swap-selected-button');
             swapSelectedButton.innerHTML = "Accept";
+            swapSelectedButton.onclick = function () { accept(); };
             containerDiv.appendChild(swapSelectedButton);
             swapSelectedButton = document.getElementById('swap-selected-button');
             /**
@@ -408,10 +410,8 @@ function deal() {
                         console.log(obj + ' deselected');
                         removeSubarray(selectedTableCards, obj);
                     } else { // If the card is not selected then select it
-                        if (swapTableCards) {
-                            this.style.border = "3px solid red";
-                            selectedTableCards.push(obj);
-                        }
+                        this.style.border = "3px solid red";
+                        selectedTableCards.push(obj);
                         selectedTableCardsElements = document.getElementsByClassName('player-table-card'); // Get all the player table cards Elements
                         selectedTableCardCount = 0; // Set the selected card count to 0
                         for (let i = 0; i < selectedTableCardsElements.length; i++) { // Loop through the selected cards
