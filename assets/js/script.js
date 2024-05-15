@@ -559,6 +559,19 @@ function playSelected() {
 };
 
 /**
+ * Function to burn the pack
+ */
+function burnPack() {
+    inPlayDiv.innerHTML = '';
+    inPlayDiv.style.backgroundImage = ``;
+    inPlayDiv.setAttribute('suit', '');
+    inPlayDiv.setAttribute('value', '');
+    inPlayCard = [];
+    inPlayDeck = [];
+    tipDiv.innerHTML = 'The pack has been burned';
+};
+
+/**
  * Function to convert the card value to a number
  */
 function cardValueToNumber(cardValue) {
