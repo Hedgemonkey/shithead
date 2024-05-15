@@ -501,6 +501,94 @@ function swap() {
         
         // Clear the selected card count
         selectedCardCount = 0;
+    } else {
+        alert('Please select the same number of cards from your hand as you have selected from the table');
+    }
+};
+
+/**
+ * Accept cards/Start game function
+ */
+function accept() {
+    // Remove the play selected button
+    playSelectedButton.innerHTML = 'Play Selected cards';
+    // Remove the swap selected button
+    swapSelectedButton.remove();
+    // Remove the tip
+    for (let i = 0; i < opponentsHand.length; i++) {
+        let opIsLower = false;
+        if (checkOpponentCardLower(i)) {
+            console.log('Opponent has a lower card');
+            tipDiv.innerHTML = 'Oppoent had the lowest card...';
+            opIsLower = true;
+            // opponentPlayCard(opponentsHand[opponentsLowerCardIndex]);
+        } else {
+            if (!opIsLower) {
+                tipDiv.innerHTML = 'Opponent has no lower card, select lowest card to play';
+            }
+        }
+    }
+    // Disable listeners on the player table cards
+    for (let i = 0; i < playerTableCardArray.length; i++) {
+        playerTableCardArray[i].removeEventListener('click', function () { });
+    }
+};
+/**
+ * Function to play the selected cards
+ */
+function playSelected() {
+    // Check that the selected cards are higher than the last card played
+    for (let i = 0; i < selectedCards.length; i++) {
+        if ((cardValueToNumber(selectedCards[i].value) < inPlayDiv.getAttribute('value')) || (inPlayCard[0].value = '5')) {
+            tipDiv.innerHTML = 'You must play a higher card than the last card played';
+            if (inPlayCard[0].value == '7') {
+                inPlayDiv.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
+                inPlayDiv.setAttribute('suit', selectedCards[i].suit);
+                inPlayDiv.setAttribute('value', selectedCards[i].value);
+                inPlayCard.unshift(selectedCards[i]);
+                inPlayCard.pop();
+                tipDiv.innerHTML = `You played a ${selectedCards[i].value} on a 5`;
+            }
+        }
+    }
+    // If they are then play the cards
+    // If they are not then alert the player that the cards are not higher
+    // If the player has no higher cards then they must pick up the deck
+    // If the player has no cards in their hand then they can play a card from the table
+    // If the player has no cards in their hand or on the table then they have won the game
+};
+
+/**
+ * Function to convert the card value to a number
+ */
+function cardValueToNumber(cardValue) {
+    switch (cardValue) {
+        case 'Ace':
+            return 1;
+        case '2':
+            return 2;
+        case '3':
+            return 3;
+        case '4':
+            return 4;
+        case '5':
+            return 5;
+        case '6':
+            return 6;
+        case '7':
+            return 7;
+        case '8':
+            return 8;
+        case '9':
+            return 9;
+        case '10':
+            return 10;
+        case 'Jack':
+            return 11;
+        case 'Queen':
+            return 12;
+        case 'King':
+            return 13;
     }
 };
 
