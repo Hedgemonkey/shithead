@@ -546,9 +546,35 @@ function playSelected() {
                 inPlayDiv.setAttribute('suit', selectedCards[i].suit);
                 inPlayDiv.setAttribute('value', selectedCards[i].value);
                 inPlayCard.unshift(selectedCards[i]);
-                inPlayCard.pop();
+                inPlayDeck.push(inPlayCard.pop());
                 tipDiv.innerHTML = `You played a ${selectedCards[i].value} on a 5`;
             }
+        } else if (selectedCards[i].value == '2' || selectedCards[i].value == '7' || selectedCards[i].value == '8' || selectedCards[i].value == '10') {
+            inPlayDiv.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
+            inPlayDiv.setAttribute('suit', selectedCards[i].suit);
+            inPlayDiv.setAttribute('value', selectedCards[i].value);
+            inPlayCard.unshift(selectedCards[i]);
+            inPlayDeck.push(inPlayCard.pop());
+            tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
+            if (selectedCards[i].value == '10') {
+                burnPack();
+                tipDiv.innerHTML = `You played a ${selectedCards[i].value} and burned the pack`;
+            }
+            if (selectedCards[i].value == '7') {
+                //skipGo();
+                tipDiv.innerHTML = `You played a ${selectedCards[i].value} and skipped the next go`;
+            }
+            if (selectedCards[i].value == '8') {
+                //invisibleCard();
+                tipDiv.innerHTML = `You played a ${selectedCards[i].value} and made the next card invisible`;
+            }
+        } else {
+            inPlayDiv.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
+            inPlayDiv.setAttribute('suit', selectedCards[i].suit);
+            inPlayDiv.setAttribute('value', selectedCards[i].value);
+            inPlayCard.unshift(selectedCards[i]);
+            inPlayDeck.push(inPlayCard.pop());
+            tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
         }
     }
     // If they are then play the cards
