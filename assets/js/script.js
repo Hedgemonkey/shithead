@@ -35,6 +35,9 @@ let swapTableCards = false;
 let selectedTableCards = [];
 let selectedTableCardsElements = [];
 let selectedTableCardCount = 0;
+let opponentsLowerCardIndex;
+let inPlayCard = [];
+let inPlayDeck = [];
 
 
 /**
@@ -498,11 +501,11 @@ function swap() {
         // Clear the selected cards
         selectedCards = [];
         selectedTableCards = [];
-        
+
         // Clear the selected card count
         selectedCardCount = 0;
     } else {
-        alert('Please select the same number of cards from your hand as you have selected from the table');
+        tipDiv.innerHTML = 'Please select the same number of cards from your hand as you have selected from the table';
     }
 };
 
@@ -519,9 +522,10 @@ function accept() {
         let opIsLower = false;
         if (checkOpponentCardLower(i)) {
             console.log('Opponent has a lower card');
-            tipDiv.innerHTML = 'Oppoent had the lowest card...';
+            tipDiv.innerHTML = 'Oppoent has the lowest card...';
             opIsLower = true;
-            // opponentPlayCard(opponentsHand[opponentsLowerCardIndex]);
+            opponentTurn = true;
+            playCard(opponentsHand[opponentsLowerCardIndex]);
         } else {
             if (!opIsLower) {
                 tipDiv.innerHTML = 'Opponent has no lower card, select lowest card to play';
