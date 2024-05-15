@@ -29,7 +29,7 @@ let tipDiv;
 let playSelectedButton;
 let swapSelectedButton;
 let selectedCards = [];
-let selectedCardsElements = [];
+let playerCardsElements = [];
 let selectedCardCount = 0;
 let swapTableCards = false;
 let selectedTableCards = [];
@@ -349,10 +349,10 @@ function deal() {
                     selectedCards.push(obj);
                     swapTableCards = true;
                 }
-                selectedCardsElements = document.getElementsByClassName('player-hand-card'); // Get all the player hand cards
+                playerCardsElements = document.getElementsByClassName('player-hand-card'); // Get all the player hand cards
                 selectedCardCount = 0; // Set the selected card count to 0
-                for (let i = 0; i < selectedCardsElements.length; i++) { // Loop through the selected cards
-                    if (selectedCardsElements[i].style.border == "3px solid red") {
+                for (let i = 0; i < playerCardsElements.length; i++) { // Loop through the selected cards
+                    if (playerCardsElements[i].style.border == "3px solid red") {
                         selectedCardCount++;
                     }
                 }
@@ -360,6 +360,12 @@ function deal() {
                     playSelectedButton.disabled = true;
                     playSelectedButton.style.opacity = "0.5";
                     playSelectedButton.style.backgroundColor = "grey";
+                    // Reset the selected table cards
+                    selectedTableCards = [];
+                    selectedTableCardCount = 0;
+                    for (let i = 0; i < selectedTableCardsElements.length; i++) { // Loop through the selected cards
+                        selectedTableCardsElements[i].style.border == "1px solid black";
+                    }
                 }
             });
             playerHand.push(currentCardDelayed);
@@ -439,6 +445,63 @@ function deal() {
         dealCount++;
     }
     dealButton.remove(); // Remove the deal button
+};
+
+/**
+ * Swap cards function
+ */
+function swap() {
+    // Check that same number of cards selected from hand and table
+    if (selectedCards.length == selectedTableCards.length) {
+        let selectedCardArray = [];
+        let selectedTableCardArray = [];
+        // 
+        for (let i = 0; i < selectedCards.length; i++) {
+            let selectedCard = selectedCards[i];
+            // Get the selected card from the hand and assign it's element to a variable
+            for (let j = 0; j < playerCardsElements.length; j++) {
+                if (playerCardsElements[j].getAttribute('suit') == selectedCard.suit && playerCardsElements[j].getAttribute('value') == selectedCard.value) {
+                    selectedCardArray.push(playerCardsElements[j]);
+                }
+            }
+            // Get the selected card from the table and assign it's element to a variable
+            let selectedTableCard = selectedTableCards[i];
+            for (let j = 0; j < selectedTableCardsElements.length; j++) {
+                if (selectedTableCardsElements[j].getAttribute('suit') == selectedTableCard.suit && selectedTableCardsElements[j].getAttribute('value') == selectedTableCard.value) {
+                    selectedTableCardArray.push(selectedTableCardsElements[j]);
+                }
+            }
+            // Swap the divs
+            for (let j = 0; j < selectedCardArray.length; j++) {
+                let selectedCardImg = `url('assets/images/cards/fronts/${selectedCardArray[j].getAttribute('suit').toLowerCase()}_${selectedCardArray[j].getAttribute('value').toLowerCase()}.svg')`;
+                let selectedCardSuit = selectedCardArray[j].getAttribute('suit');
+                let selectedCardValue = selectedCardArray[j].getAttribute('value');
+                let selectedTableCardImg = `url('assets/images/cards/fronts/${selectedTableCardArray[j].getAttribute('suit').toLowerCase()}_${selectedTableCardArray[j].getAttribute('value').toLowerCase()}.svg')`;
+                let selectedTableCardSuit = selectedTableCardArray[j].getAttribute('suit');
+                let selectedTableCardValue = selectedTableCardArray[j].getAttribute('value');
+                selectedCardArray[j].style.border = "1px solid black";
+                selectedCardArray[j].style.backgroundImage = selectedTableCardImg;
+                selectedCardArray[j].setAttribute('suit', selectedTableCardSuit);
+                selectedCardArray[j].setAttribute('value', selectedTableCardValue);
+                selectedTableCardArray[j].style.border = "1px solid black";
+                selectedTableCardArray[j].style.backgroundImage = selectedCardImg;
+                selectedTableCardArray[j].setAttribute('suit', selectedCardSuit);
+                selectedTableCardArray[j].setAttribute('value', selectedCardValue);
+                // Swap the card values in the player hand and table card arrays
+                removeClassObject(playerHand, new Card(selectedTableCardArray[j].getAttribute('suit'), selectedTableCardArray[j].getAttribute('value')));
+                console.log(selectedCardArray[j].getAttribute('suit') + ' , ' + selectedCardArray[j].getAttribute('value'));
+                playerHand.push(new Card(selectedCardArray[j].getAttribute('suit'), selectedCardArray[j].getAttribute('value')));
+                removeClassObject(playerTableCardsUp, new Card(selectedTableCardArray[j].getAttribute('suit'), selectedTableCardArray[j].getAttribute('value')));
+                playerTableCardsUp.push(new Card(selectedTableCardArray[j].getAttribute('suit'), selectedTableCardArray[j].getAttribute('value')));
+            }
+        }
+        // Clear the selected cards
+        selectedCards = [];
+        selectedTableCards = [];
+        
+        // Clear the selected card count
+        selectedCardCount = 0;
+    }
 };
 
 /**
