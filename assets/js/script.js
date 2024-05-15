@@ -336,17 +336,17 @@ function deal() {
             containerDiv.appendChild(playerHandUpdatable);
             // Add event listener to the player hand cards
             playerHandUpdatable.addEventListener('click', function () {
+                let obj = new Card(this.getAttribute('suit'), this.getAttribute('value')); // Create a new card object
                 if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
                     this.style.border = "1px solid black";
-                    let obj = [this.getAttribute('suit'), this.getAttribute('value')]
                     console.log(obj + ' deselected');
-                    removeSubarray(selectedCards, obj);
+                    removeClassObject(selectedCards, obj);
                     if (selectedCards.length == 0) {
                         swapTableCards = false;
                     }
                 } else { // If the card is not selected then select it
                     this.style.border = "3px solid red";
-                    selectedCards.push([this.getAttribute('suit'), this.getAttribute('value')]);
+                    selectedCards.push(obj);
                     swapTableCards = true;
                 }
                 selectedCardsElements = document.getElementsByClassName('player-hand-card'); // Get all the player hand cards
@@ -396,17 +396,17 @@ function deal() {
              */
             for (let i = 0; i < playerTableCardArray.length; i++) {
                 playerTableCardArray[i].addEventListener('click', function () {
+                    let obj = new Card(this.getAttribute('suit'), this.getAttribute('value')); // Create a new card object
                     if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
                         this.style.border = "1px solid black";
-                        let obj = new Card(this.getAttribute('suit'), this.getAttribute('value'));
                         console.log(obj + ' deselected');
                         removeSubarray(selectedTableCards, obj);
                     } else { // If the card is not selected then select it
                         if (swapTableCards) {
                             this.style.border = "3px solid red";
-                            selectedTableCards.push([this.getAttribute('suit'), this.getAttribute('value')]);
+                            selectedTableCards.push(obj);
                         }
-                        selectedTableCardsElements = document.getElementsByClassName('player-table-card'); // Get all the player table cards
+                        selectedTableCardsElements = document.getElementsByClassName('player-table-card'); // Get all the player table cards Elements
                         selectedTableCardCount = 0; // Set the selected card count to 0
                         for (let i = 0; i < selectedTableCardsElements.length; i++) { // Loop through the selected cards
                             if (selectedTableCardsElements[i].style.border == "3px solid red") {
@@ -476,4 +476,5 @@ function removeClassObject(mainArray, subArray) {
     let index = mainArray.findIndex(arr => arr.suit === subArray.suit && arr.value === subArray.value);
     if (index !== -1) {
         mainArray.splice(index, 1);
-}
+    }
+};
