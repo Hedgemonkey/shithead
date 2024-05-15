@@ -251,6 +251,20 @@ function shuffle() {
  */
 function deal() {
     /**
+     * Reset some variables
+     */
+    selectedCards = [];
+    playerHand = [];
+    opponentsHand = [];
+    playerTableCardsUp = [];
+    playerTableCardsDown = [];
+    opponentsTableCardsUp = [];
+    opponentsTableCardsDown = [];
+    gameDeck = [];
+    inPlayCard = [];
+    inPlayDeck = [];
+    playCardArray = [];
+    /**
      * Create and add game tips to the hero div
      */
     let containerDiv = document.getElementById('hero');
