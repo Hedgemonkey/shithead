@@ -505,6 +505,20 @@ function swap() {
 };
 
 /**
+ * Function to check if opponent has a lower card than in players hand
+ */
+function checkOpponentCardLower(varCard) {
+    let opponentCard = opponentsHand[varCard];
+    for (let i = 0; i < playerHand.length; i++) {
+        if (opponentCard.value < playerHand[i].value && playerHand[i].value != '2' && playerHand[i].value != '5' && playerHand[i].value != '7' && playerHand[i].value != '8' && playerHand[i].value != '10') {
+            return true;
+            opponentsLowerCardIndex = varCard;
+        }
+    }
+};
+
+
+/**
  * DOM load event listener to add event listeners to the buttons
  */
 document.addEventListener('DOMContentLoaded', function () {
