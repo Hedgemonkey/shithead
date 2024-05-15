@@ -518,18 +518,22 @@ function accept() {
     // Remove the swap selected button
     swapSelectedButton.remove();
     // Remove the tip
-    for (let i = 0; i < opponentsHand.length; i++) {
-        let opIsLower = false;
-        if (checkOpponentCardLower(i)) {
-            console.log('Opponent has a lower card');
-            tipDiv.innerHTML = 'Oppoent has the lowest card...';
-            opIsLower = true;
-            opponentTurn = true;
-            playCard(opponentsHand[opponentsLowerCardIndex]);
-        } else {
-            if (!opIsLower) {
-                tipDiv.innerHTML = 'Opponent has no lower card, select lowest card to play';
-            }
+    let opIsLower = false;
+    if (array1Lower(opponentsHand, playerHand) !== false) {
+        console.log('Opponent has a lower card');
+        tipDiv.innerHTML = 'Oppoent has the lowest card...';
+        opIsLower = true;
+        opponentTurn = true;
+        console.log('opponentsHand: ' + opponentsHand[array1Lower(opponentsHand, playerHand)]);
+        // Move card out of opponentsHand and add to playCardArray
+        playCardArray.unshift(opponentsHand[array1Lower(opponentsHand, playerHand)]);
+        // Remove card from opponentsHand
+        console.log('Removed ' + opponentsHand[array1Lower(opponentsHand, playerHand)].value + ' ' + opponentsHand[array1Lower(opponentsHand, playerHand)].suit + ' from opponents hand');
+        removeClassObject(opponentsHand, opponentsHand[array1Lower(opponentsHand, playerHand)]);
+        playCard();
+    } else {
+        if (!opIsLower) {
+            tipDiv.innerHTML = 'Opponent has no lower card, select lowest card to play';
         }
     }
     // Disable listeners on the player table cards
