@@ -39,6 +39,8 @@ let opponentsLowerCardIndex;
 let inPlayCard = [];
 let inPlayDeck = [];
 let playCardArray = [];
+let opponentTurn;
+let gameActive;
 
 
 /**
@@ -540,8 +542,13 @@ let playerTableCardClick = function () {
 function accept() {
     // Remove the play selected button
     playSelectedButton.innerHTML = 'Play Selected cards';
+    playSelectedButton.onclick = function () { playCard(); };
     // Remove the swap selected button
     swapSelectedButton.remove();
+    // Remove event listener from table cards
+    for (let i = 0; i < playerTableCardArray.length; i++) {
+        playerTableCardArray[i].removeEventListener('click', playerTableCardClick);
+    }
     // Remove the tip
     let opIsLower = false;
     if (array1Lower(opponentsHand, playerHand) !== false) {
@@ -563,15 +570,16 @@ function accept() {
     }
     // Disable listeners on the player table cards
     for (let i = 0; i < playerTableCardArray.length; i++) {
-        playerTableCardArray[i].removeEventListener('click', function () { });
+        playerTableCardArray[i].removeEventListener('click', playerTableCardClick);
     }
+    gameActive = true;
 };
 
 /**
  * Opponent play function
  */
 function playCard() {
-    if (opponentTurn) {
+    if (opponentTurn === true) {
         // Check for duplicate value cards in opponents Hand and add them to the playCard array
         for (let i = 0; i < opponentsHand.length; i++) {
             if (opponentsHand[i].value == playCardArray.value) {
@@ -605,6 +613,19 @@ function playCard() {
                 }
             }
 
+        }
+        opponentTurn = false;
+    } else {
+        if (playerTableCardsDown.length == 0 && playerHand.length == 0) {
+            tipDiv.innerHTML = 'You no cards left, you win!';
+            addWin();
+        }
+        if (selectedCards.length == 0) {
+            tipDiv.innerHTML = 'You must play a card';
+        } else if (selectedCards.length > 1) {
+            tipDiv.innerHTML = 'You currently can only play one card at a time';
+        } else {
+            playSelected();
         }
     }
 };
@@ -738,7 +759,7 @@ function minValue(array) {
     }
 
     return { minValue, minIndex };
-}
+};
 
 function array1Lower(array1, array2) {
     let min1 = minValue(array1);
@@ -749,21 +770,7 @@ function array1Lower(array1, array2) {
     } else {
         return false;
     }
-}
-
-/**
- * DOM load event listener to add event listeners to the buttons
- */
-document.addEventListener('DOMContentLoaded', function () {
-    // Add event listener to the rules button
-    document.getElementById('rules-button').addEventListener('click', function () { // Add event listener to the rules button
-        rules();
-    });
-    // Add event listener to the play button
-    document.getElementById('play-button').addEventListener('click', function () {  // Add event listener to the play button
-        play();
-    });
-});
+};
 
 /**
 * Function to remove subarray from array 
