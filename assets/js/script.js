@@ -85,6 +85,7 @@ function rules() {
         document.getElementById('rules-button').innerHTML = "Close Rules";
     }
 };
+
 /** 
  * play() function initialises the game and sets up the deck, players, and game state.
  */
@@ -353,39 +354,7 @@ function deal() {
             playerHandCount++;
             containerDiv.appendChild(playerHandUpdatable);
             // Add event listener to the player hand cards
-            playerHandUpdatable.addEventListener('click', function () {
-                let obj = new Card(this.getAttribute('suit'), this.getAttribute('value')); // Create a new card object
-                if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
-                    this.style.border = "1px solid black";
-                    console.log(obj + ' deselected');
-                    removeClassObject(selectedCards, obj);
-                    if (selectedCards.length == 0) {
-                        swapTableCards = false;
-                    }
-                } else { // If the card is not selected then select it
-                    this.style.border = "3px solid red";
-                    selectedCards.push(obj);
-                    // swapTableCards = true;
-                }
-                playerCardsElements = document.getElementsByClassName('player-hand-card'); // Get all the player hand cards
-                selectedCardCount = 0; // Set the selected card count to 0
-                for (let i = 0; i < playerCardsElements.length; i++) { // Loop through the selected cards
-                    if (playerCardsElements[i].style.border == "3px solid red") {
-                        selectedCardCount++;
-                    }
-                }
-                if (selectedCardCount == 0) { // If the player has not selected cards then disable the play selected button
-                    playSelectedButton.disabled = true;
-                    playSelectedButton.style.opacity = "0.5";
-                    playSelectedButton.style.backgroundColor = "grey";
-                    // Reset the selected table cards
-                    selectedTableCards = [];
-                    selectedTableCardCount = 0;
-                    for (let i = 0; i < selectedTableCardsElements.length; i++) { // Loop through the selected cards
-                        selectedTableCardsElements[i].style.border == "1px solid black";
-                    }
-                }
-            });
+            playerHandUpdatable.addEventListener('click', playerHandCardClick);
             playerHand.push(currentCardDelayed);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player hand');
         } else if (dealCountDelayed == 51) { // Last card to deck
@@ -421,33 +390,7 @@ function deal() {
              * Event listener for the player table cards
              */
             for (let i = 0; i < playerTableCardArray.length; i++) {
-                playerTableCardArray[i].addEventListener('click', function () {
-                    let obj = new Card(this.getAttribute('suit'), this.getAttribute('value')); // Create a new card object
-                    if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
-                        this.style.border = "1px solid black";
-                        console.log(obj + ' deselected');
-                        removeSubarray(selectedTableCards, obj);
-                    } else { // If the card is not selected then select it
-                        this.style.border = "3px solid red";
-                        selectedTableCards.push(obj);
-                        selectedTableCardsElements = document.getElementsByClassName('player-table-card'); // Get all the player table cards Elements
-                        selectedTableCardCount = 0; // Set the selected card count to 0
-                        for (let i = 0; i < selectedTableCardsElements.length; i++) { // Loop through the selected cards
-                            if (selectedTableCardsElements[i].style.border == "3px solid red") {
-                                selectedTableCardCount++;
-                            }
-                        }
-                        if (selectedTableCardCount > 0) { // If the player has selected cards then enable the play selected button
-                            playSelectedButton.disabled = false;
-                            playSelectedButton.style.opacity = "1";
-                            playSelectedButton.style.backgroundColor = "green";
-                        } else { // If the player has not selected cards then disable the play selected button
-                            playSelectedButton.disabled = true;
-                            playSelectedButton.style.opacity = "0.5";
-                            playSelectedButton.style.backgroundColor = "grey";
-                        }
-                    }
-                });
+                playerTableCardArray[i].addEventListener('click', playerTableCardClick);
             }
         } else {
             gameDeck.push(currentCardDelayed);
@@ -521,6 +464,73 @@ function swap() {
         selectedCardCount = 0;
     } else {
         tipDiv.innerHTML = 'Please select the same number of cards from your hand as you have selected from the table';
+    }
+};
+/**
+ * Event Listener function for the player hand cards
+ */
+let playerHandCardClick = function () {
+    let obj = new Card(this.getAttribute('suit'), this.getAttribute('value')); // Create a new card object
+    if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
+        this.style.border = "1px solid black";
+        console.log(obj + ' deselected');
+        removeClassObject(selectedCards, obj);
+        if (selectedCards.length == 0) {
+            swapTableCards = false;
+        }
+    } else { // If the card is not selected then select it
+        this.style.border = "3px solid red";
+        selectedCards.push(obj);
+        // swapTableCards = true;
+    }
+    playerCardsElements = document.getElementsByClassName('player-hand-card'); // Get all the player hand cards
+    selectedCardCount = 0; // Set the selected card count to 0
+    for (let i = 0; i < playerCardsElements.length; i++) { // Loop through the selected cards
+        if (playerCardsElements[i].style.border == "3px solid red") {
+            selectedCardCount++;
+        }
+    }
+    if (selectedCardCount == 0) { // If the player has not selected cards then disable the play selected button
+        playSelectedButton.disabled = true;
+        playSelectedButton.style.opacity = "0.5";
+        playSelectedButton.style.backgroundColor = "grey";
+        // Reset the selected table cards
+        selectedTableCards = [];
+        selectedTableCardCount = 0;
+        for (let i = 0; i < selectedTableCardsElements.length; i++) { // Loop through the selected cards
+            selectedTableCardsElements[i].style.border == "1px solid black";
+        }
+    }
+};
+
+/**
+ * Event Listener function for the player table cards
+ */
+let playerTableCardClick = function () {
+    let obj = new Card(this.getAttribute('suit'), this.getAttribute('value')); // Create a new card object
+    if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
+        this.style.border = "1px solid black";
+        console.log(obj + ' deselected');
+        removeSubarray(selectedTableCards, obj);
+    } else { // If the card is not selected then select it
+        this.style.border = "3px solid red";
+        selectedTableCards.push(obj);
+        selectedTableCardsElements = document.getElementsByClassName('player-table-card'); // Get all the player table cards Elements
+        selectedTableCardCount = 0; // Set the selected card count to 0
+        for (let i = 0; i < selectedTableCardsElements.length; i++) { // Loop through the selected cards
+            if (selectedTableCardsElements[i].style.border == "3px solid red") {
+                selectedTableCardCount++;
+            }
+        }
+        if (selectedTableCardCount > 0) { // If the player has selected cards then enable the play selected button
+            playSelectedButton.disabled = false;
+            playSelectedButton.style.opacity = "1";
+            playSelectedButton.style.backgroundColor = "green";
+        } else { // If the player has not selected cards then disable the play selected button
+            playSelectedButton.disabled = true;
+            playSelectedButton.style.opacity = "0.5";
+            playSelectedButton.style.backgroundColor = "grey";
+        }
     }
 };
 
@@ -602,7 +612,6 @@ function playCard() {
 /**
  * Function to play the selected cards
  */
-
 function playSelected() {
     // Check that the selected cards are higher than the last card played
     for (let i = 0; i < selectedCards.length; i++) {
