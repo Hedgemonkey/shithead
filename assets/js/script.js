@@ -737,6 +737,24 @@ function burnPack() {
 };
 
 /**
+ * Function to clear the selected cards
+ */
+function clearSelected() {
+    let cardElements = document.getElementsByClassName('player-hand-card');
+    let selectedTableCardsElements = document.getElementsByClassName('player-table-card');
+    for (let i = 0; i < cardElements.length; i++) {
+        playerCardsElements[i].style.border = "1px solid black";
+    }
+    for (let i = 0; i < selectedTableCardsElements.length; i++) {
+        selectedTableCardsElements[i].style.border = "1px solid black";
+    }
+    selectedCards = [];
+    selectedTableCards = [];
+    selectedCardCount = 0;
+    selectedTableCardCount = 0;
+}
+
+/**
  * Function to convert the card value to a number
  */
 function cardValueToNumber(cardValue) {
