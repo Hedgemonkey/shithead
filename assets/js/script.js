@@ -784,6 +784,24 @@ function checkOpponentCardLower(varCard) {
 };
 
 /**
+ * get the lowest value card over a specified number
+ */
+function getLowestValueOverNumber(array, number) {
+    return array.filter(item => cardValueToNumber(item.value) > number)
+        .reduce((lowest, current) => {
+            return (lowest == null || cardValueToNumber(current.value) < cardValueToNumber(lowest.value)) ? current : lowest;
+        }, null);
+};
+
+/**
+ * get the lowest value card from an array 
+ */
+function getLowestValueObject(array) {
+    return array.reduce((lowest, current) => {
+        return (lowest == null || cardValueToNumber(current.value) < cardValueToNumber(lowest.value)) ? current : lowest;
+    }, null);
+};
+/**
  * Alternate function to check if array has a lower value card
  * returns which array has the lower card and the index of the card
  * this function returns false if array 1 has a special card
