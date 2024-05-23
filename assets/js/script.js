@@ -637,59 +637,69 @@ function playCard() {
  * Function to play the selected cards
  */
 function playSelected() {
-    // Check that the selected cards are higher than the last card played
-    for (let i = 0; i < selectedCards.length; i++) {
-        if (inPlayCard[0] == undefined) {
-            let div = document.querySelector(`[suit="${selectedCards[i].suit}"][value="${selectedCards[i].value}"]`);
-            removeClassObject(playerHand, selectedCards[i]);
-            console.log('Removed ' + selectedCards[i].value + ' ' + selectedCards[i].suit + ' from player hand');
-            let newCard = gameDeck.pop(); // Get new card from deck
-            deckDiv.innerHTML = gameDeck.length; // Update new number of cards in deck
-            playerHand.push(newCard); // Add new card to player hand
-            console.log('Added ' + newCard.value + ' ' + newCard.suit + ' to player hand');
-            // Add the card to the players hand div
-            let newDiv = document.createElement('div');
-            newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
-            newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
-            newDiv.setAttribute('suit', newCard.suit);
-            newDiv.setAttribute('value', newCard.value);
-            newDiv.setAttribute('class', 'player-hand-card');
-            playerHandDiv.appendChild(newDiv);
-            div.remove();
-            // Change the card in the inPlay div
-            inPlayDiv.style.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
-            inPlayDiv.setAttribute('suit', selectedCards[i].suit);
-            inPlayDiv.setAttribute('value', selectedCards[i].value);
-            inPlayCard.unshift(selectedCards[i]);
-            if (inPlayCard.length > 3) {
-                inPlayDeck.push(inPlayCard.pop());
-            } else { inPlayDeck.push(selectedCards[i]); }
-            tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
-            opponentTurn = true;
-            newDiv.addEventListener('click', playerHandCardClick);
-            playCard();
-        } else if ((cardValueToNumber(selectedCards[i].value) < inPlayDiv.getAttribute('value')) || (inPlayCard[0].value = '5')) {
-            tipDiv.innerHTML = 'You must play a higher card than the last card played';
-            if (inPlayCard[0].value == '7') {
+    // Check if multiple selected cards that they are the same value
+    if (selectedCards.length > 1) {
+        for (let i = 0; i < selectedCards.length; i++) {
+            for (let j = 0; j < selectedCards.length; j++) {
+                if (selectedCards[i].value !== selectedCards[j].value) {
+                    tipDiv.innerHTML = 'You can only play cards of the same value';
+                }
+            }
+        }
+    } else {
+        for (let i = 0; i < selectedCards.length; i++) {
+            if (inPlayCard[0] == undefined) {
+                let div = document.querySelector(`[suit="${selectedCards[i].suit}"][value="${selectedCards[i].value}"]`);
+                removeClassObject(playerHand, selectedCards[i]);
+                console.log('Removed ' + selectedCards[i].value + ' ' + selectedCards[i].suit + ' from player hand');
+                let newCard = gameDeck.pop(); // Get new card from deck
+                deckDiv.innerHTML = gameDeck.length; // Update new number of cards in deck
+                playerHand.push(newCard); // Add new card to player hand
+                console.log('Added ' + newCard.value + ' ' + newCard.suit + ' to player hand');
+                // Add the card to the players hand div
+                let newDiv = document.createElement('div');
+                newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
+                newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
+                newDiv.setAttribute('suit', newCard.suit);
+                newDiv.setAttribute('value', newCard.value);
+                newDiv.setAttribute('class', 'player-hand-card');
+                playerHandDiv.appendChild(newDiv);
+                div.remove();
+                // Change the card in the inPlay div
+                inPlayDiv.style.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
+                inPlayDiv.setAttribute('suit', selectedCards[i].suit);
+                inPlayDiv.setAttribute('value', selectedCards[i].value);
+                inPlayCard.unshift(selectedCards[i]);
+                if (inPlayCard.length > 3) {
+                    inPlayDeck.push(inPlayCard.pop());
+                } else { inPlayDeck.push(selectedCards[i]); }
+                tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
+                opponentTurn = true;
+                newDiv.addEventListener('click', playerHandCardClick);
+                playCard();
+            } else if ((cardValueToNumber(selectedCards[i].value) < inPlayDiv.getAttribute('value')) || (inPlayCard[0].value = '5')) {
+                tipDiv.innerHTML = 'You must play a higher card than the last card played';
+                if (inPlayCard[0].value == '5') {
+                    inPlayDiv.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
+                    inPlayDiv.setAttribute('suit', selectedCards[i].suit);
+                    inPlayDiv.setAttribute('value', selectedCards[i].value);
+                    inPlayCard.unshift(selectedCards[i]);
+                    inPlayDeck.push(inPlayCard.pop());
+                    tipDiv.innerHTML = `You played a ${selectedCards[i].value} on a 5`;
+                    playCard();
+                }
+            } else if (selectedCards[i].value == '2' || selectedCards[i].value == '7' || selectedCards[i].value == '8' || selectedCards[i].value == '10') {
                 inPlayDiv.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
                 inPlayDiv.setAttribute('suit', selectedCards[i].suit);
                 inPlayDiv.setAttribute('value', selectedCards[i].value);
                 inPlayCard.unshift(selectedCards[i]);
                 inPlayDeck.push(inPlayCard.pop());
-                tipDiv.innerHTML = `You played a ${selectedCards[i].value} on a 5`;
-            }
-        } else if (selectedCards[i].value == '2' || selectedCards[i].value == '7' || selectedCards[i].value == '8' || selectedCards[i].value == '10') {
-            inPlayDiv.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
-            inPlayDiv.setAttribute('suit', selectedCards[i].suit);
-            inPlayDiv.setAttribute('value', selectedCards[i].value);
-            inPlayCard.unshift(selectedCards[i]);
-            inPlayDeck.push(inPlayCard.pop());
-            tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
-            if (selectedCards[i].value == '10') {
-                burnPack();
-                tipDiv.innerHTML = `You played a ${selectedCards[i].value} and burned the pack`;
-            }
-            if (selectedCards[i].value == '7') {
+                tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
+                if (selectedCards[i].value == '10') {
+                    burnPack();
+                    tipDiv.innerHTML = `You played a ${selectedCards[i].value} and burned the pack`;
+                }
+                if (selectedCards[i].value == '7') {
                 //skipGo();
                 tipDiv.innerHTML = `You played a ${selectedCards[i].value} and skipped the next go`;
             }
