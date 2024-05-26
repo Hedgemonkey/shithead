@@ -555,7 +555,8 @@ function accept() {
     }
     // Remove the tip
     let opIsLower = false;
-    if (array1Lower(opponentsHand, playerHand) !== false) {
+    let opponentCheck = array1Lower(opponentsHand, playerHand);
+    if (opponentCheck !== false && opponentCheck.minValue != 2 && opponentCheck.minValue != 1) {
         console.log('Opponent has a lower card');
         tipDiv.innerHTML = 'Opponent has the lowest card...';
         opIsLower = true;
@@ -915,6 +916,7 @@ function getLowestValueOverNumber(array, number) {
 };
 
 /**
+
  * get the lowest value card from an array 
  */
 function getLowestValueObject(array) {
@@ -930,15 +932,24 @@ function getLowestValueObject(array) {
 function minValue(array) {
     let minIndex = 0;
     let minValue = cardValueToNumber(array[0].value);
+    while (minValue == 1 || minValue == 2) {
+        if (minIndex == array.length) {
+            return { minValue, minIndex };
+        }
+        minIndex++;
+        minValue = cardValueToNumber(array[minIndex].value);
+    }
 
     for (let i = 0; i < array.length; i++) {
         let currentValue = cardValueToNumber(array[i].value);
-        if (currentValue < minValue && currentValue != '1' && currentValue != '2' && currentValue != '5' && currentValue != '7' && currentValue != '8' && currentValue != '10') {
+        if (currentValue == 1 || currentValue == 2) {
+            continue;
+        }
+        if (currentValue < minValue) {
             minValue = currentValue;
             minIndex = i;
         }
     }
-
     return { minValue, minIndex };
 };
 
@@ -946,7 +957,7 @@ function array1Lower(array1, array2) {
     let min1 = minValue(array1);
     let min2 = minValue(array2);
 
-    if (min1.value >= 3 && min1.minValue < min2.minValue) {
+    if (min1.minValue >= 3 && min1.minValue < min2.minValue) {
         return min1.minIndex;
     } else {
         return false;
