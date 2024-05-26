@@ -622,6 +622,7 @@ function playCard() {
                 console.log('Opponents lower card: ' + opponentsLowerCard.value + ' ' + opponentsLowerCard.suit);
                 inPlayCard.unshift(opponentsLowerCard);
                 console.log('Added ' + opponentsLowerCard.value + ' ' + opponentsLowerCard.suit + ' to inPlayCard');
+                opponentFirstTurn = false;
             } else {
                 // Code for no card in play (Feedback loop)
                 // Select lowest card from opponents hand and process
@@ -633,7 +634,74 @@ function playCard() {
                     console.log('3 of the same card in play');
                     // Code for same value cards in play
                 }
-                else { // If there are not 3 of the same card in play then move one card to the inPlayDeck
+                else { // If there are not 3 of the same card in play
+                    console.log('Not 3 of the same card in play');
+                    // Play the lowest card over the current card
+                    let opponentCard = getLowestValueOverNumber(opponentsHand, cardValueToNumber(inPlayCard[0].value));
+                    if (opponentCard == false) { // If the opponent has no cards to play
+                        // Pick up the deck
+                        let opponentHandSize = opponentsHand.length;
+                        for (let i = 0; i < inPlayDeck.length; i++) {
+                            let newDiv = document.createElement('div');
+                            newDiv.setAttribute('id', `opponents-hand-card-${gameDeck.length + opponentHandSize}`);
+                            newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+                            newDiv.setAttribute('suit', inPlayDeck[i].suit);
+                            newDiv.setAttribute('value', inPlayDeck[i].value);
+                            newDiv.setAttribute('class', 'opponents-hand-card');
+                            opponentsHand.push(inPlayDeck[i]);
+                            opponentsHandDiv.appendChild(newDiv);
+                        }
+                        inPlayDeck = [];
+                        for (let i = 0; i < inPlayCard.length; i++) {
+                            let newDiv = document.createElement('div');
+                            newDiv.setAttribute('id', `opponents-hand-card-${gameDeck.length + opponentHandSize}`);
+                            newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+                            newDiv.setAttribute('suit', inPlayCard[i].suit);
+                            newDiv.setAttribute('value', inPlayCard[i].value);
+                            newDiv.setAttribute('class', 'opponents-hand-card');
+                            opponentsHand.push(inPlayCard[i]);
+                            opponentsHandDiv.appendChild(newDiv);
+                        }
+                        inPlayCard = [];
+                        tipDiv.innerHTML = 'Opponent picked up the deck';
+                        opponentTurn = false;
+                        inPlayDiv.innerHTML = '';
+                        inPlayDiv.style.backgroundImage = '';
+                        inPlayDiv.setAttribute('suit', '');
+                        inPlayDiv.setAttribute('value', '');
+                    } else { // If the opponent has a card to play
+                        // Assign opponentCard as the lowest card in the opponents hand
+                        let lowest = minValue(opponentsHand);
+                        opponentCard = opponentsHand[lowest.minIndex];
+                        // Remove div containing the card from the opponents hand
+                        let opponentCardDiv = document.querySelector(`[suit="${opponentCard.suit}"][value="${opponentCard.value}"]`);
+                        opponentCardDiv.remove();
+                        console.log('Removed ' + opponentCard.value + ' ' + opponentCard.suit + ' from opponents hand div');
+                        // Move card from opponentsHand to inPlayCard
+                        inPlayCard.unshift(opponentCard);
+                        console.log('Added ' + opponentCard.value + ' ' + opponentCard.suit + ' to inPlayCard');
+                        // Change the inPlayDiv to show the opponents card
+                        inPlayDiv.style.backgroundImage = `url('assets/images/cards/fronts/${opponentCard.suit.toLowerCase()}_${opponentCard.value.toLowerCase()}.svg')`;
+                        inPlayDiv.setAttribute('suit', opponentCard.suit);
+                        inPlayDiv.setAttribute('value', opponentCard.value);
+                        tipDiv.innerHTML = `Opponent played a ${opponentCard.value} of ${opponentCard.suit}`;
+                        // Remove card from opponentsHand
+                        console.log('Removed ' + opponentCard.value + ' ' + opponentCard.suit + ' from opponents hand');
+                        removeClassObject(opponentsHand, opponentCard);
+                        // Move card from deck to opponentsHand
+                        let pickedUpCard = gameDeck.pop();
+                        opponentsHand.push(pickedUpCard);
+                        let newDiv = document.createElement('div');
+                        newDiv.setAttribute('id', `opponents-hand-card-${opponentsHand.length}`);
+                        newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+                        newDiv.setAttribute('suit', pickedUpCard.suit);
+                        newDiv.setAttribute('value', pickedUpCard.value);
+                        newDiv.setAttribute('class', 'opponents-hand-card');
+                        opponentsHandDiv.appendChild(newDiv);
+                        console.log('Added ' + pickedUpCard.value + ' ' + pickedUpCard.suit + ' to opponents hand');
+                        opponentTurn = false;
+                    }
+                    // move one card to the inPlayDeck
                     let movingToDeck = inPlayCard.pop();
                     inPlayDeck.push(movingToDeck);
                     console.log('Moved ' + movingToDeck.value + ' ' + movingToDeck.suit + ' to inPlayDeck');
