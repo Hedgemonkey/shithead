@@ -543,7 +543,7 @@ let playerTableCardClick = function () {
 function accept() {
     // Remove the play selected button
     playSelectedButton.innerHTML = 'Play Selected cards';
-    playSelectedButton.onclick = function () { playCard(); };
+    playSelectedButton.onclick = function () { playSelected(); };
     playSelectedButton.disabled = false;
     playSelectedButton.style.opacity = "1";
     playSelectedButton.style.backgroundColor = "green";
@@ -704,7 +704,7 @@ function playCard() {
                     opponentTurn = false;
                 }
                 // move one card to the inPlayDeck
-                if (inPlayCard.length >= 3) {
+                while (inPlayCard.length > 3) {
                     let movingToDeck = inPlayCard.pop();
                     inPlayDeck.push(movingToDeck);
                     console.log('Moved ' + movingToDeck.value + ' ' + movingToDeck.suit + ' to inPlayDeck');
