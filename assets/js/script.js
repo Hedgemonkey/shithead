@@ -680,6 +680,8 @@ function playCard() {
                 }
             } else {
                 // Play the lowest card over the current card
+                console.log('Current Card in play is ' + inPlayCard[0].value + ' ' + inPlayCard[0].suit);
+                console.log('Opponents Lowest Valid Card is ' + getLowestValueOverNumber(opponentsHand, cardValueToNumber(inPlayCard[0].value)));
                 let opponentCard = getLowestValueOverNumber(opponentsHand, cardValueToNumber(inPlayCard[0].value));
                 if (opponentCard == false) { // If the opponent has no cards to play
                     // Pick up the deck
@@ -992,12 +994,12 @@ function sortPlayersHand() {
     console.log('Run loop to sort players hand');
     while (tempPlayersHand.length > 0) {
         let lowest = minValueIgnore(tempPlayersHand);
-        console.log('Lowest value: ' + lowest.minValue);
-        console.log('Lowest index: ' + lowest.minIndex);
+        //console.log('Lowest value: ' + lowest.minValue);
+        //console.log('Lowest index: ' + lowest.minIndex);
         sortedPlayersHand.push(tempPlayersHand[lowest.minIndex]);
         tempPlayersHand.splice(lowest.minIndex, 1);
-        console.log('Temp players hand: ' + tempPlayersHand.value + ' ' + tempPlayersHand.suit);
-        console.log('Sorted players hand: ' + sortedPlayersHand.value + ' ' + sortedPlayersHand.suit);
+        //console.log('Temp players hand: ' + tempPlayersHand.value + ' ' + tempPlayersHand.suit);
+        //console.log('Sorted players hand: ' + sortedPlayersHand.value + ' ' + sortedPlayersHand.suit);
     } // End of while loop
     console.log('Sorted players hand: ' + sortedPlayersHand);
     // Clear the players hand div
@@ -1012,6 +1014,7 @@ function sortPlayersHand() {
         newDiv.setAttribute('suit', sortedPlayersHand[i].suit);
         newDiv.setAttribute('value', sortedPlayersHand[i].value);
         playerHandDiv.appendChild(newDiv);
+        newDiv.addEventListener('click', playerHandCardClick);
     }
     // Reassign the players hand array
     playerHand = sortedPlayersHand;
@@ -1026,12 +1029,12 @@ function sortOpponentsHand() {
     console.log('Run loop to sort opponents hand');
     while (tempOpponentsHand.length > 0) {
         let lowest = minValueIgnore(tempOpponentsHand);
-        console.log('Lowest value: ' + lowest.minValue);
-        console.log('Lowest index: ' + lowest.minIndex);
+        //console.log('Lowest value: ' + lowest.minValue);
+        //console.log('Lowest index: ' + lowest.minIndex);
         sortedOpponentsHand.push(tempOpponentsHand[lowest.minIndex]);
         tempOpponentsHand.splice(lowest.minIndex, 1);
-        console.log('Temp opponents hand: ' + tempOpponentsHand);
-        console.log('Sorted opponents hand: ' + sortedOpponentsHand);
+        //console.log('Temp opponents hand: ' + tempOpponentsHand);
+        //console.log('Sorted opponents hand: ' + sortedOpponentsHand);
     } // End of while loop
     console.log('Sorted opponents hand: ' + sortedOpponentsHand);
     // Clear the opponents hand div
