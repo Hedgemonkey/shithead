@@ -207,12 +207,14 @@ function populateTableCards() {
         // Add the table cards to the divs
         let opponentsTableCard = document.createElement('div');
         opponentsTableCard.setAttribute('id', `opponents-table-card-${i}`);
-        opponentsTableCard.classList.add('opponents-table-card table-card');
+        opponentsTableCard.classList.add('opponents-table-card');
+        opponentsTableCard.classList.add('table-card');
         opponentsTableDiv.appendChild(opponentsTableCard);
         opponentsTableCardArray.push(opponentsTableCard);
         let playerTableCard = document.createElement('div');
         playerTableCard.setAttribute('id', `player-table-card-${i}`);
-        playerTableCard.classList.add('player-table-card table-card');
+        playerTableCard.classList.add('player-table-card')
+        playerTableCard.classList.add('table-card');
         playerTableDiv.appendChild(playerTableCard);
         playerTableCardArray.push(playerTableCard);
     }
