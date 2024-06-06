@@ -894,7 +894,7 @@ function playSelected() {
                     opponentTurn = true;
                     playCard();
                 }
-            } else if (cardValueToNumber(selectedCards[i].value) > cardValueToNumber(inPlayCard[0].value)) { // If selected card is higher than the card in play
+            } else if (cardValueToNumber(selectedCards[i].value) >= cardValueToNumber(inPlayCard[0].value)) { // If selected card is higher than the card in play
                 console.log('Selected card is higher than card in play');
                 // Remove the selected card from the players hand div
                 let div = document.querySelector(`[suit="${selectedCards[i].suit}"][value="${selectedCards[i].value}"]`);
