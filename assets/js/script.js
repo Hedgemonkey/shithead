@@ -1130,7 +1130,7 @@ function checkOpponentCardLower(varCard) {
  * get the lowest value card over a specified number
  */
 function getLowestValueOverNumber(array, number) {
-    return array.filter(item => cardValueToNumber(item.value) > number)
+    return array.filter(item => cardValueToNumber(item.value) >= number)
         .reduce((lowest, current) => {
             return (lowest == null || cardValueToNumber(current.value) < cardValueToNumber(lowest.value)) ? current : lowest;
         }, null);
