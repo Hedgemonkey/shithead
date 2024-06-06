@@ -61,7 +61,7 @@ function rules() {
         // create new div element to contain rules
         let rulesHTML = document.createElement('div');
         rulesHTML.setAttribute('id', 'rules');
-        rulesHTML.setAttribute('class', 'rules');
+        rulesHTML.classList.add('rules');
         rulesHTML.innerHTML = `
         <h2>Sh*tHead rules:</h2>
         <ul>
@@ -104,42 +104,42 @@ function play() {
     // Add the opponents hand div
     opponentsHandDiv = document.createElement('div');
     opponentsHandDiv.setAttribute('id', 'opponents-hand');
-    opponentsHandDiv.setAttribute('class', 'opponents-hand');
+    opponentsHandDiv.classList.add('opponents-hand');
     containerDiv.appendChild(opponentsHandDiv);
     opponentsHandDiv = document.getElementById('opponents-hand'); // Re-assign to the new element
     // Add the opponents table cards div
     opponentsTableDiv = document.createElement('div');
     opponentsTableDiv.setAttribute('id', 'opponents-table');
-    opponentsTableDiv.setAttribute('class', 'opponents-table');
+    opponentsTableDiv.classList.add('opponents-table');
     containerDiv.appendChild(opponentsTableDiv);
     opponentsTableDiv = document.getElementById('opponents-table'); // Re-assign to the new element
     // Add div to hold thecentral gameplay area
     gamePlayDiv = document.createElement('div');
     gamePlayDiv.setAttribute('id', 'game-play');
-    gamePlayDiv.setAttribute('class', 'game-play');
+    gamePlayDiv.classList.add('game-play');
     // Add the deck div to gameplay div
     deckDiv = document.createElement('div');
     deckDiv.setAttribute('id', 'deck');
-    deckDiv.setAttribute('class', 'deck');
+    deckDiv.classList.add('deck');
     deckDiv.innerHTML = '52';
     deckDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
     gamePlayDiv.appendChild(deckDiv);
     // Add the score div to gameplay div
     scoreDiv = document.createElement('div');
     scoreDiv.setAttribute('id', 'score');
-    scoreDiv.setAttribute('class', 'score');
+    scoreDiv.classList.add('score');
     scoreDiv.innerHTML = '<h3>Wins:<br> 0</h3>';
     gamePlayDiv.appendChild(scoreDiv);
     // Add the loss div to gameplay div
     lossDiv = document.createElement('div');
     lossDiv.setAttribute('id', 'loss');
-    lossDiv.setAttribute('class', 'loss');
+    lossDiv.classList.add('loss');
     lossDiv.innerHTML = '<h3>Losses:<br> 0</h3>';
     gamePlayDiv.appendChild(lossDiv);
     // Add the inPlay div to gameplay div
     inPlayDiv = document.createElement('div');
     inPlayDiv.setAttribute('id', 'in-play');
-    inPlayDiv.setAttribute('class', 'in-play');
+    inPlayDiv.classList.add('in-play');
     gamePlayDiv.appendChild(inPlayDiv);
     // Add gamePlayDiv to containerDiv
     containerDiv.appendChild(gamePlayDiv);
@@ -152,19 +152,19 @@ function play() {
     // Add the player table cards div
     playerTableDiv = document.createElement('div');
     playerTableDiv.setAttribute('id', 'player-table');
-    playerTableDiv.setAttribute('class', 'player-table');
+    playerTableDiv.classList.add('player-table');
     containerDiv.appendChild(playerTableDiv);
     playerTableDiv = document.getElementById('player-table'); // Re-assign to the new element
     // Add the player hand div
     playerHandDiv = document.createElement('div');
     playerHandDiv.setAttribute('id', 'player-hand');
-    playerHandDiv.setAttribute('class', 'player-hand');
+    playerHandDiv.classList.add('player-hand');
     containerDiv.appendChild(playerHandDiv);
     playerHandDiv = document.getElementById('player-hand'); // Re-assign to the new element
     // Add shuffle and Deal buttons
     shuffleButton = document.createElement('button');
     shuffleButton.setAttribute('id', 'shuffle-button');
-    shuffleButton.setAttribute('class', 'shuffle-button');
+    shuffleButton.classList.add('shuffle-button');
     shuffleButton.innerHTML = "Shuffle";
     containerDiv.appendChild(shuffleButton);
     shuffleButton = document.getElementById('shuffle-button'); // Re-assign to the new element
@@ -173,7 +173,7 @@ function play() {
     });
     dealButton = document.createElement('button');
     dealButton.setAttribute('id', 'deal-button');
-    dealButton.setAttribute('class', 'deal-button');
+    dealButton.classList.add('deal-button');
     dealButton.innerHTML = "Deal";
     containerDiv.appendChild(dealButton);
     dealButton = document.getElementById('deal-button'); // Re-assign to the new element
@@ -206,12 +206,12 @@ function populateTableCards() {
         // Add the table cards to the divs
         let opponentsTableCard = document.createElement('div');
         opponentsTableCard.setAttribute('id', `opponents-table-card-${i}`);
-        opponentsTableCard.setAttribute('class', 'opponents-table-card table-card');
+        opponentsTableCard.classList.add('opponents-table-card table-card');
         opponentsTableDiv.appendChild(opponentsTableCard);
         opponentsTableCardArray.push(opponentsTableCard);
         let playerTableCard = document.createElement('div');
         playerTableCard.setAttribute('id', `player-table-card-${i}`);
-        playerTableCard.setAttribute('class', 'player-table-card table-card');
+        playerTableCard.classList.add('player-table-card table-card');
         playerTableDiv.appendChild(playerTableCard);
         playerTableCardArray.push(playerTableCard);
     }
@@ -234,7 +234,7 @@ function shuffle() {
     if (!document.getElementById('deal-button')) {
         dealButton = document.createElement('button');
         dealButton.setAttribute('id', 'deal-button');
-        dealButton.setAttribute('class', 'deal-button');
+        dealButton.classList.add('deal-button');
         dealButton.innerHTML = "Deal";
         document.getElementById('hero').appendChild(dealButton);
         dealButton = document.getElementById('deal-button'); // Re-assign to the new element
@@ -276,7 +276,7 @@ function deal() {
     let containerDiv = document.getElementById('hero');
     tipDiv = document.createElement('div');
     tipDiv.setAttribute('id', 'tip');
-    tipDiv.setAttribute('class', 'tip');
+    tipDiv.classList.add('tip');
     tipDiv.innerHTML = '<h4>Dealing cards...</h4>';
     containerDiv.appendChild(tipDiv);
     tipDiv = document.getElementById('tip'); // Re-assign to the new element
@@ -339,7 +339,7 @@ function deal() {
             let containerDiv = document.getElementById('opponents-hand');
             let opponenetsHandUpdatable = document.createElement('div');
             opponenetsHandUpdatable.setAttribute('id', `opponents-hand-card-${opponentsHandCount}`);
-            opponenetsHandUpdatable.setAttribute('class', 'opponents-hand-card');
+            opponenetsHandUpdatable.classList.add('opponents-hand-card');
             opponenetsHandUpdatable.setAttribute('suit', currentCardDelayed.suit);
             opponenetsHandUpdatable.setAttribute('value', currentCardDelayed.value);
             opponentsHand.push(currentCardDelayed);
@@ -351,7 +351,7 @@ function deal() {
             let containerDiv = document.getElementById('player-hand');
             let playerHandUpdatable = document.createElement('div');
             playerHandUpdatable.setAttribute('id', `player-hand-card-${playerHandCount}`);
-            playerHandUpdatable.setAttribute('class', 'player-hand-card');
+            playerHandUpdatable.classList.add('player-hand-card');
             playerHandUpdatable.setAttribute('suit', currentCardDelayed.suit);
             playerHandUpdatable.setAttribute('value', currentCardDelayed.value);
             playerHandUpdatable.style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
@@ -372,7 +372,7 @@ function deal() {
              */
             playSelectedButton = document.createElement('button');
             playSelectedButton.setAttribute('id', 'play-selected-button');
-            playSelectedButton.setAttribute('class', 'play-selected-button');
+            playSelectedButton.classList.add('play-selected-button');
             playSelectedButton.onclick = function () { swap(); };
             playSelectedButton.innerHTML = "Swap";
             containerDiv.appendChild(playSelectedButton);
@@ -385,7 +385,7 @@ function deal() {
              */
             swapSelectedButton = document.createElement('button');
             swapSelectedButton.setAttribute('id', 'swap-selected-button');
-            swapSelectedButton.setAttribute('class', 'swap-selected-button');
+            swapSelectedButton.classList.add('swap-selected-button');
             swapSelectedButton.innerHTML = "Accept";
             swapSelectedButton.onclick = function () { accept(); };
             containerDiv.appendChild(swapSelectedButton);
@@ -623,7 +623,7 @@ function playCard() {
                 newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
                 newDiv.setAttribute('suit', pickedUpCard.suit);
                 newDiv.setAttribute('value', pickedUpCard.value);
-                newDiv.setAttribute('class', 'opponents-hand-card');
+                newDiv.classList.add('opponents-hand-card');
                 opponentsHandDiv.appendChild(newDiv);
                 console.log('Added ' + pickedUpCard.value + ' ' + pickedUpCard.suit + ' to opponents hand');
                 let opponentsHandDivCard = document.querySelector(`[suit="${opponentsLowerCard.suit}"][value="${opponentsLowerCard.value}"]`);
@@ -658,7 +658,7 @@ function playCard() {
                 newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
                 newDiv.setAttribute('suit', pickedUpCard.suit);
                 newDiv.setAttribute('value', pickedUpCard.value);
-                newDiv.setAttribute('class', 'opponents-hand-card');
+                newDiv.classList.add('opponents-hand-card');
                 opponentsHandDiv.appendChild(newDiv);
                 console.log('Added ' + pickedUpCard.value + ' ' + pickedUpCard.suit + ' to opponents hand');
                 opponentTurn = false;
@@ -690,7 +690,7 @@ function playCard() {
                         newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
                         newDiv.setAttribute('suit', inPlayDeck[i].suit);
                         newDiv.setAttribute('value', inPlayDeck[i].value);
-                        newDiv.setAttribute('class', 'opponents-hand-card');
+                        newDiv.classList.add('opponents-hand-card');
                         opponentsHand.push(inPlayDeck[i]);
                         opponentsHandDiv.appendChild(newDiv);
                     }
@@ -701,7 +701,7 @@ function playCard() {
                         newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
                         newDiv.setAttribute('suit', inPlayCard[i].suit);
                         newDiv.setAttribute('value', inPlayCard[i].value);
-                        newDiv.setAttribute('class', 'opponents-hand-card');
+                        newDiv.classList.add('opponents-hand-card');
                         opponentsHand.push(inPlayCard[i]);
                         opponentsHandDiv.appendChild(newDiv);
                     }
@@ -739,7 +739,7 @@ function playCard() {
                     newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
                     newDiv.setAttribute('suit', pickedUpCard.suit);
                     newDiv.setAttribute('value', pickedUpCard.value);
-                    newDiv.setAttribute('class', 'opponents-hand-card');
+                    newDiv.classList.add('opponents-hand-card');
                     opponentsHandDiv.appendChild(newDiv);
                     console.log('Added ' + pickedUpCard.value + ' ' + pickedUpCard.suit + ' to opponents hand');
                     opponentTurn = false;
@@ -762,6 +762,8 @@ function playCard() {
             }
         }
     }
+    // Sort the opponents hand
+    sortOpponentsHand();
     opponentTurn = false;
     // Check if player has any cards left and enable selection of table cards
     if (playerHand.length == 0) {
@@ -800,7 +802,7 @@ function playSelected() {
                 newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
                 newDiv.setAttribute('suit', newCard.suit);
                 newDiv.setAttribute('value', newCard.value);
-                newDiv.setAttribute('class', 'player-hand-card');
+                newDiv.classList.add('player-hand-card');
                 playerHandDiv.appendChild(newDiv);
                 div.remove();
                 // Change the card in the inPlay div
@@ -871,7 +873,7 @@ function playSelected() {
                         newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
                         newDiv.setAttribute('suit', newCard.suit);
                         newDiv.setAttribute('value', newCard.value);
-                        newDiv.setAttribute('class', 'player-hand-card');
+                        newDiv.classList.add('player-hand-card');
                         playerHandDiv.appendChild(newDiv);
                         newDiv.addEventListener('click', playerHandCardClick);
                     }
@@ -913,7 +915,7 @@ function playSelected() {
                         newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
                         newDiv.setAttribute('suit', newCard.suit);
                         newDiv.setAttribute('value', newCard.value);
-                        newDiv.setAttribute('class', 'player-hand-card');
+                        newDiv.classList.add('player-hand-card');
                         playerHandDiv.appendChild(newDiv);
                         newDiv.addEventListener('click', playerHandCardClick);
                     }
@@ -997,7 +999,7 @@ function sortPlayersHand() {
     for (let i = 0; i < sortedPlayersHand.length; i++) {
         // Create a new div for each card in the players hand
         let newDiv = document.createElement('div');
-        newDiv.classList.add(`player-hand-card-${i}`);
+        newDiv.classList.add(`player-hand-card-${i + 1}`);
         newDiv.classList.add('player-hand-card');
         newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${sortedPlayersHand[i].suit.toLowerCase()}_${sortedPlayersHand[i].value.toLowerCase()}.svg')`;
         newDiv.setAttribute('suit', sortedPlayersHand[i].suit);
@@ -1031,7 +1033,7 @@ function sortOpponentsHand() {
     for (let i = 0; i < sortedOpponentsHand.length; i++) {
         // Create a new div for each card in the opponents hand
         let newDiv = document.createElement('div');
-        newDiv.classList.add(`opponents-hand-card-${i}`);
+        newDiv.classList.add(`opponents-hand-card-${i + 1}`);
         newDiv.classList.add('opponents-hand-card');
         newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
         newDiv.setAttribute('suit', sortedOpponentsHand[i].suit);
