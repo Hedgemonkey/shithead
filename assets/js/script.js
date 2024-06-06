@@ -758,72 +758,6 @@ function playCard() {
             }
         }
     }
-    /**
-            inPlayDiv.style.backgroundImage = `url('assets/images/cards/fronts/${opponentsLowerCard.suit.toLowerCase()}_${opponentsLowerCard.value.toLowerCase()}.svg')`;
-            inPlayDiv.setAttribute('suit', opponentsLowerCard.suit);
-            inPlayDiv.setAttribute('value', oppon.entsLowerCard.value);
-            tipDiv.innerHTML = `Opponent played a ${opponentsLowerCard.value}`;
-            removeClassObject(opponentsHand, opponentsLowerCard);
-            opponentsHand.push(gameDeck.pop());
-            let newDiv = document.createElement('div');
-            newDiv.setAttribute('id', `opponents-hand-card-${opponentsHand.length}`);
-            newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
-            newDiv.setAttribute('suit', opponentsHand[opponentsHand.length - 1].suit);
-            newDiv.setAttribute('value', opponentsHand[opponentsHand.length - 1].value);
-            newDiv.setAttribute('class', 'opponents-hand-card');
-            opponentsHandDiv.appendChild(newDiv);
-            console.log('Removed ' + opponentsLowerCard.value + ' ' + opponentsLowerCard.suit + ' from opponents hand');
-        } else {
-            // let opponentCard = getLowestValueOverNumber(opponentsHand, cardValueToNumber(inPlayCard[0].value));
-            if (opponentCard == false) { // If the opponent has no cards to play
-                // Pick up the deck
-                let opponentHandSize = opponentsHand.length;
-                for (let i = 0; i inPlayDeck< inPlayDeck.length; i++) {
-                    let newDiv = document.createElement('div');
-                    newDiv.setAttribute('id', `opponents-hand-card-${gameDeck.length + opponentHandSize}`);
-                    newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
-                    newDiv.setAttribute('suit', inPlayDeck[i].suit);
-                    newDiv.setAttribute('value', inPlayDeck[i].value);
-                    newDiv.setAttribute('class', 'opponents-hand-card');
-                    opponentsHand.push(inPlayDeck[i]);
-                    opponentsHandDiv.appendChild(newDiv);
-                }
-                inPlayDeck = [];
-                for (let i = 0; i < inPlayCard.length; i++) {
-                    let newDiv = document.createElement('div');
-                    newDiv.setAttribute('id', `opponents-hand-card-${gameDeck.length + opponentHandSize}`);
-                    newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
-                    newDiv.setAttribute('suit', inPlayCard[i].suit);
-                    newDiv.setAttribute('value', inPlayCard[i].value);
-                    newDiv.setAttribute('class', 'opponents-hand-card');
-                    opponentsHand.push(inPlayCard[i]);
-                    opponentsHandDiv.appendChild(newDiv);
-                }
-                inPlayCard = [];
-                tipDiv.innerHTML = 'Opponent picked up the deck';
-                opponentTurn = false;
-                inPlayDiv.innerHTML = '';
-                inPlayDiv.style.backgroundImage = '';
-                inPlayDiv.setAttribute('suit', '');
-                inPlayDiv.setAttribute('value', '');
-            }
-        }
-        // Check for duplicate value cards in opponents Hand and add them to the playCard array
-        /*for (let i = 0; i < opponentsHand.length; i++) {
-            if (opponentsHand[i].value == playCardArray.value) {
-                // playCardArray.unshift(opponentsHand[i]);
-                console.log('Found duplicate ' + opponentsHand[i].value + ' ' + opponentsHand[i].suit + ' to playCardArray');
-            }
-        }
-        if (playCardArray.length == 4) {
-            burnPack();
-            tipDiv.innerHTML = 'Opponent played 4 of the same card, pack burned';
-            for (let i = 0; i < 4; i++) {
-                removeClassObject(opponentsHand, playCardArray[i]);
-                console.log('Removed ' + playCardArray[i].value + ' ' + playCardArray[i].suit + ' from opponents hand');
-            }
-            playCardArray = [];
-        }*/
     opponentTurn = false;
     // Check if player has any cards left and enable selection of table cards
     if (playerHand.length == 0) {
@@ -831,20 +765,6 @@ function playCard() {
     } else if (playerHand.length > 0) {
         playerTableCardClickEnabled = false;
     }
-    /**
-} else {
-    if (playerTableCardsDown.length == 0 && playerHand.length == 0) {
-        tipDiv.innerHTML = 'You no cards left, you win!';
-        addWin();
-    }
-    if (selectedCards.length == 0) {
-        tipDiv.innerHTML = 'You must play a card';
-    } else if (selectedCards.length > 1) {
-        tipDiv.innerHTML = 'You currently can only play one card at a time';
-    } else {
-        playSelected();
-    }
-}*/
 };
 
 /**
@@ -1005,58 +925,6 @@ function playSelected() {
                 console.log('Selected card is lower than card in play');
                 tipDiv.innerHTML = 'You must play a higher card than the last card played';
             }
-
-            /** else if ((cardValueToNumber(selectedCards[i].value) < inPlayDiv.getAttribute('value')) || (inPlayCard[0].value = '5')) {
-                tipDiv.innerHTML = 'You must play a higher card than the last card played';
-                if (inPlayCard[0].value == '5') {
-                    inPlayDiv.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
-                    inPlayDiv.setAttribute('suit', selectedCards[i].suit);
-                    inPlayDiv.setAttribute('value', selectedCards[i].value);
-                    inPlayCard.unshift(selectedCards[i]);
-                    inPlayDeck.push(inPlayCard.pop());
-                    tipDiv.innerHTML = `You played a ${selectedCards[i].value} on a 5`;
-                    opponentTurn = true;
-                    clearSelected();
-                    playCard();
-                }
-            } else if (selectedCards[i].value == '2' || selectedCards[i].value == '7' || selectedCards[i].value == '8' || selectedCards[i].value == '10') {
-                inPlayDiv.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
-                inPlayDiv.setAttribute('suit', selectedCards[i].suit);
-                inPlayDiv.setAttribute('value', selectedCards[i].value);
-                inPlayCard.unshift(selectedCards[i]);
-                if (inPlayCard.length > 3) {
-                    console.log('More than 3 cards in play removing bottom card from inPlayCard and adding to inPlayDeck');
-                    inPlayDeck.push(inPlayCard.pop());
-                }
-                tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
-                if (selectedCards[i].value == '10') {
-                    burnPack();
-                    tipDiv.innerHTML = `You played a ${selectedCards[i].value} and burned the pack`;
-                }
-                if (selectedCards[i].value == '7') {
-                    tipDiv.innerHTML = `You played a ${selectedCards[i].value} and skipped the next go`;
-                }
-                if (selectedCards[i].value == '8') {
-                    //invisibleCard();
-                    tipDiv.innerHTML = `You played a ${selectedCards[i].value} and made the next card invisible`;
-                }
-                if (selectedCards[i].value == '2') {
-                    //pickUpTwo();
-                    tipDiv.innerHTML = `You played a ${selectedCards[i].value} which can be played on any card`;
-                }
-                opponentTurn = true;
-                clearSelected();
-                playCard();
-            } else {
-                opponentsHand[array1Lower(opponentsHand, playerHand)]
-                inPlayDiv.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
-                inPlayDiv.setAttribute('suit', selectedCards[i].suit);
-                inPlayDiv.setAttribute('value', selectedCards[i].value);
-                inPlayCard.unshift(selectedCards[i]);
-                inPlayDeck.push(inPlayCard.pop());
-                tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
-                opponentTurn = true;
-            } */
         }
     }
     // Check that the selected cards are higher than the last card played
