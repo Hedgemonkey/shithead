@@ -731,6 +731,15 @@ function playCard() {
                     opponentsHandDiv.appendChild(newDiv);
                     console.log('Added ' + pickedUpCard.value + ' ' + pickedUpCard.suit + ' to opponents hand');
                     opponentTurn = false;
+                    // Check if opponentCard is a 10 and burn the pack
+                    if (opponentCard.value == '10') {
+                        burnPack();
+                        tipDiv.innerHTML = 'Opponent played a 10, pack burned';
+                        console.log('Opponent played a 10, pack burned');
+                        opponentTurn = true;
+                        console.log('Opponent turn true');
+                        playCard(); // Play another card
+                    }
                 }
                 // move one card to the inPlayDeck
                 while (inPlayCard.length > 3) {
