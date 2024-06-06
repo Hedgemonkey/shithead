@@ -42,6 +42,7 @@ let playCardArray = [];
 let opponentTurn;
 let gameActive = false;
 let opponentFirstTurn = false;
+let playerTableCardClickEnabled;
 
 
 /**
@@ -393,6 +394,7 @@ function deal() {
              * Event listener for the player table cards
              */
             for (let i = 0; i < playerTableCardArray.length; i++) {
+                playerTableCardClickEnabled = true;
                 playerTableCardArray[i].addEventListener('click', playerTableCardClick);
             }
         } else {
@@ -510,29 +512,31 @@ let playerHandCardClick = function () {
  * Event Listener function for the player table cards
  */
 let playerTableCardClick = function () {
-    let obj = new Card(this.getAttribute('suit'), this.getAttribute('value')); // Create a new card object
-    if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
-        this.style.border = "1px solid black";
-        console.log(obj + ' deselected');
-        removeSubarray(selectedTableCards, obj);
-    } else { // If the card is not selected then select it
-        this.style.border = "3px solid red";
-        selectedTableCards.push(obj);
-        selectedTableCardsElements = document.getElementsByClassName('player-table-card'); // Get all the player table cards Elements
-        selectedTableCardCount = 0; // Set the selected card count to 0
-        for (let i = 0; i < selectedTableCardsElements.length; i++) { // Loop through the selected cards
-            if (selectedTableCardsElements[i].style.border == "3px solid red") {
-                selectedTableCardCount++;
+    if (playerTableCardClickEnabled) {
+        let obj = new Card(this.getAttribute('suit'), this.getAttribute('value')); // Create a new card object
+        if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
+            this.style.border = "1px solid black";
+            console.log(obj + ' deselected');
+            removeSubarray(selectedTableCards, obj);
+        } else { // If the card is not selected then select it
+            this.style.border = "3px solid red";
+            selectedTableCards.push(obj);
+            selectedTableCardsElements = document.getElementsByClassName('player-table-card'); // Get all the player table cards Elements
+            selectedTableCardCount = 0; // Set the selected card count to 0
+            for (let i = 0; i < selectedTableCardsElements.length; i++) { // Loop through the selected cards
+                if (selectedTableCardsElements[i].style.border == "3px solid red") {
+                    selectedTableCardCount++;
+                }
             }
-        }
-        if (selectedTableCardCount > 0 || gameActive) { // If the player has selected cards then enable the play selected button
-            playSelectedButton.disabled = false;
-            playSelectedButton.style.opacity = "1";
-            playSelectedButton.style.backgroundColor = "green";
-        } else { // If the player has not selected cards then disable the play selected button
-            playSelectedButton.disabled = true;
-            playSelectedButton.style.opacity = "0.5";
-            playSelectedButton.style.backgroundColor = "grey";
+            if (selectedTableCardCount > 0 || gameActive) { // If the player has selected cards then enable the play selected button
+                playSelectedButton.disabled = false;
+                playSelectedButton.style.opacity = "1";
+                playSelectedButton.style.backgroundColor = "green";
+            } else { // If the player has not selected cards then disable the play selected button
+                playSelectedButton.disabled = true;
+                playSelectedButton.style.opacity = "0.5";
+                playSelectedButton.style.backgroundColor = "grey";
+            }
         }
     }
 };
@@ -551,7 +555,8 @@ function accept() {
     swapSelectedButton.remove();
     // Remove event listener from table cards
     for (let i = 0; i < playerTableCardArray.length; i++) {
-        playerTableCardArray[i].removeEventListener('click', playerTableCardClick);
+        //playerTableCardArray[i].removeEventListener('click', playerTableCardClick);
+        playerTableCardClickEnabled = false;
     }
     // Remove the tip
     let opIsLower = false;
@@ -575,7 +580,8 @@ function accept() {
     }
     // Disable listeners on the player table cards
     for (let i = 0; i < playerTableCardArray.length; i++) {
-        playerTableCardArray[i].removeEventListener('click', playerTableCardClick);
+        //playerTableCardArray[i].removeEventListener('click', playerTableCardClick);
+        playerTableCardClickEnabled = false;
     }
     gameActive = true;
 };
@@ -819,6 +825,12 @@ function playCard() {
             playCardArray = [];
         }*/
     opponentTurn = false;
+    // Check if player has any cards left and enable selection of table cards
+    if (playerHand.length == 0) {
+        playerTableCardClickEnabled = true;
+    } else if (playerHand.length > 0) {
+        playerTableCardClickEnabled = false;
+    }
     /**
 } else {
     if (playerTableCardsDown.length == 0 && playerHand.length == 0) {
@@ -1156,7 +1168,7 @@ function sortOpponentsHand() {
     }
     // Reassign the opponents hand array
     opponentsHand = sortedOpponentsHand;
-}    
+}
 
 
 
