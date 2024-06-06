@@ -1204,19 +1204,6 @@ function array1Lower(array1, array2) {
     }
 };
 
-/**
-* Function to remove subarray from array 
-*/
-function arraysEqual(a, b) {
-    return a.length === b.length && a.every((val, index) => val === b[index]);
-};
-
-function removeSubarray(mainArray, subArray) {
-    let index = mainArray.findIndex(arr => arraysEqual(arr, subArray));
-    if (index !== -1) {
-        mainArray.splice(index, 1);
-    }
-};
 
 /**
  * Function to remove class object from array
