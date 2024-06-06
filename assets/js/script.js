@@ -626,6 +626,35 @@ function playCard() {
             } else {
                 // Code for no card in play (Feedback loop)
                 // Select lowest card from opponents hand and process
+                console.log('No card in play');
+                let opponentCard = getLowestValueObject(opponentsHand);
+                // Move card out of opponentsHand and add to playCardArray
+                console.log('Added ' + opponentCard.value + ' ' + opponentCard.suit + ' to playCardArray');
+                playCardArray.unshift(opponentCard);
+                // Change the inPlayDiv to show the opponents card
+                inPlayDiv.style.backgroundImage = `url('assets/images/cards/fronts/${opponentCard.suit.toLowerCase()}_${opponentCard.value.toLowerCase()}.svg')`;
+                inPlayDiv.setAttribute('suit', opponentCard.suit);
+                inPlayDiv.setAttribute('value', opponentCard.value);
+                tipDiv.innerHTML = `Opponent played a ${opponentCard.value} of ${opponentCard.suit}`;
+                // Remove card from opponentsHand
+                console.log('Removed ' + opponentCard.value + ' ' + opponentCard.suit + ' from opponents hand');
+                removeClassObject(opponentsHand, opponentCard);
+                // Move card from deck to opponentsHand
+                let pickedUpCard = gameDeck.pop();
+                opponentsHand.push(pickedUpCard);
+                let newDiv = document.createElement('div');
+                newDiv.setAttribute('id', `opponents-hand-card-${opponentsHand.length}`);
+                newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+                newDiv.setAttribute('suit', pickedUpCard.suit);
+                newDiv.setAttribute('value', pickedUpCard.value);
+                newDiv.setAttribute('class', 'opponents-hand-card');
+                opponentsHandDiv.appendChild(newDiv);
+                console.log('Added ' + pickedUpCard.value + ' ' + pickedUpCard.suit + ' to opponents hand');
+                opponentTurn = false;
+                // Add card to inPlayCard
+                console.log('Opponents card: ' + opponentCard.value + ' ' + opponentCard.suit);
+                inPlayCard.unshift(opponentCard);
+                console.log('Added ' + opponentCard.value + ' ' + opponentCard.suit + ' to inPlayCard');
             }
         } else if (inPlayCard[0] !== undefined) { // If there is a card in play
             if (inPlayCard.length > 3) { // if there is more than 3 cards in play check if they are the same value
