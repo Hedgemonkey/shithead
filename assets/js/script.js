@@ -42,7 +42,8 @@ let playCardArray = [];
 let opponentTurn;
 let gameActive = false;
 let opponentFirstTurn = false;
-let playerTableCardClickEnabled;
+let playerTableCardClickEnabled = true;
+let gameCardsClickEnabled = false;
 
 
 /**
@@ -765,6 +766,12 @@ function playCard() {
     // Sort the opponents hand
     sortOpponentsHand();
     opponentTurn = false;
+    // Check is player has a playable card and enable Deck click if so
+    if (checkValidPlayerCard()) {
+        gameCardsClickEnabled = false;
+    } else {
+        gameCardsClickEnabled = true;
+    }
     // Check if player has any cards left and enable selection of table cards
     if (playerHand.length == 0) {
         playerTableCardClickEnabled = true;
@@ -1044,6 +1051,27 @@ function sortOpponentsHand() {
     opponentsHand = sortedOpponentsHand;
 }
 
+/**
+ * Function to check if player has a playable card
+ */
+function checkValidPlayerCard() {
+    let currentPlayCard = inPlayCard[0];
+    let resultTrue = false;
+    for (let i = 0; i < playerHand.length; i++) {
+        if (cardValueToNumber(playerHand[i].value) >= cardValueToNumber(currentPlayCard.value)) {
+            resultTrue = true;
+            break;
+        } else if (cardValueToNumber(playerHand[i].value) == '1' || cardValueToNumber(playerHand[i].value) == '2' || cardValueToNumber(playerHand[i].value) == '5' || cardValueToNumber(playerHand[i].value) == '7' || cardValueToNumber(playerHand[i].value) == '8' || cardValueToNumber(playerHand[i].value) == '10') {
+            resultTrue = true;
+            break;
+        }
+    }
+    if (!resultTrue) {
+        return false;
+    } else {
+        return true;
+    }
+};
 
 
 /**
