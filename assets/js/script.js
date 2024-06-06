@@ -558,6 +558,10 @@ function accept() {
         //playerTableCardArray[i].removeEventListener('click', playerTableCardClick);
         playerTableCardClickEnabled = false;
     }
+    // Sort the player hand
+    sortPlayersHand();
+    // Sort the opponents hand
+    sortOpponentsHand();
     // Remove the tip
     let opIsLower = false;
     let opponentCheck = array1Lower(opponentsHand, playerHand);
