@@ -737,16 +737,18 @@ function playCard() {
                     console.log('Removed ' + opponentCard.value + ' ' + opponentCard.suit + ' from opponents hand');
                     removeClassObject(opponentsHand, opponentCard);
                     // Move card from deck to opponentsHand
-                    let pickedUpCard = gameDeck.pop();
-                    opponentsHand.push(pickedUpCard);
-                    let newDiv = document.createElement('div');
-                    newDiv.setAttribute('id', `opponents-hand-card-${opponentsHand.length}`);
-                    newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
-                    newDiv.setAttribute('suit', pickedUpCard.suit);
-                    newDiv.setAttribute('value', pickedUpCard.value);
-                    newDiv.classList.add('opponents-hand-card');
-                    opponentsHandDiv.appendChild(newDiv);
-                    console.log('Added ' + pickedUpCard.value + ' ' + pickedUpCard.suit + ' to opponents hand');
+                    if (gameDeck.length > 0) {
+                        let pickedUpCard = gameDeck.pop();
+                        opponentsHand.push(pickedUpCard);
+                        let newDiv = document.createElement('div');
+                        newDiv.setAttribute('id', `opponents-hand-card-${opponentsHand.length}`);
+                        newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+                        newDiv.setAttribute('suit', pickedUpCard.suit);
+                        newDiv.setAttribute('value', pickedUpCard.value);
+                        newDiv.classList.add('opponents-hand-card');
+                        opponentsHandDiv.appendChild(newDiv);
+                        console.log('Added ' + pickedUpCard.value + ' ' + pickedUpCard.suit + ' to opponents hand');
+                    }
                     opponentTurn = false;
                     // Check if opponentCard is a 10 and burn the pack
                     if (opponentCard.value == '10') {
