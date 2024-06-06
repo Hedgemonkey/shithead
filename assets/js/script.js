@@ -588,8 +588,9 @@ function playCard() {
         console.log('Opponent turn');
         if (inPlayCard[0] == undefined) {
             console.log('No card in play');
-            console.log('Checking if opponent has lower card than player');
+            console.log('Checking if first turn');
             if (opponentFirstTurn) {
+                console.log('First turn checking if opponent has a lower card');
                 // Set the opponents lower card variable
                 let opponentsLowerCardIndex = array1Lower(opponentsHand, playerHand);
                 let opponentsLowerCard = opponentsHand[opponentsLowerCardIndex];
@@ -671,6 +672,7 @@ function playCard() {
                 let opponentCard = getLowestValueOverNumber(opponentsHand, cardValueToNumber(inPlayCard[0].value));
                 if (opponentCard == false) { // If the opponent has no cards to play
                     // Pick up the deck
+                    console.log('Opponent picked up the deck!!!!');
                     let opponentHandSize = opponentsHand.length;
                     for (let i = 0; i < inPlayDeck.length; i++) {
                         let newDiv = document.createElement('div');
@@ -880,6 +882,7 @@ function playSelected() {
                 clearSelected();
                 playCard();
             } else if (cardValueToNumber(selectedCards[i].value) == 1 || selectedCards[i].value == 2 || selectedCards[i].value == 5 || selectedCards[i].value == 7 || selectedCards[i].value == 8 || selectedCards[i].value == 10) {
+                let played10 = false; // Set played10 to false
                 console.log('Selected card is a special card');
                 // Remove the selected card from the players hand
                 let div = document.querySelector(`[suit="${selectedCards[i].suit}"][value="${selectedCards[i].value}"]`);
@@ -901,6 +904,7 @@ function playSelected() {
                 }
                 tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
                 if (selectedCards[i].value == 10) {
+                    played10 = true; // Set played10 to true
                     burnPack();
                     console.log('Burned the pack');
                     tipDiv.innerHTML = `You played a ${selectedCards[i].value} and burned the pack`;
@@ -936,9 +940,11 @@ function playSelected() {
                         newDiv.addEventListener('click', playerHandCardClick);
                     }
                 }
-                opponentTurn = true;
                 clearSelected();
-                playCard();
+                if (!played10) {
+                    opponentTurn = true;
+                    playCard();
+                }
             } else if (cardValueToNumber(selectedCards[i].value) > cardValueToNumber(inPlayCard[0].value)) { // If selected card is higher than the card in play
                 console.log('Selected card is higher than card in play');
                 // Remove the selected card from the players hand div
