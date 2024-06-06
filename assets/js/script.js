@@ -792,8 +792,10 @@ function playSelected() {
     if (selectedCards.length > 1) {
         for (let i = 0; i < selectedCards.length; i++) {
             for (let j = 0; j < selectedCards.length; j++) {
-                if (selectedCards[i].value !== selectedCards[j].value) {
-                    tipDiv.innerHTML = 'You can only play cards of the same value';
+                if (i !== j) {
+                    if (selectedCards[i].value !== selectedCards[j].value) {
+                        tipDiv.innerHTML = 'You can only play cards of the same value';
+                    }
                 }
             }
         }
