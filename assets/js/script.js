@@ -1087,6 +1087,80 @@ function clearSelected() {
 };
 
 /**
+ * Functions to sort Hands and propergate the changes to the divs
+ */
+/**
+ * Function to sort the players hand
+ */
+function sortPlayersHand() {
+    // First sort the players hand array by value
+    let sortedPlayersHand = [];
+    let tempPlayersHand = playerHand;
+    console.log('Run loop to sort players hand');
+    while (tempPlayersHand.length > 0) {
+        let lowest = minValueIgnore(tempPlayersHand);
+        console.log('Lowest value: ' + lowest.minValue);
+        console.log('Lowest index: ' + lowest.minIndex);
+        sortedPlayersHand.push(tempPlayersHand[lowest.minIndex]);
+        tempPlayersHand.splice(lowest.minIndex, 1);
+        console.log('Temp players hand: ' + tempPlayersHand.value + ' ' + tempPlayersHand.suit);
+        console.log('Sorted players hand: ' + sortedPlayersHand.value + ' ' + sortedPlayersHand.suit);
+    } // End of while loop
+    console.log('Sorted players hand: ' + sortedPlayersHand);
+    // Clear the players hand div
+    playerHandDiv.innerHTML = '';
+    // Loop through the sorted players hand array and add the cards to the players hand div
+    for (let i = 0; i < sortedPlayersHand.length; i++) {
+        // Create a new div for each card in the players hand
+        let newDiv = document.createElement('div');
+        newDiv.classList.add(`player-hand-card-${i}`);
+        newDiv.classList.add('player-hand-card');
+        newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${sortedPlayersHand[i].suit.toLowerCase()}_${sortedPlayersHand[i].value.toLowerCase()}.svg')`;
+        newDiv.setAttribute('suit', sortedPlayersHand[i].suit);
+        newDiv.setAttribute('value', sortedPlayersHand[i].value);
+        playerHandDiv.appendChild(newDiv);
+    }
+    // Reassign the players hand array
+    playerHand = sortedPlayersHand;
+};
+/**
+ * Function to sort the opponents hand
+ */
+function sortOpponentsHand() {
+    // First sort the opponents hand array by value
+    let sortedOpponentsHand = [];
+    let tempOpponentsHand = opponentsHand;
+    console.log('Run loop to sort opponents hand');
+    while (tempOpponentsHand.length > 0) {
+        let lowest = minValueIgnore(tempOpponentsHand);
+        console.log('Lowest value: ' + lowest.minValue);
+        console.log('Lowest index: ' + lowest.minIndex);
+        sortedOpponentsHand.push(tempOpponentsHand[lowest.minIndex]);
+        tempOpponentsHand.splice(lowest.minIndex, 1);
+        console.log('Temp opponents hand: ' + tempOpponentsHand);
+        console.log('Sorted opponents hand: ' + sortedOpponentsHand);
+    } // End of while loop
+    console.log('Sorted opponents hand: ' + sortedOpponentsHand);
+    // Clear the opponents hand div
+    opponentsHandDiv.innerHTML = '';
+    // Loop through the sorted opponents hand array and add the cards to the opponents hand div
+    for (let i = 0; i < sortedOpponentsHand.length; i++) {
+        // Create a new div for each card in the opponents hand
+        let newDiv = document.createElement('div');
+        newDiv.classList.add(`opponents-hand-card-${i}`);
+        newDiv.classList.add('opponents-hand-card');
+        newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+        newDiv.setAttribute('suit', sortedOpponentsHand[i].suit);
+        newDiv.setAttribute('value', sortedOpponentsHand[i].value);
+        opponentsHandDiv.appendChild(newDiv);
+    }
+    // Reassign the opponents hand array
+    opponentsHand = sortedOpponentsHand;
+}    
+
+
+
+/**
  * Function to convert the card value to a number
  */
 function cardValueToNumber(cardValue) {
@@ -1180,6 +1254,21 @@ function minValue(array) {
     }
     return { minValue, minIndex };
 };
+/**
+ * alternative minValue function ignoring special cards
+ */
+function minValueIgnore(array) {
+    let minIndex = 0;
+    let minValue = cardValueToNumber(array[0].value);
+    for (let i = 0; i < array.length; i++) {
+        let currentValue = cardValueToNumber(array[i].value);
+        if (currentValue < minValue) {
+            minValue = currentValue;
+            minIndex = i;
+        }
+    }
+    return { minValue, minIndex };
+}
 
 function array1Lower(array1, array2) {
     let min1 = minValue(array1);
