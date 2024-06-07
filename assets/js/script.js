@@ -619,16 +619,18 @@ function playCard() {
                 console.log('Removed ' + opponentsLowerCard.value + ' ' + opponentsLowerCard.suit + ' from opponents hand');
                 removeClassObject(opponentsHand, opponentsLowerCard);
                 // Move card from deck to opponentsHand
-                let pickedUpCard = gameDeck.pop();
-                opponentsHand.push(pickedUpCard);
-                let newDiv = document.createElement('div');
-                newDiv.setAttribute('id', `opponents-hand-card-${opponentsHand.length}`);
-                newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
-                newDiv.setAttribute('suit', pickedUpCard.suit);
-                newDiv.setAttribute('value', pickedUpCard.value);
-                newDiv.classList.add('opponents-hand-card');
-                opponentsHandDiv.appendChild(newDiv);
-                console.log('Added ' + pickedUpCard.value + ' ' + pickedUpCard.suit + ' to opponents hand');
+                if (gameDeck.length > 0) {
+                    let pickedUpCard = gameDeck.pop();
+                    opponentsHand.push(pickedUpCard);
+                    let newDiv = document.createElement('div');
+                    newDiv.setAttribute('id', `opponents-hand-card-${opponentsHand.length}`);
+                    newDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+                    newDiv.setAttribute('suit', pickedUpCard.suit);
+                    newDiv.setAttribute('value', pickedUpCard.value);
+                    newDiv.classList.add('opponents-hand-card');
+                    opponentsHandDiv.appendChild(newDiv);
+                    console.log('Added ' + pickedUpCard.value + ' ' + pickedUpCard.suit + ' to opponents hand');
+                }
                 let opponentsHandDivCard = document.querySelector(`[suit="${opponentsLowerCard.suit}"][value="${opponentsLowerCard.value}"]`);
                 opponentsHandDivCard.remove();
                 opponentTurn = false;
