@@ -812,18 +812,21 @@ function playSelected() {
                 let div = document.querySelector(`[suit="${selectedCards[i].suit}"][value="${selectedCards[i].value}"]`);
                 removeClassObject(playerHand, selectedCards[i]);
                 console.log('Removed ' + selectedCards[i].value + ' ' + selectedCards[i].suit + ' from player hand');
-                let newCard = gameDeck.pop(); // Get new card from deck
-                deckDiv.innerHTML = gameDeck.length; // Update new number of cards in deck
-                playerHand.push(newCard); // Add new card to player hand
-                console.log('Added ' + newCard.value + ' ' + newCard.suit + ' to player hand');
-                // Add the card to the players hand div
-                let newDiv = document.createElement('div');
-                newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
-                newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
-                newDiv.setAttribute('suit', newCard.suit);
-                newDiv.setAttribute('value', newCard.value);
-                newDiv.classList.add('player-hand-card');
-                playerHandDiv.appendChild(newDiv);
+                if (gameDeck.length > 0) {
+                    let newCard = gameDeck.pop(); // Get new card from deck
+                    deckDiv.innerHTML = gameDeck.length; // Update new number of cards in deck
+                    playerHand.push(newCard); // Add new card to player hand
+                    console.log('Added ' + newCard.value + ' ' + newCard.suit + ' to player hand');
+                    // Add the card to the players hand div
+                    let newDiv = document.createElement('div');
+                    newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
+                    newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
+                    newDiv.setAttribute('suit', newCard.suit);
+                    newDiv.setAttribute('value', newCard.value);
+                    newDiv.classList.add('player-hand-card');
+                    playerHandDiv.appendChild(newDiv);
+                    newDiv.addEventListener('click', playerHandCardClick);
+                }
                 div.remove();
                 // Change the card in the inPlay div
                 inPlayDiv.style.backgroundImage = `url('assets/images/cards/fronts/${selectedCards[i].suit.toLowerCase()}_${selectedCards[i].value.toLowerCase()}.svg')`;
@@ -836,7 +839,6 @@ function playSelected() {
                 tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
                 console.log('Added ' + selectedCards[i].value + ' ' + selectedCards[i].suit + ' to inPlayCard');
                 opponentTurn = true;
-                newDiv.addEventListener('click', playerHandCardClick);
                 clearSelected();
                 playCard();
             } else if (cardValueToNumber(selectedCards[i].value) == 1 || selectedCards[i].value == 2 || selectedCards[i].value == 5 || selectedCards[i].value == 7 || selectedCards[i].value == 8 || selectedCards[i].value == 10) {
