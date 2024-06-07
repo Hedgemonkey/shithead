@@ -792,6 +792,9 @@ function playCard() {
  * Function to play the selected cards
  */
 function playSelected() {
+    if (playerHand.length == 0) {
+        selectedCards = selectedTableCards;
+    }
     // Check if multiple selected cards that they are the same value
     if (selectedCards.length > 1) {
         for (let i = 0; i < selectedCards.length; i++) {
