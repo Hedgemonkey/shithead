@@ -1089,6 +1089,28 @@ function checkValidPlayerCard() {
     }
 };
 
+/**
+ * Function to check if opponent has a playable card
+ */
+function checkValidOpponentCard() {
+    let currentPlayCard = inPlayCard[0];
+    let resultTrue = false;
+    for (let i = 0; i < opponentsHand.length; i++) {
+        if (cardValueToNumber(opponentsHand[i].value) >= cardValueToNumber(currentPlayCard.value)) {
+            resultTrue = true;
+            break;
+        } else if (cardValueToNumber(opponentsHand[i].value) == '1' || cardValueToNumber(opponentsHand[i].value) == '2' || cardValueToNumber(opponentsHand[i].value) == '5' || cardValueToNumber(opponentsHand[i].value) == '7' || cardValueToNumber(opponentsHand[i].value) == '8' || cardValueToNumber(opponentsHand[i].value) == '10') {
+            resultTrue = true;
+            break;
+        }
+    }
+    if (!resultTrue) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 
 /**
  * Function to convert the card value to a number
