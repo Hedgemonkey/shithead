@@ -366,7 +366,7 @@ function deal() {
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player hand');
         } else if (dealCountDelayed == 51) { // Last card to deck
             gameDeck.push(currentCardDelayed);
-            deckDiv.style.backgroundImage = `url('assets/                let removePlayerHandClass = new Card(selectedCardArray[j].getAttribute('suit'), selectedCardArray[j].getAttribute('value'));images/cards/backs/${cardBack}')`;
+            deckDiv.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
             deckDiv.innerHTML = gameDeck.length;
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to deck');
             tipDiv.innerHTML = '<h4>Choose cards you want to swap.</h4>'; // Update the tip
@@ -519,8 +519,8 @@ let playerTableCardClick = function () {
         let obj = new Card(this.getAttribute('suit'), this.getAttribute('value')); // Create a new card object
         if (this.style.border == "3px solid red") { // If the card is already selected then deselect it
             this.style.border = "1px solid black";
-            console.log(obj + ' deselected');
-            removeSubarray(selectedTableCards, obj);
+            console.log(obj.suit + ' , ' + obj.value + ' deselected');
+            removeClassObject(selectedTableCards, obj);
         } else { // If the card is not selected then select it
             this.style.border = "3px solid red";
             selectedTableCards.push(obj);
