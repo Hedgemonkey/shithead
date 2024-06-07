@@ -687,7 +687,7 @@ function playCard() {
                 console.log('Current Card in play is ' + inPlayCard[0].value + ' ' + inPlayCard[0].suit);
                 console.log('Opponents Lowest Valid Card is ' + getLowestValueOverNumber(opponentsHand, cardValueToNumber(inPlayCard[0].value)));
                 let opponentCard = getLowestValueOverNumber(opponentsHand, cardValueToNumber(inPlayCard[0].value));
-                if (opponentCard == false) { // If the opponent has no cards to play
+                if (!checkValidOpponentCard()) { // If the opponent has no cards to play
                     // Pick up the deck
                     console.log('Opponent picked up the deck!!!!');
                     let opponentHandSize = opponentsHand.length;
