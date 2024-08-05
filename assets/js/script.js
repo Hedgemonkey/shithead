@@ -1056,6 +1056,12 @@ function playFromDeck() {
             opponentTurn = true;
             setTimeout(function () { playCard(); }, 2500);
         }
+        else if (inPlayCard[0] == undefined) {
+            tipDiv.innerHTML = 'Game deck card was a ' + newCard.value;
+            addToInPlay(newCard);
+            opponentTurn = true;
+            setTimeout(function () { playCard(); }, 2500);
+        }
         else if (cardValueToNumber(newCard.value) >= cardValueToNumber(inPlayCard[0].value)) {
             tipDiv.innerHTML = 'Game deck card was a ' + newCard.value;
             addToInPlay(newCard);
