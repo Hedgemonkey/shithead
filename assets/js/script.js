@@ -1188,8 +1188,8 @@ function sortOpponentsHand() {
 /**
  * Function to pick up the inPlayDeck
  */
-function pickUpInPlayDeck(var) {
-    if (var = 'oponent') {
+function pickUpInPlayDeck(x) {
+    if (x == 'opponent') {
     let tempInPlayDeck = inPlayDeck;
     while (inPlayDeck.length > 0) {
         opponentsHand.push(inPlayDeck.pop());
