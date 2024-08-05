@@ -1020,6 +1020,23 @@ function burnPack() {
 };
 
 /**
+ * Function to add to the inPlayDeck
+ */
+function addToInPlay(card) {
+    inPlayDiv.style.backgroundImage = `url('assets/images/cards/fronts/${card.suit.toLowerCase()}_${card.value.toLowerCase()}.svg')`;
+    inPlayDiv.setAttribute('suit', card.suit);
+    inPlayDiv.setAttribute('value', card.value);
+    inPlayCard.unshift(card);
+    console.log('Added ' + card.value + ' ' + card.suit + ' to inPlayCard');
+    if (inPlayCard.length > 3) {
+        console.log('More than 3 cards in play removing bottom card from inPlayCard and adding to inPlayDeck');
+        let movingCard = inPlayCard.pop();
+        inPlayDeck.push(movingCard);
+        console.log('Moved ' + movingCard.value + ' ' + movingCard.suit + ' to inPlayDeck');
+    }
+}
+
+/**
  * Function to clear the selected cards
  */
 function clearSelected() {
