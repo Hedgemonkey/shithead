@@ -1186,6 +1186,44 @@ function sortOpponentsHand() {
 }
 
 /**
+ * Function to pick up the inPlayDeck
+ */
+function pickUpInPlayDeck(var) {
+    if (var = 'oponent') {
+    let tempInPlayDeck = inPlayDeck;
+    while (inPlayDeck.length > 0) {
+        opponentsHand.push(inPlayDeck.pop());
+    }
+    while (inPlayCard.length > 0) {
+        opponentsHand.push(inPlayCard.pop());
+    }
+    sortOpponentsHand();
+    inPlayDiv.style.backgroundImage = '';
+    inPlayDiv.removeAttribute('suit');
+    inPlayDiv.removeAttribute('value');
+    tipDiv.innerHTML = 'Opponent picked up the deck';
+    opponentTurn = false;
+}
+    else {
+    let tempInPlayDeck = inPlayDeck;
+    while (inPlayDeck.length > 0) {
+        playerHand.push(inPlayDeck.pop());
+    }
+    while (inPlayCard.length > 0) {
+        playerHand.push(inPlayCard.pop());
+    }
+    sortPlayersHand();
+    inPlayDiv.style.backgroundImage = '';
+    inPlayDiv.removeAttribute('suit');
+    inPlayDiv.removeAttribute('value');
+    tipDiv.innerHTML = 'You picked up the deck';
+    setTimeout(() => {
+        playCard();
+    }, 3000);
+}
+};
+
+/**
  * Function to check if player has a playable card
  */
 function checkValidPlayerCard() {
