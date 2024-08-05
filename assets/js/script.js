@@ -1020,6 +1020,64 @@ function burnPack() {
 };
 
 /**
+ * Function to play from game deck
+ */
+function playFromDeck() {
+    if (gameDeck.length > 0) {
+        let newCard = gameDeck.pop();
+        deckDiv.innerHTML = gameDeck.length;
+        if (cardValueToNumber(newCard.value) == 10) {
+            addToInPlay(newCard);
+            setTimeout(function () { burnPack(); }, 2500);
+            tipDiv.innerHTML = 'Game deck card was a 10, pack burned';
+        }
+        else if (cardValueToNumber(newCard.value) == 7) {
+            tipDiv.innerHTML = 'Game deck card was a 7, go again';
+            addToInPlay(newCard);
+        }
+        else if (cardValueToNumber(newCard.value) == 1) {
+            tipDiv.innerHTML = 'Game deck card was an Ace';
+            addToInPlay(newCard);
+            opponentTurn = true;
+            setTimeout(function () { playCard(); }, 2500);
+        }
+        else if (cardValueToNumber(newCard.value) == 2) {
+            tipDiv.innerHTML = 'Game deck card was a 2';
+            addToInPlay(newCard);
+            opponentTurn = true;
+            setTimeout(function () { playCard(); }, 2500);
+        }
+        else if (cardValueToNumber(newCard.value) == 5) {
+            tipDiv.innerHTML = 'Game deck card was a 5 opponent must play lower card';
+            addToInPlay(newCard);
+            opponentTurn = true;
+            setTimeout(function () { playCard(); }, 2500);
+        }
+        else if (cardValueToNumber(newCard.value) >= cardValueToNumber(inPlayCard[0].value)) {
+            tipDiv.innerHTML = 'Game deck card was a ' + newCard.value;
+            addToInPlay(newCard);
+            opponentTurn = true;
+            setTimeout(function () { playCard(); }, 2500);
+        }
+        else if (cardValueToNumber(newCard.value) < cardValueToNumber(inPlayCard[0].value)) {
+            tipDiv.innerHTML = 'Game deck card was lower than the last card played pick up the deck';
+            addToInPlay(newCard);
+            setTimeout(function () { pickUpInPlayDeck(); }, 2500);
+            opponentTurn = true;
+            setTimeout(function () { playCard(); }, 5000);
+        }
+    }
+    else {
+        tipDiv.innerHTML = 'Game deck is empty';
+    }
+    if (gameDeck.length == 0) {
+        deckDiv.style.backgroundImage = ``;
+        deckDiv.removeAttribute('suit');
+        deckDiv.removeAttribute('value');
+    }
+};
+
+/**
  * Function to add to the inPlayDeck
  */
 function addToInPlay(card) {
