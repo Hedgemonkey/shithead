@@ -66,8 +66,7 @@ function rules() {
         rulesHTML.innerHTML = `
         <h2>Sh*tHead rules:</h2>
         <ul>
-        <li>The deck will be shuffled and each player            opponentsTableCardArray[dealCountDelayed].setAttribute('suit', currentCardDelayed.suit);
-        opponentsTableCardArray[dealCountDelayed].setAttribute('value', currentCardDelayed.value); gets delt 1 card each until the both have 3 cards face down, 3 cards face up, and 3 to their hand.</li>
+        <li>The deck will be shuffled and each player gets delt 1 card each until the both have 3 cards face down, 3 cards face up, and 3 to their hand.</li>
         <li>Player must play a higher card than last played unless it's a special card</li>
         <li>If you can't play a higher card then you must pick up the deck</li>
         <li>You must have a minimum of 3 cards in your hand until the deck is empty</li>
@@ -1092,7 +1091,7 @@ function addToInPlay(card) {
         inPlayDeck.push(movingCard);
         console.log('Moved ' + movingCard.value + ' ' + movingCard.suit + ' to inPlayDeck');
     }
-}
+};
 
 /**
  * Function to clear the selected cards
@@ -1113,7 +1112,7 @@ function clearSelected() {
 };
 
 /**
- * Functions to sort Hands and propergate the changes to the divs
+ * Functions to sort Hands and propagate the changes to the divs
  */
 /**
  * Function to sort the players hand

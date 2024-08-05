@@ -149,7 +149,7 @@ nav a:hover {
 #opponents-hand, #opponents-table, #player-table, #player-hand {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     margin-top: 5px;
     overflow-x: auto;
