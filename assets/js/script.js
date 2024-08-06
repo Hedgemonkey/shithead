@@ -587,6 +587,8 @@ function accept() {
         //playerTableCardArray[i].removeEventListener('click', playerTableCardClick);
         playerTableCardClickEnabled = false;
     }
+    // Add event listener to the game deck
+    deckDiv.onclick = function () { playFromDeck(); };
     gameActive = true;
 };
 
@@ -824,15 +826,15 @@ function playSelected() {
     }
     // Check if multiple selected cards that they are the same value
     if (selectedCards.length > 1) {
-        for (let i = 0; i < selectedCards.length; i++) {
-            for (let j = 0; j < selectedCards.length; j++) {
-                if (i !== j) {
-                    if (selectedCards[i].value !== selectedCards[j].value) {
-                        tipDiv.innerHTML = 'You can only play cards of the same value';
-                    }
-                }
-            }
-        }
+        //for (let i = 0; i < selectedCards.length; i++) {
+        //    for (let j = 0; j < selectedCards.length; j++) {
+        //        if (i !== j) {
+        //            if (selectedCards[i].value !== selectedCards[j].value) {
+        //                tipDiv.innerHTML = 'You can only play cards of the same value';
+        //            }
+        //        }
+        //    }
+        tipDiv.innerHTML = 'You can only play one card at a time';
     } else {
         for (let i = 0; i < selectedCards.length; i++) {
             if (inPlayCard[0] == undefined) {
@@ -873,9 +875,10 @@ function playSelected() {
                 //console.log('Added ' + selectedCards[i].value + ' ' + selectedCards[i].suit + ' to inPlayCard');
                 opponentTurn = true;
                 clearSelected();
+                sortPlayersHand();
                 playCard();
             } else if (cardValueToNumber(selectedCards[i].value) == 1 || selectedCards[i].value == 2 || selectedCards[i].value == 5 || selectedCards[i].value == 7 || selectedCards[i].value == 10) {
-                let played10 = false; // Set played10 to false
+                let playAgain = false; // Set playAgain to false
                 console.log('Selected card is a special card');
                 // Remove the selected card from the players hand
                 let div = document.querySelector(`[suit="${selectedCards[i].suit}"][value="${selectedCards[i].value}"]`);
@@ -890,21 +893,22 @@ function playSelected() {
                 // Remove from playerHand Array
                 removeClassObject(playerHand, selectedCards[i]);
                 console.log('Removed ' + selectedCards[i].value + ' ' + selectedCards[i].suit + ' from player hand');
-                if (inPlayCard.length > 3) {
-                    console.log('More than 3 cards in play removing bottom card from inPlayCard and adding to inPlayDeck');
-                    let movingCard = inPlayCard.pop();
-                    inPlayDeck.push(movingCard);
-                    console.log('Moved ' + movingCard.value + ' ' + movingCard.suit + ' to inPlayDeck');
-                }
+                //if (inPlayCard.length > 3) {
+                //    console.log('More than 3 cards in play removing bottom card from inPlayCard and adding to inPlayDeck');
+                //    let movingCard = inPlayCard.pop();
+                //    inPlayDeck.push(movingCard);
+                //    console.log('Moved ' + movingCard.value + ' ' + movingCard.suit + ' to inPlayDeck');
+                //}
                 tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
                 if (selectedCards[i].value == 10) {
-                    played10 = true; // Set played10 to true
+                    playAgain = true; // Set playAgain to true
                     burnPack();
                     console.log('Burned the pack');
-                    tipDiv.innerHTML = `You played a ${selectedCards[i].value} and burned the pack`;
+                    tipDiv.innerHTML = `You played a ${selectedCards[i].value} and burned the pack go again`;
                 }
                 if (selectedCards[i].value == 7) {
                     tipDiv.innerHTML = `You played a ${selectedCards[i].value} and go again`;
+                    playAgain = true; // Set playAgain to true
                 }
                 if (selectedCards[i].value == 2) {
                     tipDiv.innerHTML = `You played a ${selectedCards[i].value} which can be played on any card`;
@@ -940,7 +944,7 @@ function playSelected() {
                         playCard();
                     }
                 }
-            } else if (cardValueToNumber(selectedCards[i].value) >= cardValueToNumber(inPlayCard[0].value)) { // If selected card is higher than the card in play
+            } else if (cardValueToNumber(selectedCards[i].value) >= cardValueToNumber(inPlayCard[0].value) || (inPlayCard[0].value == 5 && cardValueToNumber(selectedCards[i].value) <= 5)) { // If selected card is higher than the card in play
                 console.log('Selected card is higher than card in play');
                 // Remove the selected card from the players hand div
                 let div = document.querySelector(`[suit="${selectedCards[i].suit}"][value="${selectedCards[i].value}"]`);
@@ -987,7 +991,10 @@ function playSelected() {
                 opponentTurn = true;
                 clearSelected();
                 playCard();
-            } else if (cardValueToNumber(inPlayCard[0].value) > cardValueToNumber(selectedCards[i].value)) { // If selected card is lower than the card in play
+            } else if (inPlayCard[0] == 5 && cardValueToNumber(selectedCards[i].value) > 5) {
+                tipDiv.innerHTML = 'You must play a lower card than a 5';
+                console.log('You must play a lower card than a 5');
+            } else if (cardValueToNumber(inPlayCard[0].value) > cardValueToNumber(selectedCards[i].value) && inPlayCard[0].value != 5) { // If selected card is lower than the card in play
                 console.log('Selected card is lower than card in play');
                 tipDiv.innerHTML = 'You must play a higher card than the last card played';
             }
