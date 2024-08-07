@@ -1256,23 +1256,46 @@ function checkValidPlayerCard() {
 function checkValidOpponentCard() {
     let currentPlayCard = inPlayCard[0];
     let resultTrue = false;
-    for (let i = 0; i < opponentsHand.length; i++) {
-        if (cardValueToNumber(opponentsHand[i].value) >= cardValueToNumber(currentPlayCard.value)) {
-            resultTrue = true;
-            console.log('Opponent has a playable card' + opponentsHand[i].value + ' of ' + opponentsHand[i].suit);
-            break;
-        } else if (cardValueToNumber(opponentsHand[i].value) == '1' || cardValueToNumber(opponentsHand[i].value) == '2' || cardValueToNumber(opponentsHand[i].value) == '5' || cardValueToNumber(opponentsHand[i].value) == '7' || cardValueToNumber(opponentsHand[i].value) == '10') {
-            resultTrue = true;
-            console.log('Opponent has a playable special card' + opponentsHand[i].value + ' of ' + opponentsHand[i].suit);
-            break;
+    let validCard;
+    if (inPlayCard[0] == undefined) {
+        validCard = 0;
+        resultTrue = true;
+        console.log('Opponent has a playable card ' + opponentsHand[0].value + ' of ' + opponentsHand[0].suit + ' as there is no card in play');
+    } else if (inPlayCard[0] == 5) {
+        for (let i = 0; i < opponentsHand.length; i++) {
+            if (cardValueToNumber(opponentsHand[i].value) <= cardValueToNumber(currentPlayCard.value)) {
+                resultTrue = true;
+                validCard = i;
+                console.log('Opponent has a playable card' + opponentsHand[i].value + ' of ' + opponentsHand[i].suit);
+                break;
+            } else if (cardValueToNumber(opponentsHand[i].value) == '1' || cardValueToNumber(opponentsHand[i].value) == '2' || cardValueToNumber(opponentsHand[i].value) == '5' || cardValueToNumber(opponentsHand[i].value) == '7' || cardValueToNumber(opponentsHand[i].value) == '10') {
+                resultTrue = true;
+                validCard = i;
+                console.log('Opponent has a playable special card' + opponentsHand[i].value + ' of ' + opponentsHand[i].suit);
+                break;
+            }
+        }
+    } else {
+        for (let i = 0; i < opponentsHand.length; i++) {
+            if (cardValueToNumber(opponentsHand[i].value) >= cardValueToNumber(currentPlayCard.value)) {
+                resultTrue = true;
+                validCard = i;
+                console.log('Opponent has a playable card' + opponentsHand[i].value + ' of ' + opponentsHand[i].suit);
+                break;
+            } else if (cardValueToNumber(opponentsHand[i].value) == '1' || cardValueToNumber(opponentsHand[i].value) == '2' || cardValueToNumber(opponentsHand[i].value) == '5' || cardValueToNumber(opponentsHand[i].value) == '7' || cardValueToNumber(opponentsHand[i].value) == '10') {
+                resultTrue = true;
+                validCard = i;
+                console.log('Opponent has a playable special card' + opponentsHand[i].value + ' of ' + opponentsHand[i].suit);
+                break;
+            }
         }
     }
     if (!resultTrue) {
         return false;
     } else {
-        return true;
+        return validCard;
     }
-}
+};
 
 
 /**
