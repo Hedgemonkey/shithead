@@ -43,7 +43,6 @@ let opponentTurn;
 let gameActive = false;
 let opponentFirstTurn = false;
 let playerTableCardClickEnabled = true;
-let gameCardsClickEnabled = false;
 
 
 /**
@@ -803,12 +802,12 @@ function playCard() {
     // Sort the opponents hand
     sortOpponentsHand();
     opponentTurn = false;
-    // Check is player has a playable card and enable Deck click if so
-    if (checkValidPlayerCard()) {
-        gameCardsClickEnabled = false;
-    } else {
-        gameCardsClickEnabled = true;
-    }
+    // Check is player has a playable card and enable Deck click if so REMOVED
+    //if (checkValidPlayerCard()) {
+    //    gameCardsClickEnabled = false;
+    //} else {
+    //    gameCardsClickEnabled = true;
+    //}
     // Check if player has any cards left and enable selection of table cards
     if (playerHand.length == 0) {
         playerTableCardClickEnabled = true;
