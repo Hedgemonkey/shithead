@@ -847,14 +847,14 @@ function playSelected() {
                     playerHand.push(newCard); // Add new card to player hand
                     console.log('Added ' + newCard.value + ' ' + newCard.suit + ' to player hand');
                     // Add the card to the players hand div
-                    let newDiv = document.createElement('div');
-                    newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
-                    newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
-                    newDiv.setAttribute('suit', newCard.suit);
-                    newDiv.setAttribute('value', newCard.value);
-                    newDiv.classList.add('player-hand-card');
-                    playerHandDiv.appendChild(newDiv);
-                    newDiv.addEventListener('click', playerHandCardClick);
+                    //let newDiv = document.createElement('div');
+                    //newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
+                    //newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
+                    //newDiv.setAttribute('suit', newCard.suit);
+                    //newDiv.setAttribute('value', newCard.value);
+                    //newDiv.classList.add('player-hand-card');
+                    //playerHandDiv.appendChild(newDiv);
+                    //newDiv.addEventListener('click', playerHandCardClick);
                     if (gameDeck.length == 0) {
                         deckDiv.style.backgroundImage = ``;
                         deckDiv.removeAttribute('suit');
@@ -924,14 +924,14 @@ function playSelected() {
                         playerHand.push(newCard);
                         console.log('Added ' + newCard.value + ' ' + newCard.suit + ' to player hand');
                         // Add the card to the players hand div
-                        let newDiv = document.createElement('div');
-                        newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
-                        newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
-                        newDiv.setAttribute('suit', newCard.suit);
-                        newDiv.setAttribute('value', newCard.value);
-                        newDiv.classList.add('player-hand-card');
-                        playerHandDiv.appendChild(newDiv);
-                        newDiv.addEventListener('click', playerHandCardClick);
+                        //let newDiv = document.createElement('div');
+                        //newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
+                        //newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
+                        //newDiv.setAttribute('suit', newCard.suit);
+                        //newDiv.setAttribute('value', newCard.value);
+                        //newDiv.classList.add('player-hand-card');
+                        //playerHandDiv.appendChild(newDiv);
+                        //newDiv.addEventListener('click', playerHandCardClick);
                         if (gameDeck.length == 0) {
                             deckDiv.style.backgroundImage = ``;
                             deckDiv.removeAttribute('suit');
@@ -944,8 +944,8 @@ function playSelected() {
                         playCard();
                     }
                 }
-            } else if (cardValueToNumber(selectedCards[i].value) >= cardValueToNumber(inPlayCard[0].value) || (inPlayCard[0].value == 5 && cardValueToNumber(selectedCards[i].value) <= 5)) { // If selected card is higher than the card in play
-                console.log('Selected card is higher than card in play');
+            } else if (cardValueToNumber(selectedCards[i].value) >= cardValueToNumber(inPlayCard[0].value) || (inPlayCard[0].value == 5 && cardValueToNumber(selectedCards[i].value) <= 5)) { // If selected card is higher than the card in play or lower if the card in play is a 5
+                console.log('Selected card is valid');
                 // Remove the selected card from the players hand div
                 let div = document.querySelector(`[suit="${selectedCards[i].suit}"][value="${selectedCards[i].value}"]`);
                 div.remove();
@@ -961,36 +961,37 @@ function playSelected() {
                 //    inPlayDeck.push(movingCard);
                 //    console.log('Moved ' + movingCard.value + ' ' + movingCard.suit + ' to inPlayDeck');
             }
-            // Remove the selected card from the players hand array
-            removeClassObject(playerHand, selectedCards[i]);
-            console.log('Removed ' + selectedCards[i].value + ' ' + selectedCards[i].suit + ' from player hand');
-            // Pick up card from deck and add to player hand if the player hand is less than 3 and there are still cards in the deck
-            if (playerHand.length < 3) {
-                if (gameDeck.length > 0) {
-                    let newCard = gameDeck.pop();
-                    deckDiv.innerHTML = gameDeck.length;
-                    playerHand.push(newCard);
-                    console.log('Added ' + newCard.value + ' ' + newCard.suit + ' to player hand');
-                    // Add the card to the players hand div
-                    let newDiv = document.createElement('div');
-                    newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
-                    newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
-                    newDiv.setAttribute('suit', newCard.suit);
-                    newDiv.setAttribute('value', newCard.value);
-                    newDiv.classList.add('player-hand-card');
-                    playerHandDiv.appendChild(newDiv);
-                    newDiv.addEventListener('click', playerHandCardClick);
-                    if (gameDeck.length == 0) {
-                        deckDiv.style.backgroundImage = ``;
-                        deckDiv.removeAttribute('suit');
-                        deckDiv.removeAttribute('value');
+                // Remove the selected card from the players hand array
+                removeClassObject(playerHand, selectedCards[i]);
+                console.log('Removed ' + selectedCards[i].value + ' ' + selectedCards[i].suit + ' from player hand');
+                // Pick up card from deck and add to player hand if the player hand is less than 3 and there are still cards in the deck
+                if (playerHand.length < 3) {
+                    if (gameDeck.length > 0) {
+                        let newCard = gameDeck.pop();
+                        deckDiv.innerHTML = gameDeck.length;
+                        playerHand.push(newCard);
+                        console.log('Added ' + newCard.value + ' ' + newCard.suit + ' to player hand');
+                        // Add the card to the players hand div
+                        //let newDiv = document.createElement('div');
+                        //newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
+                        //newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
+                        //newDiv.setAttribute('suit', newCard.suit);
+                        //newDiv.setAttribute('value', newCard.value);
+                        //newDiv.classList.add('player-hand-card');
+                        //playerHandDiv.appendChild(newDiv);
+                        //newDiv.addEventListener('click', playerHandCardClick);
+                        if (gameDeck.length == 0) {
+                            deckDiv.style.backgroundImage = ``;
+                            deckDiv.removeAttribute('suit');
+                            deckDiv.removeAttribute('value');
 
+                        }
                     }
+                    tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
+                    opponentTurn = true;
+                    clearSelected();
+                    playCard();
                 }
-                tipDiv.innerHTML = `You played a ${selectedCards[i].value}`;
-                opponentTurn = true;
-                clearSelected();
-                playCard();
             } else if (inPlayCard[0] == 5 && cardValueToNumber(selectedCards[i].value) > 5) {
                 tipDiv.innerHTML = 'You must play a lower card than a 5';
                 console.log('You must play a lower card than a 5');
