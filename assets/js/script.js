@@ -17,9 +17,17 @@ let shuffleButton;
 let dealButton;
 let cardBack = 'midjourney_design.jpg';
 let opponentsTableCardsDown = [];
-let playerTableCardsDown = [];
+let opponentsTableCardsDown1;
+let opponentsTableCardsDown2;
+let opponentsTableCardsDown3;
 let opponentsTableCardsUp = [];
+let opponentsTableCardsUp1;
+let opponentsTableCardsUp2;
+let opponentsTableCardsUp3;
+let playerTableCardsDown = [];
+let playerTableCardsDownIndexed = [];
 let playerTableCardsUp = [];
+let playerTableCardsUpIndexed = [];
 let opponentsHand = [];
 let playerHand = [];
 let gameDeck = [];
@@ -43,6 +51,8 @@ let opponentTurn;
 let gameActive = false;
 let opponentFirstTurn = false;
 let playerTableCardClickEnabled = true;
+let cardIndex;
+let SelectedTableId;
 
 
 /**
@@ -292,44 +302,72 @@ function deal() {
         console.log(currentCardDelayed);
         if (dealCountDelayed < 3) { // First 3 cards to opponents table face down
             opponentsTableCardArray[dealCountDelayed].style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+            opponentsTableCardArray[dealCountDelayed].setAttribute('state', 'down');
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table');
+            if (dealCountDelayed == 0) {
+                opponentsTableCardsDowIndexed[0] = currentCardDelayed;
+            } else if (dealCountDelayed == 1) {
+                opponentsTableCardsDownIndexed[1] = currentCardDelayed;
+            } else if (dealCountDelayed == 2) {
+                opponentsTableCardsDownIndexed[2] = currentCardDelayed;
+            }
             opponentsTableCardsDown.push(currentCardDelayed);
         } else if (dealCountDelayed < 6) { // Next 3 cards to player table face down
             playerTableCardArray[dealCountDelayed - 3].style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+            playerTableCardArray[dealCountDelayed - 3].setAttribute('state', 'down');
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table');
+            if (dealCountDelayed == 3) {
+                playerTableCardsDownIndexed[0] = currentCardDelayed;
+            } else if (dealCountDelayed == 4) {
+                playerTableCardsDownIndexed[1] = currentCardDelayed;
+            } else if (dealCountDelayed == 5) {
+                playerTableCardsDownIndexed[2] = currentCardDelayed;
+            }
             playerTableCardsDown.push(currentCardDelayed);
         } else if (dealCountDelayed == 6) { // First up card to opponents table
             opponentsTableCardArray[dealCountDelayed - 6].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            opponentsTableCardArray[dealCountDelayed - 6].setAttribute('state', 'up');
+            opponentsTableCardsUp1 = currentCardDelayed;
             opponentsTableCardsUp.push(currentCardDelayed);
             opponentsTableCardArray[dealCountDelayed - 6].setAttribute('suit', currentCardDelayed.suit);
             opponentsTableCardArray[dealCountDelayed - 6].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
         } else if (dealCountDelayed == 8) { // Second up card to opponents table
             opponentsTableCardArray[dealCountDelayed - 7].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            opponentsTableCardArray[dealCountDelayed - 7].setAttribute('state', 'up');
+            opponentsTableCardsUp2 = currentCardDelayed;
             opponentsTableCardsUp.push(currentCardDelayed);
             opponentsTableCardArray[dealCountDelayed - 7].setAttribute('suit', currentCardDelayed.suit);
             opponentsTableCardArray[dealCountDelayed - 7].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
         } else if (dealCountDelayed == 10) { // Third up card to opponents table
             opponentsTableCardArray[dealCountDelayed - 8].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            opponentsTableCardArray[dealCountDelayed - 8].setAttribute('state', 'up');
+            opponentsTableCardsUp3 = currentCardDelayed;
             opponentsTableCardsUp.push(currentCardDelayed);
             opponentsTableCardArray[dealCountDelayed - 8].setAttribute('suit', currentCardDelayed.suit);
             opponentsTableCardArray[dealCountDelayed - 8].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to opponents table face up');
         } else if (dealCountDelayed == 7) {  // First up card to player table
             playerTableCardArray[dealCountDelayed - 7].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            playerTableCardArray[dealCountDelayed - 7].setAttribute('state', 'up');
+            playerTableCardsUp1 = currentCardDelayed;
             playerTableCardsUp.push(currentCardDelayed);
             playerTableCardArray[dealCountDelayed - 7].setAttribute('suit', currentCardDelayed.suit);
             playerTableCardArray[dealCountDelayed - 7].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
         } else if (dealCountDelayed == 9) { // Second up card to player table
             playerTableCardArray[dealCountDelayed - 8].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            playerTableCardArray[dealCountDelayed - 8].setAttribute('state', 'up');
+            playerTableCardsUp2 = currentCardDelayed;
             playerTableCardsUp.push(currentCardDelayed);
             playerTableCardArray[dealCountDelayed - 8].setAttribute('suit', currentCardDelayed.suit);
             playerTableCardArray[dealCountDelayed - 8].setAttribute('value', currentCardDelayed.value);
             console.log(currentCardDelayed.suit + currentCardDelayed.value + ' to player table face up');
         } else if (dealCountDelayed == 11) { // Third up card to player table
             playerTableCardArray[dealCountDelayed - 9].style.backgroundImage = `url('assets/images/cards/fronts/${currentCardDelayed.suit.toLowerCase()}_${currentCardDelayed.value.toLowerCase()}.svg')`;
+            playerTableCardArray[dealCountDelayed - 9].setAttribute('state', 'up');
+            playerTableCardsUp3 = currentCardDelayed;
             playerTableCardsUp.push(currentCardDelayed);
             playerTableCardArray[dealCountDelayed - 9].setAttribute('suit', currentCardDelayed.suit);
             playerTableCardArray[dealCountDelayed - 9].setAttribute('value', currentCardDelayed.value);
@@ -537,6 +575,9 @@ let playerTableCardClick = function () {
                 playSelectedButton.style.backgroundColor = "grey";
             }
         }
+        selectedTableId = this.id; // Get the id of the selected table card
+        cardIndex = parseInt(selectedTableId.replace('player-table-card-', '')); // Get the index of the selected table card
+        console.log('Selected table card index: ' + cardIndex);
     }
 };
 
@@ -742,12 +783,12 @@ function playCard() {
                 opponentCard = opponentsHand[checkValidOpponentCard()];
                 // If the opponent has cards in their hand
                 // Assign opponentCard as the lowest card in the opponents hand
-                let lowest = minValue(opponentsHand);
-                opponentCard = opponentsHand[lowest.minIndex];
+                //let lowest = minValue(opponentsHand);
+                //opponentCard = opponentsHand[lowest.minIndex];
                 // Remove div containing the card from the opponents hand
-                let opponentCardDiv = document.querySelector(`[suit="${opponentCard.suit}"][value="${opponentCard.value}"]`);
-                opponentCardDiv.remove();
-                console.log('Removed ' + opponentCard.value + ' ' + opponentCard.suit + ' from opponents hand div');
+                //let opponentCardDiv = document.querySelector(`[suit="${opponentCard.suit}"][value="${opponentCard.value}"]`);
+                //opponentCardDiv.remove();
+                //console.log('Removed ' + opponentCard.value + ' ' + opponentCard.suit + ' from opponents hand div');
                 // Move card from opponentsHand to inPlayCard
                 addToInPlay(opponentCard);
                 //inPlayCard.unshift(opponentCard);
@@ -760,6 +801,7 @@ function playCard() {
                 // Remove card from opponentsHand
                 console.log('Removed ' + opponentCard.value + ' ' + opponentCard.suit + ' from opponents hand');
                 removeClassObject(opponentsHand, opponentCard);
+                sortOpponentsHand();
                 // Move card from deck to opponentsHand
                 if (gameDeck.length > 0) {
                     let pickedUpCard = gameDeck.pop();
@@ -787,9 +829,8 @@ function playCard() {
                 setTimeout(function () { burnPack(); }, 2500);
                 tipDiv.innerHTML = 'Opponent played a 10, burning pack!';
                 console.log('Opponent played a 10, pack burned');
-                opponentTurn = true;
                 console.log('Opponent turn true');
-                setTimeout(function () { playCard(); }, 5000); // Play another card
+                setTimeout(function () { opponentTurn = true; playCard(); }, 5000); // Play another card
             }
             //}
             // move one card to the inPlayDeck
@@ -815,6 +856,9 @@ function playCard() {
     } else if (playerHand.length > 0) {
         playerTableCardClickEnabled = false;
     }
+    if (playerHand.length == 0 && playerTableCardsDown.length == 0) {
+        // ... Win condition code
+    }
 };
 
 /**
@@ -822,10 +866,217 @@ function playCard() {
  */
 function playSelected() {
     if (playerHand.length == 0) {
+        let tempElement;
+        let upState;
         selectedCards = selectedTableCards;
+        if (selectedCards.length > 1) {
+            tipDiv.innerHTML = 'You can only play one card at a time';
+        }
+        tempElement = document.getElementById(`player-table-card-${cardIndex + 1}`)
+        if (tempElement.getAttribute('state') == 'up') {
+            upState = true;
+            if (inPlayCard[0] == undefined) {
+                addToInPlay(selectedCards[0]);
+                tipDiv.innerHTML = `You played a ${selectedCards[0].value}`;
+                tempElement.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+                tempElement.style.border = "1px solid black";
+                tempElement.setAttribute('state', 'down');
+                tempElement.setAttribute('suit', playerTableCardsDownIndexed[cardIndex].suit);
+                tempElement.setAttribute('value', playerTableCardsDownIndexed[cardIndex].value);
+                removeClassObject(playerTableCardsUp, selectedCards[0]);
+                opponentTurn = true;
+                if (selectedCards[0].value == '7') {
+                    tipDiv.innerHTML = 'You played a 7, go again!';
+                    clearSelected();
+                }
+                if (selectedCards[0].value == '10') {
+                    tipDiv.innerHTML = 'You played a 10, burning pack!';
+                    setTimeout(function () { burnPack(); }, 2500);
+                    clearSelected();
+                } else {
+                    tipDiv.innerHTML = `You played a ${selectedCards[0].value}`;
+                    opponentTurn = true;
+                    clearSelected();
+                    setTimeout(function () { playCard(); }, 2500);
+                }
+            } else if (cardValueToNumber(selectedCards[0].value) == 1 || selectedCards[0].value == 2 || selectedCards[0].value == 5 || selectedCards[0].value == 7 || selectedCards[0].value == 10) {
+                let playAgain = false;
+                if (selectedCards[0].value == 10) {
+                    tipDiv.innerHTML = 'You played a 10, burning pack!';
+                    setTimeout(function () { burnPack(); }, 2500);
+                    playAgain = true;
+                } else if (selectedCards[0].value == 7) {
+                    tipDiv.innerHTML = 'You played a 7, go again!';
+                    playAgain = true;
+                } else if (selectedCards[0].value == 2) {
+                    tipDiv.innerHTML = 'You played a 2, opponents turn!';
+                } else if (selectedCards[0].value == 5) {
+                    tipDiv.innerHTML = 'You played a 5, opponents turn!';
+                } else if (selectedCards[0].value == 1) {
+                    tipDiv.innerHTML = 'You played an Ace, opponents turn!';
+                }
+                if (playAgain) {
+                    tempElement.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+                    tempElement.style.border = "1px solid black";
+                    tempElement.setAttribute('state', 'down');
+                    tempElement.setAttribute('suit', playerTableCardsDownIndexed[cardIndex].suit);
+                    tempElement.setAttribute('value', playerTableCardsDownIndexed[cardIndex].value);
+                    removeClassObject(playerTableCardsUp, selectedCards[0]);
+                    opponentTurn = false;
+                    clearSelected();
+                } else {
+                    tempElement.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+                    tempElement.style.border = "1px solid black";
+                    tempElement.setAttribute('state', 'down');
+                    tempElement.setAttribute('suit', playerTableCardsDownIndexed[cardIndex].suit);
+                    tempElement.setAttribute('value', playerTableCardsDownIndexed[cardIndex].value);
+                    removeClassObject(playerTableCardsUp, selectedCards[0]);
+                    opponentTurn = true;
+                    clearSelected();
+                    setTimeout(function () { playCard(); }, 2500);
+                }
+            } else if (cardValueToNumber(selectedCards[0].value) >= cardValueToNumber(inPlayCard[0].value) && cardValueToNumber(inPlayCard[0].value) != 5) {
+                tempElement.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+                tempElement.style.border = "1px solid black";
+                tempElement.setAttribute('state', 'down');
+                tempElement.setAttribute('suit', playerTableCardsDownIndexed[cardIndex].suit);
+                tempElement.setAttribute('value', playerTableCardsDownIndexed[cardIndex].value);
+                removeClassObject(playerTableCardsUp, selectedCards[0]);
+                addToInPlay(selectedCards[0]);
+                tipDiv.innerHTML = `You played a ${selectedCards[0].value}`;
+                opponentTurn = true;
+                clearSelected();
+                setTimeout(function () { playCard(); }, 2500);
+            } else if (cardValueToNumber(inPlayCard[0].value) == 5 && cardValueToNumber(selectedCards[0].value) <= 5) {
+                tempElement.style.backgroundImage = `url('assets/images/cards/backs/${cardBack}')`;
+                tempElement.style.border = "1px solid black";
+                tempElement.setAttribute('state', 'down');
+                tempElement.setAttribute('suit', playerTableCardsDownIndexed[cardIndex].suit);
+                tempElement.setAttribute('value', playerTableCardsDownIndexed[cardIndex].value);
+                removeClassObject(playerTableCardsUp, selectedCards[0]);
+                addToInPlay(selectedCards[0]);
+                tipDiv.innerHTML = `You played a ${selectedCards[0].value}`;
+                opponentTurn = true;
+                clearSelected();
+                setTimeout(function () { playCard(); }, 2500);
+            } else if (cardValueToNumber(selectedCards[0].value) > 5 && cardValueToNumber(inPlayCard[0].value) == 5) {
+                tipDiv.innerHTML = 'You must play a card lower than 5';
+                clearSelected();
+            } else if (cardValueToNumber(selectedCards[0].value) < cardValueToNumber(inPlayCard[0].value)) {
+                tipDiv.innerHTML = 'You must play a card of equal or higher value';
+                clearSelected();
+            }
+        } else if (tempElement.getAttribute('state') == 'down') {
+            upState = false;
+            if (inPlayCard[0] == undefined) {
+                addToInPlay(selectedCards[0]);
+                tipDiv.innerHTML = `You played a ${selectedCards[0].value}`;
+                tempElement.style.backgroundImage = '';
+                tempElement.style.border = "1px solid black";
+                tempElement.setAttribute('state', '');
+                tempElement.setAttribute('suit', '');
+                tempElement.setAttribute('value', '');
+                tempElement.onclick = '';
+                removeClassObject(playerTableCardsDown, selectedCards[0]);
+                if (selectedCards[0].value == '7') {
+                    tipDiv.innerHTML = 'You played a 7, go again!';
+                    clearSelected();
+                }
+                if (selectedCards[0].value == '10') {
+                    tipDiv.innerHTML = 'You played a 10, burning pack!';
+                    if (playerTableCardsDown.length > 0 && playerHand.length > 0) {
+                        setTimeout(function () { burnPack(); }, 2500);
+                    }
+                    clearSelected();
+                }
+            } else {
+                tipDiv.innerHTML = `You played a ${selectedCards[0].value}`;
+                opponentTurn = true;
+                clearSelected();
+                if (playerTableCardsDown.length > 0 && playerHand.length > 0) {
+                    setTimeout(function () { playCard(); }, 2500);
+                }
+            }
+        } else if (cardValueToNumber(selectedCards[0].value) == 1 || selectedCards[0].value == 2 || selectedCards[0].value == 5 || selectedCards[0].value == 7 || selectedCards[0].value == 10) {
+            let playAgain = false;
+            if (selectedCards[0].value == 10) {
+                tipDiv.innerHTML = 'You played a 10, burning pack!';
+                setTimeout(function () { burnPack(); }, 2500);
+                playAgain = true;
+            } else if (selectedCards[0].value == 7) {
+                tipDiv.innerHTML = 'You played a 7, go again!';
+                playAgain = true;
+            } else if (selectedCards[0].value == 2) {
+                tipDiv.innerHTML = 'You played a 2, opponents turn!';
+            } else if (selectedCards[0].value == 5) {
+                tipDiv.innerHTML = 'You played a 5, opponents turn!';
+            } else if (selectedCards[0].value == 1) {
+                tipDiv.innerHTML = 'You played an Ace, opponents turn!';
+            }
+            if (playAgain) {
+                tempElement.style.backgroundImage = '';
+                tempElement.style.border = "1px solid black";
+                tempElement.setAttribute('state', '');
+                tempElement.setAttribute('suit', '');
+                tempElement.setAttribute('value', '');
+                tempElement.onclick = '';
+                removeClassObject(playerTableCardsDown, selectedCards[0]);
+                opponentTurn = false;
+                clearSelected();
+            } else {
+                tempElement.style.backgroundImage = '';
+                tempElement.style.border = "1px solid black";
+                tempElement.setAttribute('state', '');
+                tempElement.setAttribute('suit', '');
+                tempElement.setAttribute('value', '');
+                tempElement.onclick = '';
+                removeClassObject(playerTableCardsDown, selectedCards[0]);
+                opponentTurn = true;
+                clearSelected();
+                if (playerTableCardsDown.length > 0 && playerHand.length > 0) {
+                    setTimeout(function () { playCard(); }, 2500);
+                }
+            }
+        } else if (cardValueToNumber(selectedCards[0].value) >= cardValueToNumber(inPlayCard[0].value) && cardValueToNumber(inPlayCard[0].value != 5)) {
+            tempElement.style.backgroundImage = '';
+            tempElement.style.border = "1px solid black";
+            tempElement.setAttribute('state', '');
+            tempElement.setAttribute('suit', '');
+            tempElement.setAttribute('value', '');
+            tempElement.onclick = '';
+            removeClassObject(playerTableCardsDown, selectedCards[0]);
+            addToInPlay(selectedCards[0]);
+            tipDiv.innerHTML = `You played a ${selectedCards[0].value}`;
+            opponentTurn = true;
+            clearSelected();
+            if (playerTableCardsDown.length > 0 && playerHand.length > 0) {
+                setTimeout(function () { playCard(); }, 2500);
+            }
+        } else if (cardValueToNumber(inPlayCard[0].value) == 5 && cardValueToNumber(selectedCards[0].value) <= 5) {
+            tempElement.style.backgroundImage = '';
+            tempElement.style.border = "1px solid black";
+            tempElement.setAttribute('state', '');
+            tempElement.setAttribute('suit', '');
+            tempElement.setAttribute('value', '');
+            tempElement.onclick = '';
+            removeClassObject(playerTableCardsDown, selectedCards[0]);
+            addToInPlay(selectedCards[0]);
+            tipDiv.innerHTML = `You played a ${selectedCards[0].value}`;
+            opponentTurn = true;
+            clearSelected();
+            if (playerTableCardsDown.length > 0 && playerHand.length > 0) {
+                setTimeout(function () { playCard(); }, 2500);
+            }
+        } else if (cardValueToNumber(selectedCards[0].value) > 5 && cardValueToNumber(inPlayCard[0].value) == 5) {
+            tipDiv.innerHTML = 'You must play a card lower than 5';
+            clearSelected();
+        } else if (cardValueToNumber(selectedCards[0].value) < cardValueToNumber(inPlayCard[0].value)) {
+            tipDiv.innerHTML = 'You must play a card of equal or higher value';
+            clearSelected();
+        }
     }
     // Check if multiple selected cards that they are the same value
-    if (selectedCards.length > 1) {
+    else if (selectedCards.length > 1) {
         //for (let i = 0; i < selectedCards.length; i++) {
         //    for (let j = 0; j < selectedCards.length; j++) {
         //        if (i !== j) {
@@ -847,6 +1098,7 @@ function playSelected() {
                     playerHand.push(newCard); // Add new card to player hand
                     console.log('Added ' + newCard.value + ' ' + newCard.suit + ' to player hand');
                     // Add the card to the players hand div
+                    sortPlayersHand();
                     //let newDiv = document.createElement('div');
                     //newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
                     //newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
@@ -893,6 +1145,7 @@ function playSelected() {
                 // Remove from playerHand Array
                 removeClassObject(playerHand, selectedCards[i]);
                 console.log('Removed ' + selectedCards[i].value + ' ' + selectedCards[i].suit + ' from player hand');
+                sortPlayersHand();
                 //if (inPlayCard.length > 3) {
                 //    console.log('More than 3 cards in play removing bottom card from inPlayCard and adding to inPlayDeck');
                 //    let movingCard = inPlayCard.pop();
@@ -924,6 +1177,7 @@ function playSelected() {
                         playerHand.push(newCard);
                         console.log('Added ' + newCard.value + ' ' + newCard.suit + ' to player hand');
                         // Add the card to the players hand div
+                        sortPlayersHand();
                         //let newDiv = document.createElement('div');
                         //newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
                         //newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
@@ -963,6 +1217,8 @@ function playSelected() {
                 // Remove the selected card from the players hand array
                 removeClassObject(playerHand, selectedCards[i]);
                 console.log('Removed ' + selectedCards[i].value + ' ' + selectedCards[i].suit + ' from player hand');
+                clearSelected();
+                //sortPlayersHand();
                 // Pick up card from deck and add to player hand if the player hand is less than 3 and there are still cards in the deck
                 if (playerHand.length < 3) {
                     if (gameDeck.length > 0) {
@@ -971,6 +1227,7 @@ function playSelected() {
                         playerHand.push(newCard);
                         console.log('Added ' + newCard.value + ' ' + newCard.suit + ' to player hand');
                         // Add the card to the players hand div
+                        sortPlayersHand();
                         //let newDiv = document.createElement('div');
                         //newDiv.setAttribute('id', `player-hand-card-${playerHand.length}`);
                         //newDiv.style.backgroundImage = `url('assets/images/cards/fronts/${newCard.suit.toLowerCase()}_${newCard.value.toLowerCase()}.svg')`;
@@ -994,9 +1251,11 @@ function playSelected() {
             } else if (inPlayCard[0] == 5 && cardValueToNumber(selectedCards[i].value) > 5) {
                 tipDiv.innerHTML = 'You must play a lower card than a 5';
                 console.log('You must play a lower card than a 5');
+                clearSelected();
             } else if (cardValueToNumber(inPlayCard[0].value) > cardValueToNumber(selectedCards[i].value) && inPlayCard[0].value != 5) { // If selected card is lower than the card in play
                 console.log('Selected card is lower than card in play');
                 tipDiv.innerHTML = 'You must play a higher card than the last card played';
+                clearSelected();
             }
         }
     }
@@ -1097,7 +1356,7 @@ function addToInPlay(card) {
         console.log('Moved ' + movingCard.value + ' ' + movingCard.suit + ' to inPlayDeck');
     }
 };
-
+//sortPlayersHand();
 /**
  * Function to clear the selected cards
  */
@@ -1428,3 +1687,7 @@ function removeClassObject(mainArray, subArray) {
         mainArray.splice(index, 1);
     }
 };
+
+/**
+ * Function to handle selection of table cards
+ */
