@@ -783,13 +783,13 @@ function playCard() {
             }
             opponentTurn = false;
             // Check if opponentCard is a 10 and burn the pack
-            if (opponentCard.value == '10') {
-                burnPack();
-                tipDiv.innerHTML = 'Opponent played a 10, pack burned';
+            if (opponentCard !== false && opponentCard.value == '10') {
+                setTimeout(function () { burnPack(); }, 2500);
+                tipDiv.innerHTML = 'Opponent played a 10, burning pack!';
                 console.log('Opponent played a 10, pack burned');
                 opponentTurn = true;
                 console.log('Opponent turn true');
-                playCard(); // Play another card
+                setTimeout(function () { playCard(); }, 5000); // Play another card
             }
             //}
             // move one card to the inPlayDeck
@@ -960,7 +960,6 @@ function playSelected() {
                 //    let movingCard = inPlayCard.pop();
                 //    inPlayDeck.push(movingCard);
                 //    console.log('Moved ' + movingCard.value + ' ' + movingCard.suit + ' to inPlayDeck');
-            }
                 // Remove the selected card from the players hand array
                 removeClassObject(playerHand, selectedCards[i]);
                 console.log('Removed ' + selectedCards[i].value + ' ' + selectedCards[i].suit + ' from player hand');
