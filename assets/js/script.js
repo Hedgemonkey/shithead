@@ -699,9 +699,9 @@ function playCard() {
             //} else {
             // Play the lowest card over the current card
             console.log('Current Card in play is ' + inPlayCard[0].value + ' ' + inPlayCard[0].suit);
-            console.log('Opponents Lowest Valid Card is ' + getLowestValueOverNumber(opponentsHand, cardValueToNumber(inPlayCard[0].value)));
-            let opponentCard = getLowestValueOverNumber(opponentsHand, cardValueToNumber(inPlayCard[0].value));
-            if (!checkValidOpponentCard()) { // If the opponent has no cards to play
+            console.log('Opponents Lowest Valid Card Index is: ' + checkValidOpponentCard());
+            let opponentCard = false;
+            if (checkValidOpponentCard() === false) { // If the opponent has no cards to play
                 // Pick up the deck
                 console.log('Opponent picked up the deck!!!!');
                 pickUpInPlayDeck('opponent');
@@ -739,6 +739,7 @@ function playCard() {
                 inPlayDiv.setAttribute('suit', '');
                 inPlayDiv.setAttribute('value', '');
             } else if (opponentsHand.length > 0) { // If the opponent has a card to play
+                opponentCard = opponentsHand[checkValidOpponentCard()];
                 // If the opponent has cards in their hand
                 // Assign opponentCard as the lowest card in the opponents hand
                 let lowest = minValue(opponentsHand);
@@ -1276,7 +1277,7 @@ function checkValidOpponentCard() {
         }
     } else {
         for (let i = 0; i < opponentsHand.length; i++) {
-            if (cardValueToNumber(opponentsHand[i].value) >= cardValueToNumber(currentPlayCard.value)) {
+            if (cardValueToNumber(opponentsHand[i].value) >= cardValueToNumber(currentPlayCard.value) && inPlayCard[0].value != 5) {
                 resultTrue = true;
                 validCard = i;
                 console.log('Opponent has a playable card' + opponentsHand[i].value + ' of ' + opponentsHand[i].suit);
